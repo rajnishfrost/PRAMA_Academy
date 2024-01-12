@@ -10,7 +10,7 @@ body {
 }
 /*------------global-----------*/
 .container {
-  max-width: 85%;
+  /* max-width: 85%; */
   margin: auto;
 }
 .flexSB {
