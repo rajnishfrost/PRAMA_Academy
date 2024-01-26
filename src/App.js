@@ -5,7 +5,7 @@ import About from "./components/about/About";
 import ViewCourse from "./components/allcourses/CourseHome"
 import Team from "./components/team/Team";
 import Pricing from "./components/pricing/Pricing";
-// import Blog from "./components/blog/Blog"
+import Question from "./components/blog/Question"
 import Contact from "./components/contact/Contact";
 import Footer from "./components/common/footer/Footer";
 import Home from "./components/home/Home";
@@ -21,7 +21,7 @@ function App() {
         <Route exact  path='/courses/:id' component={ViewCourse} />
         <Route exact path='/team' component={Team} />
         <Route exact path='/pricing' component={Pricing} />
-        {/* <Route exact path='/journal' component={Blog} /> */}
+        <Route exact path='/journal' component={Question} />
         <Route exact path='/contact' component={Contact} />
       </Switch>
       <Footer />
