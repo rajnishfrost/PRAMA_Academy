@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/PRAMA_Academy/static/css/main.920f57a7.css",
-    "main.js": "/PRAMA_Academy/static/js/main.afd57978.js",
+    "main.js": "/PRAMA_Academy/static/js/main.afe2ba6b.js",
     "static/media/child-2205449.jpg": "/PRAMA_Academy/static/media/child-2205449.7c7c649c0e9e192200d1.jpg",
     "static/media/brokenTeethChild_upscaled.jpg": "/PRAMA_Academy/static/media/brokenTeethChild_upscaled.c3722d1fd6a3ab83dc57.jpg",
     "static/media/awrapper.webp": "/PRAMA_Academy/static/media/awrapper.031ce77a398171427673.webp",
     "index.html": "/PRAMA_Academy/index.html",
     "main.920f57a7.css.map": "/PRAMA_Academy/static/css/main.920f57a7.css.map",
-    "main.afd57978.js.map": "/PRAMA_Academy/static/js/main.afd57978.js.map"
+    "main.afe2ba6b.js.map": "/PRAMA_Academy/static/js/main.afe2ba6b.js.map"
   },
   "entrypoints": [
     "static/css/main.920f57a7.css",
-    "static/js/main.afd57978.js"
+    "static/js/main.afe2ba6b.js"
   ]
 }
