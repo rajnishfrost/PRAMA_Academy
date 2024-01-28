@@ -10,14 +10,14 @@ const Hero = () => {
           <div className='row'>
             <Heading subtitle='WELCOME TO PRAMA ACADEMY' title='Best Online Education Expertise' />
             <p>Unveiling the Profound Advantages of Expert Online Learning for Children</p>
-            <div className='button'>
+            {/* <div className='button'>
               <button className='primary-btn'>
                 GET STARTED NOW <i className='fa fa-long-arrow-alt-right'></i>
               </button>
-              <button>
+              <button className="viewCourse">
                 VIEW COURSE <i className='fa fa-long-arrow-alt-right'></i>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

@@ -1,11 +1,12 @@
 import React from "react"
 import { blog } from "../../../dummydata"
-import "./footer.css"
+import "./footer.css";
+import { Link } from "react-router-dom"
 
 const Footer = () => {
   return (
     <>
-      <section className='newletter'>
+      {/* <section className='newletter'>
         <div className='container flexSB'>
           <div className='left row'>
             <h1>Newsletter - Stay tune and get the latest update</h1>
@@ -16,19 +17,19 @@ const Footer = () => {
             <i className='fa fa-paper-plane'></i>
           </div>
         </div>
-      </section>
+      </section> */}
       <footer>
         <div className='container padding'>
           <div className='box logo'>
             <h1>PRAMA ACADEMY</h1>
             <span>Expanding Horizons Through Quality Education</span>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-
+            <br />
+            <br />
             <i className='fab fa-facebook-f icon'></i>
             <i className='fab fa-twitter icon'></i>
             <i className='fab fa-instagram icon'></i>
           </div>
-          <div className='box link'>
+          {/* <div className='box link'>
             <h3>Explore</h3>
             <ul>
               <li>About Us</li>
@@ -37,18 +38,18 @@ const Footer = () => {
               <li>Blog</li>
               <li>Contact us</li>
             </ul>
-          </div>
+          </div> */}
           <div className='box link'>
             <h3>Quick Links</h3>
             <ul>
-              <li>Contact Us</li>
-              <li>Pricing</li>
-              <li>Terms & Conditions</li>
-              <li>Privacy</li>
-              <li>Feedbacks</li>
+              <li><Link className="footerInherit" to="home">Home</Link></li>
+              <li><Link className="footerInherit" to="home">Course</Link></li>
+              <li><Link className="footerInherit" to="home">Terms & Conditions</Link></li>
+              <li><Link className="footerInherit" to="home">About</Link></li>
+              <li><Link className="footerInherit" to="home">Our Brand Ambasdor</Link></li>
             </ul>
           </div>
-          <div className='box'>
+          {/* <div className='box'>
             <h3>Recent Post</h3>
             {blog.slice(0, 3).map((val) => (
               <div className='items flexSB'>
@@ -68,9 +69,9 @@ const Footer = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
           <div className='box last'>
-            <h3>Have a Questions?</h3>
+            <h3>Contacts</h3>
             <ul>
               <li>
                 <i className='fa fa-map'></i>
@@ -90,7 +91,7 @@ const Footer = () => {
       </footer>
       <div className='legal'>
         <p>
-          Copyright ©2022 All rights reserved 
+          Copyright ©2024 All rights reserved 
         </p>
       </div>
     </>

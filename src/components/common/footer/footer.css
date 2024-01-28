@@ -1,5 +1,5 @@
 .newletter {
-  background-color: #f7ba00;
+  background-color: #f3b600;
   padding: 50px 0;
   color: #fff;
 }
@@ -27,7 +27,7 @@
 }
 .newletter i {
   padding: 12px;
-  color: #f7ba00;
+  color: #f3b600;
   background-color: #fff;
 }
 footer {
@@ -35,8 +35,11 @@ footer {
 }
 footer .container {
   display: grid;
-  grid-template-columns: 3fr 2fr 2fr 4fr 3fr;
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
+}
+.footerInherit{
+  color: inherit;
 }
 @media screen and (max-width: 768px) {
   footer .container {
@@ -44,7 +47,7 @@ footer .container {
   }
 }
 footer .logo span {
-  color: #f7ba00;
+  color: #f3b600;
   font-size: 14px;
 }
 footer .logo p {
@@ -52,7 +55,7 @@ footer .logo p {
   margin: 30px 0 15px 0;
 }
 footer .logo .icon {
-  background-color: #f7ba00;
+  background-color: #f3b600;
   color: white;
   margin-right: 10px;
 }
@@ -65,7 +68,7 @@ footer ul li {
 }
 footer .link li::before {
   content: "⟶";
-  color: #f7ba00;
+  color: #f3b600;
   margin-right: 5px;
 }
 footer .items {
@@ -81,7 +84,7 @@ footer .items img {
 footer .items span,
 footer .items i {
   font-size: 12px;
-  color: #f7ba00;
+  color: #f3b600;
   margin-right: 5px;
   text-transform: capitalize;
 }
@@ -96,7 +99,7 @@ footer .last ul li {
 footer .last i {
   width: 60px;
   font-size: 20px;
-  color: #f7ba00;
+  color: #f3b600;
 }
 .legal {
   text-align: center;
@@ -108,5 +111,5 @@ footer .last i {
   font-size: 15px;
 }
 .legal i {
-  color: #f7ba00;
+  color: #f3b600;
 }

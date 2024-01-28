@@ -1,15 +1,24 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 // import OnlineCourses from "../allcourses/OnlineCourses"
 import Heading from "../common/heading/Heading"
 import "../allcourses/courses.css"
 import { coursesCard } from "../../dummydata"
 import { Link } from "react-router-dom"
 
-const HAbout = () => {
+const HAbout = ({ scrollToCourse }) => {
+
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollToCourse !== null) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [scrollToCourse]);
+
   return (
     <>
-      <section className='homeAbout'>
-        <div className='container'>
+      <section className='homeAbout' >
+        <div className='container' ref={sectionRef}>
           <Heading subtitle='our courses' title='explore our popular online courses' />
 
           <div className='coursesCard'>
@@ -44,18 +53,20 @@ const HAbout = () => {
                                 <h4>{details.name}</h4>
                               </div>
                             </div>
-                            <span>{details.totalTime}</span>
+                            {/* <span>{details.totalTime}</span> */}
                           </>
                         ))}
                       </div>
                     </div>
-                  </div>
-                  <div className='price'>
+                  </div >
+                  {/* <div className='price'>
                     <h3>
                       {val.priceAll} / {val.pricePer}
                     </h3>
+                  </div> */}
+                  <div className="pt50px">
+                  <Link to={`/courses${val.route}`} className="viewButton"  ><button className='outline-btn' >View !</button></Link>
                   </div>
-                  <Link to={`/courses${val.route}`} style={{color: 'inherit' , width : "100px"}} ><button className='outline-btn' >View !</button></Link>
                 </div>
               ))}
             </div>

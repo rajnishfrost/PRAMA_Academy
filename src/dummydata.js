@@ -3,7 +3,7 @@ export const homeAbout = [
     id: 1,
     cover: "https://img.icons8.com/dotty/80/000000/storytelling.png",
     title: "Online Courses",
-    desc: "In the boundless realm of online learning, children discover flexibility, personalized journeys, interactive wonders, and a global horizon, fostering boundless education.",
+    desc: "In the boundless realm of online learning, children discover flexibility .",
   },
   {
     id: 1,
@@ -15,7 +15,7 @@ export const homeAbout = [
     id: 1,
     cover: "https://img.icons8.com/ios/80/000000/athlete.png",
     title: "Learn with Expert",
-    desc: "Empower kids with flexibility,diverse resources, and global accessibility, nurturing a vibrant and personalized educational journey.",
+    desc: "Empower kids with flexibility,diverse resources, and global accessibility.",
   },
 ]
 export const awrapper = [
@@ -62,8 +62,8 @@ export const coursesCard = [
                      ] ,
     courTeacher: [
       {
-        dcover: "./images/back.webp",
-        name: "by Priti Singh",
+        dcover: "./images/priti.jpg",
+        name: "by Pratibha Singh",
         totalTime: "50 lectures (190 hrs)",
       },
     ],
@@ -90,8 +90,8 @@ export const coursesCard = [
                      ] ,
     courTeacher: [
       {
-        dcover: "./images/back.webp",
-        name: "by Priti Singh",
+        dcover: "./images/priti.jpg",
+        name: "by Pratibha Singh",
         totalTime: "30 lectures (125 hrs)",
       },
     ],
@@ -118,8 +118,8 @@ export const coursesCard = [
                      ] ,
     courTeacher: [
       {
-        dcover: "./images/back.webp",
-        name: "by Priti Singh",
+        dcover: "./images/priti.jpg",
+        name: "by Pratibha Singh",
         totalTime: "50 lectures (50 hrs)",
       },
     ],
@@ -146,8 +146,8 @@ export const coursesCard = [
                      ] ,
     courTeacher: [
       {
-        dcover: "./images/back.webp",
-        name: "by Priti Singh",
+        dcover: "./images/priti.jpg",
+        name: "by Pratibha Singh",
         totalTime: "20 lectures (20 hrs)",
       },
     ],

@@ -27,13 +27,13 @@
   transition: 0.5s;
 }
 .blog h1:hover {
-  color: #f7ba00;
+  color: #f3b600;
   cursor: pointer;
 }
 .blog span {
   text-transform: uppercase;
   font-weight: 500;
-  color: #f7ba00;
+  color: #f3b600;
 }
 .blog span label {
   margin-left: 10px;
@@ -41,7 +41,7 @@
   font-size: 14px;
 }
 .blog span:nth-last-child(1) label {
-  color: #f7ba00;
+  color: #f3b600;
 }
 .blog p {
   color: grey;
