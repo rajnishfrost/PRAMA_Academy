@@ -10,7 +10,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #f5d168;
+  background-color: #f7ba00;
   padding: 15px;
 }
 .coursesCard img {
@@ -29,7 +29,7 @@
 }
 .coursesCard .rate {
   margin: 20px 0;
-  color: #f5d168;
+  color: #f7ba00;
 }
 .coursesCard .rate i {
   font-size: 13px;
@@ -47,7 +47,7 @@
   color: grey;
 }
 .coursesCard .details span {
-  color: #f5d168;
+  color: #f7ba00;
   font-weight: 500;
   font-size: 14px;
 }
@@ -58,7 +58,7 @@
 }
 .coursesCard h3 {
   font-weight: 500;
-  color: #f5d168;
+  color: #f7ba00;
 }
 /*-------------online---------*/
 .online {
@@ -92,14 +92,14 @@
   padding: 5px 20px;
   font-weight: 500;
   font-size: 15px;
-  color: #f5d168;
+  color: #f7ba00;
   border-radius: 5px;
 }
 .online .box .show {
   opacity: 0;
 }
 .online .box:hover {
-  background-color: #f5d168;
+  background-color: #f7ba00;
   border-radius: 5px;
   cursor: pointer;
 }

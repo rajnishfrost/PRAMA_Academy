@@ -24,12 +24,12 @@ body {
   border-radius: 50%;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.3);
-  color: #f5d168;
+  color: #f6b800;
   transition: 0.5s;
 }
 .icon:hover {
   cursor: pointer;
-  background-color: #f5d168;
+  background-color: #ffbf00;
   color: #fff;
 }
 a {
@@ -44,7 +44,7 @@ li {
 button {
   padding: 17px 30px;
   background-color: #fff;
-  color: #f5d168;
+  color: #f7ba00;
   font-weight: 600;
   border: none;
   margin: 30px 10px 0 0;
@@ -60,7 +60,7 @@ button:hover {
   box-shadow: none;
 }
 .primary-btn {
-  background-color: #f5d168;
+  background-color: #f7ba00;
   color: #fff;
 }
 
@@ -72,7 +72,7 @@ button:hover {
 #heading h3 {
   font-weight: 600;
   letter-spacing: 1px;
-  color: #f5d168;
+  color: #f7ba00;
   text-transform: uppercase;
 }
 #heading h1 {
@@ -128,12 +128,12 @@ p {
 .outline-btn {
   margin: 0;
   box-shadow: none;
-  border: 2px solid #f5d168;
+  border: 2px solid #f7ba00;
   width: 100%;
   transition: 0.5s;
 }
 .outline-btn:hover {
-  background-color: #f5d168;
+  background-color: #f7ba00;
   color: #fff;
 }
 .grid3 {
