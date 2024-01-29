@@ -119,6 +119,22 @@
 .pt50px{
   padding-top: 50px;
 }
+.BenefitImg{
+  height: 200px !important;
+  width : 200px !important;
+}
+.d-flex{
+  display: flex;
+}
+.f-wrap{
+  flex-wrap: wrap;
+}
+.m50{
+  margin: 50px;
+}
+.f-center{
+  justify-content: center;
+}
 /*-------------online---------*/
 @media screen and (max-width: 768px) {
 }

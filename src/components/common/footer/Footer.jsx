@@ -3,7 +3,7 @@ import { blog } from "../../../dummydata"
 import "./footer.css";
 import { Link } from "react-router-dom"
 
-const Footer = () => {
+const Footer = ({handleCourse}) => {
   return (
     <>
       {/* <section className='newletter'>
@@ -25,9 +25,8 @@ const Footer = () => {
             <span>Expanding Horizons Through Quality Education</span>
             <br />
             <br />
-            <i className='fab fa-facebook-f icon'></i>
-            <i className='fab fa-twitter icon'></i>
-            <i className='fab fa-instagram icon'></i>
+            <a href="https://www.instagram.com/pramaacademy/" target="_blank"><i className='fab fa-instagram icon'></i></a>
+            <a href="https://www.youtube.com/@pramaacademy1122" target="_blank"><i className='fab fa-youtube icon'></i></a>
           </div>
           {/* <div className='box link'>
             <h3>Explore</h3>
@@ -42,10 +41,10 @@ const Footer = () => {
           <div className='box link'>
             <h3>Quick Links</h3>
             <ul>
-              <li><Link className="footerInherit" to="home">Home</Link></li>
-              <li><Link className="footerInherit" to="home">Course</Link></li>
+            <li><Link className="footerInherit" to="/">Home</Link></li>
+              <li><Link className="footerInherit" to="" onClick={() => handleCourse()}>Course</Link></li>
               <li><Link className="footerInherit" to="home">Terms & Conditions</Link></li>
-              <li><Link className="footerInherit" to="home">About</Link></li>
+              <li><Link className="footerInherit" to="/about">About</Link></li>
               <li><Link className="footerInherit" to="home">Our Brand Ambasdor</Link></li>
             </ul>
           </div>
@@ -75,11 +74,11 @@ const Footer = () => {
             <ul>
               <li>
                 <i className='fa fa-map'></i>
-                203 Fake St. Mountain View, San Francisco, California, USA
+               some address of the office
               </li>
               <li>
                 <i className='fa fa-phone-alt'></i>
-                +2 392 3929 210
+               +91000000000
               </li>
               <li>
                 <i className='fa fa-paper-plane'></i>

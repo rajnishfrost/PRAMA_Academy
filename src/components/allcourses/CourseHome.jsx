@@ -11,7 +11,6 @@ const ViewCourse = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [])
-
   return (
     <>
       <Back title='Explore Courses' />
@@ -27,18 +26,51 @@ const ViewCourse = () => {
               <h1>History</h1>
               <p>{data.courseHistory}</p>
               <h1>Benefits</h1>
-              {
-              data.courseBenefits.map(d =>
-              (
-                <>
-                <div className='text2'>
-                  <h2>{d.heading}</h2>
-                  <p>{d.description}</p>
-                </div>
-                </>
-              )
-              )
-            }
+              <div className="d-flex f-wrap  f-center">
+                {
+                  data.courseBenefits.map(d =>
+                  (
+                    <>
+                      <div className='text2 m50'>
+                        <img src={d.image} alt="img" className="BenefitImg" />
+                        <h2>{d.heading}</h2>
+                      </div>
+                    </>
+                  )
+                  )
+                }
+              </div>
+              <h1>Levels</h1>
+              <div>
+                {
+                  data?.levels.map(d => {
+                    return (
+                      <>
+                        <div className='text2'>
+                          <h4>{d?.des}</h4>
+                          {d.levelNumber && d.levelNumber.map((subLevel, subIndex) => (
+                            <div key={subIndex}>
+                              {subLevel.level && subLevel.level.map((item, idx) => (
+                                <div key={idx}>
+                                  <p>{item.l}</p>
+                                  {item.li && (
+                                    <ul>
+                                      {item.li.map((liItem, liIndex) => (
+                                        <li key={liIndex}>{liItem}</li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    )
+                  }
+                  )
+                }
+              </div>
             </div>
           </div>
         </div>

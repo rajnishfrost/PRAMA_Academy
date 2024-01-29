@@ -17,7 +17,6 @@ function App() {
   const handleCourse = () => {
     setScrollToCourse(!scrollToCourse);
   };
-console.log(scrollToCourse);
   return (
     <>
       <Header handleCourse={handleCourse}/>
@@ -30,7 +29,7 @@ console.log(scrollToCourse);
         <Route exact path='/journal' component={Question} />
         {/* <Route exact path='/contact' component={Contact} /> */}
       </Switch>
-      <Footer />
+      <Footer handleCourse={handleCourse}/>
     </>
   )
 }
