@@ -11,6 +11,7 @@ import Footer from "./components/common/footer/Footer";
 import Home from "./components/home/Home";
 import {useState } from "react";
 import TermAndCondition from "./components/termAndCondition/TermAndCondition";
+import BrandAmbassdor from "./components/brandAmbassdor/BrandAmbassdor";
 
 function App() {
   const [scrollToCourse, setScrollToCourse] = useState(null);
@@ -28,7 +29,7 @@ function App() {
         <Route exact path='/team' component={Team} />
         <Route exact path='/term-and-condition' component={TermAndCondition} />
         <Route exact path='/journal' component={Question} />
-        {/* <Route exact path='/contact' component={Contact} /> */}
+        <Route exact path='/brand-ambassdor' component={BrandAmbassdor} />
       </Switch>
       <Footer handleCourse={handleCourse}/>
     </>

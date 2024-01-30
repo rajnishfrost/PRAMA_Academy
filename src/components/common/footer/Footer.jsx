@@ -45,7 +45,7 @@ const Footer = ({handleCourse}) => {
               <li><Link className="footerInherit" to="" onClick={() => handleCourse()}>Course</Link></li>
               <li><Link className="footerInherit" to="/term-and-condition">Terms & Conditions</Link></li>
               <li><Link className="footerInherit" to="/about">About</Link></li>
-              <li><Link className="footerInherit" to="home">Our Brand Ambasdor</Link></li>
+              <li><Link className="footerInherit" to="/brand-ambassdor">Our Brand Ambasdor</Link></li>
             </ul>
           </div>
           {/* <div className='box'>
