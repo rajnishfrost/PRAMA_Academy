@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import Head from "./Head"
 import "./header.css"
 
-const Header = ({handleCourse}) => {
+const Header = ({handleCourse , handleContact}) => {
   const [click, setClick] = useState(false)
 
   return (
@@ -15,7 +15,7 @@ const Header = ({handleCourse}) => {
             <li>
               <Link to='/'>Home</Link>
             </li>
-            <li onClick={() => handleCourse()}>
+            <li>
               <Link onClick={() => handleCourse()} to="">Courses</Link>
             </li>
             <li>
@@ -31,7 +31,7 @@ const Header = ({handleCourse}) => {
               <Link to='/journal'>question</Link>
             </li>
             <li>
-              <Link to='/contact'>Contact</Link>
+              <Link to='' onClick={()=> handleContact()}>Contact</Link>
             </li>
           </ul>
           <div className='start'>

@@ -1,9 +1,16 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { blog } from "../../../dummydata"
 import "./footer.css";
 import { Link } from "react-router-dom"
 
-const Footer = ({handleCourse}) => {
+const Footer = ({handleCourse , scrollToContact}) => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollToContact !== null) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [scrollToContact]);
   return (
     <>
       {/* <section className='newletter'>
@@ -69,7 +76,7 @@ const Footer = ({handleCourse}) => {
               </div>
             ))}
           </div> */}
-          <div className='box last'>
+          <div className='box last' ref={sectionRef}>
             <h3>Contacts</h3>
             <ul>
               <li>

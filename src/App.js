@@ -15,13 +15,17 @@ import BrandAmbassdor from "./components/brandAmbassdor/BrandAmbassdor";
 
 function App() {
   const [scrollToCourse, setScrollToCourse] = useState(null);
+  const [scrollToContact, setScrollToContact] = useState(null);
 
   const handleCourse = () => {
     setScrollToCourse(!scrollToCourse);
   };
+  const handleContact = () => {
+    setScrollToContact(!scrollToContact);
+  };
   return (
     <>
-      <Header handleCourse={handleCourse}/>
+      <Header handleCourse={handleCourse} handleContact={handleContact}/>
       <Switch>
         <Route exact path='/' render={() => <Home scrollToCourse={scrollToCourse}/>} />
         <Route exact path='/about' component={About} />
@@ -31,7 +35,7 @@ function App() {
         <Route exact path='/journal' component={Question} />
         <Route exact path='/brand-ambassdor' component={BrandAmbassdor} />
       </Switch>
-      <Footer handleCourse={handleCourse}/>
+      <Footer handleCourse={handleCourse} scrollToContact={scrollToContact}/>
     </>
   )
 }

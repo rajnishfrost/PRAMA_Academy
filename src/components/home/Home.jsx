@@ -11,7 +11,7 @@ const Home = ({scrollToCourse}) => {
     <>
       <Hero />
       <AboutCard />
-      <HAbout scrollToCourse={scrollToCourse}/>
+      <HAbout scrollToCourse={scrollToCourse} />
       {/* <Testimonal /> */}
       {/* <Hblog /> */}
       {/* <Hprice /> */}
