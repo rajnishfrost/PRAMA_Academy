@@ -47,7 +47,7 @@ export const coursesCard = [
     cover: "../images/courses/c1.png",
     coursesName: "ABACUS",
     route: "/abacus",
-    bigImage: "../images/courses/abacus2.jpg",
+    bigImage: "../images/childWithTable.jpg",
     courseIntroduction: "Welcome to the fascinating world of the abacus, an ancient tool that has played a pivotal role in human history. In this post, we will dive into the captivating history, functionality, and modern applications of this remarkable device. But first, let&#39;s take a moment to appreciate its significance. Imagine a time before calculators and computers; when complex calculations were done solely with the power of our minds. The abacus was the key to unlocking mathematical prowess and developing cognitive abilities. Its legacy stretches back centuries, intertwining with diverse cultures around the globe. Join us on this journey as we explore how the abacus has shaped brain development, mathematics education, and historical narratives throughout time. From prehistoric origins to present-day applications – brace yourself for an enlightening adventure!",
     courseHistory: "The history of the abacus spans across centuries and various cultures, making it one of the oldest known calculating devices. Its origins can be traced back to prehistoric times, where early humans used simple counting tools like pebbles or notches on sticks to perform basic arithmetic. However, the true development of the abacus as we know it today began in ancient civilizations such as Mesopotamia and Egypt. These early abaci consisted of a series of grooves or lines marked on a flat surface, with stones or other small objects representing numerical values. This allowed for more complex calculations beyond simple addition and subtraction. In different cultures around the world, unique variations of the abacus emerged. The Chinese developed their own version called suanpan, which featured more rods and beads compared to its predecessors. Similarly, the Japanese created their soroban with distinct design elements that made calculations even more efficient. During medieval Europe, when paper was scarce and literacy rates were low, merchants relied heavily on using an abacus for trade-related calculations. It became an essential tool for business transactions and helped foster economic growth during this period The functionality of an abacus lies in its simplicity yet effectiveness in performing mathematical operations. Addition and subtraction are carried out by moving beads along rods while keeping track visually. By manipulating these beads systematically from right to left, intricate calculations could be performed accurately without any electronic assistance. Today, although electronic calculators have become ubiquitous in our lives due to technological advancements, many individuals still value learning how to use an abacus effectively for mental calculation exercises and brain development purposes. Abacus training has been proven beneficial in enhancing cognitive abilities such as concentration skills and memory retention. In conclusion (as per instructions), understanding the rich history behind this ancient calculating device allows us to appreciate its significance throughout human civilization&#39;s development in mathematics education. Whether used as a practical tool or incorporated into modern teaching methods, the abacus continues to play a vital role in fostering mathematical skills and promoting",
     courseBenefits: [
@@ -93,7 +93,7 @@ export const coursesCard = [
     classDetail: [
       {
         heading: "JUNIOR ABACUS AND MENTAL ARITHEMATIC DEVELOPMENT PROGRAMME ",
-        li: ["For Children of age 4-6.5 Years", "Number of levels : 10", "Each level : 3 months", "Each class : 45min-60min, twice in a week", "Batch size : 07 (maximum) to ensure personalised attention", "Specially trained faculty", "Specially designed book to draw the child's interest", "Daily practice of 15 Min. essential at home.", "Certification at the end of each level"],
+        li: ["For Children of age 4 - 6.5 Years", "Number of levels : 10", "Each level : 3 months", "Each class : 45min-60min, twice in a week", "Batch size : 07 (maximum) to ensure personalised attention", "Specially trained faculty", "Specially designed book to draw the child's interest", "Daily practice of 15 Min. essential at home.", "Certification at the end of each level"],
         note: "Note : Parents need to purchase 17 rod abacus from their side before start of class For India Student Hardcopy of Book will be provided For International Student Book Pdf Link will be provided parent need to print the book before class"
       },
       {
@@ -117,8 +117,10 @@ export const coursesCard = [
     cover: "../images/courses/c2.png",
     coursesName: "VEDIC MATHEMATICS",
     route: "/vedic_mathematics",
-    bigImage: "../images/courses/abacus2.jpg",
+    bigImage: "../images/Vedic-Maths-01.jpg",
     courseIntroduction: "Would you be convinced if you were told that the space scientists rely on a technique that is thousands of years old? Would it be easy to believe that the most modern scientific technologies do take the help of an ancient knowledge dating back to about 1000 BC? And yet, this is absolutely true! Vedic Mathematics is a form of mathematical science based on the ancient scripture called the Atharva Vedas. It contains 16 main formulae and 13 sub-formulae explained in the texts of Ancient India. It seems surprising but it is true that the key to most modern scientific technology, including space science, Robotics, and Artificial Intelligence relies on Vedic maths tricks today. Yes, you read it right- this traditional system called Vedic maths finds good usage in most modern technologies today. The Beauty of Vedic Mathematics is it approaches through simple and direct, single line, non-monotonic, multi-choice, direction independent and faster methods unlike conventional mathematics. This definitely leaves behind wide options in the methodologies to be chosen. Vedic maths ensures a balanced utility of both the right and left brain (logic and creativity respectively). Through Vedic Mathematics the path to infinite wisdom on maths is enjoyable and creative.Start your journey today and unlock the power of Vedic Maths with our specialized courses. With our Vedic Maths course, you will be able to solve complex calculations with ease and speed.",
+    courseHistory : "" ,
+    courseBenefits :[] ,
     levels: [
       { des: "Our course builds upon the fundamentals taught in level 1 ,2 and 3 as below taking your Vedic math skills to an advanced level." },
       {
@@ -159,8 +161,11 @@ export const coursesCard = [
     cover: "../images/courses/c3.png",
     coursesName: "HANDWRITING",
     route: "/handwriting",
-    bigImage: "../images/courses/abacus2.jpg",
-    courseIntroduction: "Discover the key to improving your handwriting with our life-changing Handwriting Improvement Course. This revolutionary program will transform your little ones scribbles into beautiful script in no time.- Learn techniques to perfect your print and cursive writing- Exercises to develop proper letter formation, spacing, and flow  - Tips for grip, posture, and holding writing utensils - Methods for increasing hand-eye coordination and motor skillsOur step-by-step curriculum focuses on developing both print and cursive writing. Kid will gain mastery over letter shapes, sizes, slant, and spacing. With practice sheets for each lesson, child ingrain good handwriting habits. Notes, cards, letters, and journals will be works of art. If you struggle with messy, inconsistent handwriting, our Handwriting Improvement Course is for your little one. Their improved penmanship will boost confidence and pride whenever they will pick up a pen.",
+    bigImage: "../images/handwriting.webp",
+    courseIntroduction: "Discover the key to improving your handwriting with our life-changing Handwriting Improvement Course. This revolutionary program will transform your little ones scribbles into beautiful script in no time. # Learn techniques to perfect your print and cursive writing # Exercises to develop proper letter formation, spacing, and flow  # Tips for grip, posture, and holding writing utensils # Methods for increasing hand eye coordination and motor skills # Our step-by-step curriculum focuses on developing both print and cursive writing. Kid will gain mastery over letter shapes, sizes, slant, and spacing. With practice sheets for each lesson, child ingrain good handwriting habits. Notes, cards, letters, and journals will be works of art. If you struggle with messy, inconsistent handwriting, our Handwriting Improvement Course is for your little one. Their improved penmanship will boost confidence and pride whenever they will pick up a pen.",
+    courseHistory : "" ,
+    courseBenefits :[] ,
+    levels : [] ,
     classDetail: [
       {
         heading: "",
@@ -183,18 +188,20 @@ export const coursesCard = [
     cover: "../images/courses/c4.png",
     coursesName: "SHLOKA",
     route: "/shloka",
-    bigImage: "../images/courses/abacus2.jpg",
-    courseIntroduction: "Open the door to the divine world of ancient Hindu wisdom with shloka and mantra classes.- Learn basic and advanced shlokas to connect with the essence of Hindu scriptures- Master proper pronunciation and rhythms for chanting mantras - Gain a deeper understanding of the meaning behind sacred verses- Experience the transformative power of devotional chantingDive into the ocean of sacred Hindu texts through shlokas. These poetic verses contain profound teachings that nourish the soul. Learning to properly chant shlokas allows you to unlock their deeper meaning and integrate their wisdom into your life. Shloka and mantra classes provide the ideal path for anyone seeking to immerse themselves in the rich spiritual heritage of Hindu culture. Discover inner peace and awaken your highest potential through these sacred practices.",
+    bigImage: "../images/shloka.jpg",
+    courseIntroduction: "Open the door to the divine world of ancient Hindu wisdom with shloka and mantra classes. # Learn basic and advanced shlokas to connect with the essence of Hindu scriptures # Master proper pronunciation and rhythms for chanting mantras # Gain a deeper understanding of the meaning behind sacred verses # Experience the transformative power of devotional chanting . Dive into the ocean of sacred Hindu texts through shlokas. These poetic verses contain profound teachings that nourish the soul. Learning to properly chant shlokas allows you to unlock their deeper meaning and integrate their wisdom into your life. Shloka and mantra classes provide the ideal path for anyone seeking to immerse themselves in the rich spiritual heritage of Hindu culture. Discover inner peace and awaken your highest potential through these sacred practices.",
+    courseHistory : "" ,
+    courseBenefits :[] ,
     levels: [
       { des: "Our Shloka Course is well divided into 2 part so that a smooth transition can be done from lower level to higher level. " },
       {
-        level: [
-          [
+        levelNumber: [
+          {level : [
             { l: "Basic Level:  In basic level we teach easy to grasp daily use shloka in a span of 3-4 month we cover 16 shlokas which can be recited daily while performing routine activities. Along with shloka kids are introduced to mythological stories and bhajans." },
-          ] ,
-          [
+          ]} ,
+          {level : [
             { l: "Advance Level : In Advance level along with shloka , bhajan, chalisa, shahastra naam of various good and puranas are taught." },
-          ]
+          ]}
         ]
       }
     ],

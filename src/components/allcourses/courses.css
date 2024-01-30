@@ -135,6 +135,21 @@
 .f-center{
   justify-content: center;
 }
+.mt10{
+  margin-top: 10px;
+}
+.mt20{
+  margin-top: 20px;
+}
+.ml30{
+  margin-left: 30px;
+}
+.ls{
+  list-style-type: disc;
+}
+.color-red{
+  color: red !important;
+}
 /*-------------online---------*/
 @media screen and (max-width: 768px) {
 }
