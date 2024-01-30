@@ -299,44 +299,46 @@ export const online = [
 ]
 export const team = [
   {
-    cover: "./images/team/t1.webp",
-    name: "Ph.D Adrian Molises",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
+    cover: "./images/team/image14.jpg",
+    name: "PRATIBHA SINGH ",
+    work: "Director and Head Instructor (M. Tech Civil Engineering)",
+    exp : "2years as Onsite engineer for Construction Company. 11 years of Teaching Experience for student 4 to 60 years old",
+    course_conducted: "Abacus, Vedic Math, Hindi, Handwriting and Art"
   },
   {
-    cover: "./images/team/t2.webp",
-    name: "Ph.D Arthur MaGregor",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
+    cover: "./images/team/shradhha.jpg",
+    name: "SHRADDHA SINGH (Clinical Psychologist)",
+    work: "Instructor , M.A Psychology.",
+    exp : "Consultant clinical psychologist.consultant for one of the biggest publications for competency testing of school student.5 years’ experience in teaching.2 year experience in child psychology.",
+    course_conducted: " Abacus, Handwriting, Art and Craft."
   },
   {
-    cover: "./images/team/t3.webp",
-    name: "Ph.D Anna Hanzen",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
+    cover: "./images/team/sowmya.jpg",
+    name: "SOWMYA BANDHAKAVI BHALERAO",
+    work: "Instructor, B.Pharmacy",
+    exp : "10-year experience in on desk training and customer service, 2 year teaching experience",
+    course_conducted: "Abacus and Shlokas"
   },
   {
-    cover: "./images/team/t4.webp",
-    name: "Ph.D Brian Wooden",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
-  },
-  {
-    cover: "./images/team/t5.webp",
-    name: "Ph.D Adrian Molises",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
-  },
-  {
-    cover: "./images/team/t6.webp",
-    name: "Ph.D Arthur MaGregor",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
+    cover: "./images/team/sneha.jpg",
+    name: "SNEHAL MANTRI",
+    work: "Instructor, MBA, Bsc Computers Science",
+    exp : "",
+    course_conducted: "Abacus"
   },
   {
     cover: "./images/team/t7.webp",
-    name: "Ph.D Anna Hanzen",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
+    name: "SWETHA NAGUR",
+    work: "Franchise, Director and Head of Young Dynamic Academy Texas USA",
+    exp : "",
+    course_conducted: "Abacus and Vedic Maths"
   },
   {
-    cover: "./images/team/t8.webp",
-    name: "Ph.D Brian Wooden",
-    work: "DEVELOPER AND LEAD INSTRUCTOR",
+    cover: "./images/team/t6.webp",
+    name: "AMIT KUMAR",
+    work: "Instructor, Double MA, B.tech Computer Science",
+    exp : "",
+    course_conducted: "Vedic Math and Regular Math"
   },
 ]
 export const price = [

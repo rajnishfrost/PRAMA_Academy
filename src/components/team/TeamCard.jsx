@@ -18,6 +18,7 @@ const TeamCard = () => {
           <div className='details'>
             <h2>{val.name}</h2>
             <p>{val.work}</p>
+            <p>Course Conducted : {val.course_conducted}</p>
           </div>
         </div>
       ))}
