@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import "./header.css"
 
 const Head = () => {
   return (
@@ -7,7 +8,7 @@ const Head = () => {
         <div className='container flexSB'>
           <div className='logo'>
             <h1>PRAMA ACADEMY</h1>
-            <span>Expanding Horizons Through Quality Education</span>
+            <span className="spanHead">Expanding Horizons Through Quality Education</span>
           </div>
 
           <div className='social'>

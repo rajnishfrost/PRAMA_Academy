@@ -55,8 +55,43 @@ header ul li a:hover {
     font-weight: 900;
   }
 }
+@media screen and (max-width: 900px) {
+  header li {
+    margin-right: 11px;
+  }
+  header ul {
+    padding: 25px 5px;
+  }
+  .logo h1 {
+    font-size: 27px;
+    font-weight: 900;
+  }
+  header ul li a {
+    color: #fff;
+    font-weight: 500;
+    transition: 0.5s;
+    font-size: 11px;
+  }
+}
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
+  .start {
+    background-color: #f3b600;
+    padding: 20px 70px;
+    color: #fff;
+    clip-path: polygon(10% 0%, 100% 0, 100% 100%, 0% 100%);
+  }
+  .head {
+    padding: 15px 0;
+    color: #fff;
+  }
+  .spanHead{
+    font-size: 8px;
+  }
+  .logo h1 {
+    font-size: 20px;
+    font-weight: 900;
+  }
   .start {
     clip-path: none;
   }
@@ -75,14 +110,14 @@ header ul li a:hover {
     display: block;
     background: none;
     color: #fff;
-    font-size: 30px;
+    font-size: 25px;
     position: absolute;
     right: 0;
     top: -20px;
   }
   .mobile-nav {
     position: absolute;
-    top: 7vh;
+    top: 0vh;
     left: 0;
     width: 100%;
     background-color: #f3b600;

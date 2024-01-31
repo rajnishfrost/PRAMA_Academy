@@ -167,11 +167,42 @@ p {
     padding: 40px 0;
   }
 }
-@media screen and (max-width: 768px) {
-  .grid2,
-  .grid3,
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+@media screen and (max-width: 900px) {
+  .grid2 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media screen and (max-width: 600px) {
+  #heading h1 {
+    font-size: 25px;
+    margin: 20px 0;
+    text-transform: capitalize;
+  }
+  button {
+    padding: 17px 30px;
+    background-color: #fff;
+    color: #f3b600;
+    font-weight: 600;
+    border: none;
+    margin: 10px 0px 0 0;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 24px 36px -11px rgb(0 0 0 / 9%);
+    transition: 0.5s;
+  }
+  .container {
+    max-width: 95%;
+    margin: auto;
+  }
+  .icon {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #f6b800;
+    transition: 0.5s;
   }
   .back {
     background-position: center;
