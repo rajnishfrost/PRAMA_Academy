@@ -153,6 +153,20 @@ p {
   box-shadow: 0 5px 25px -2px rgb(0 0 0 / 6%);
   background-color: #fff;
 }
+@media screen and (max-width: 1200px) {
+  #heading h1 {
+    font-size: 36px;
+    margin: 20px 0;
+    text-transform: capitalize;
+  }
+  p {
+    line-height: 20px;
+    font-size: 15px;
+  }
+  .padding {
+    padding: 40px 0;
+  }
+}
 @media screen and (max-width: 768px) {
   .grid2,
   .grid3,

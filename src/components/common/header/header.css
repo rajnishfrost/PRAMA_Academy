@@ -43,6 +43,19 @@ header ul li a:hover {
   display: none;
 }
 /*--------header------------*/
+@media screen and (max-width: 1200px) {
+  header li {
+    margin-right: 29px;
+  }
+  header ul {
+    padding: 25px 20px;
+  }
+  .logo h1 {
+    font-size: 27px;
+    font-weight: 900;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .start {
     clip-path: none;

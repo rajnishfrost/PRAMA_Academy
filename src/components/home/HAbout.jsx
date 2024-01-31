@@ -42,7 +42,7 @@ const HAbout = ({ scrollToCourse }) => {
                         <i className='fa fa-star'></i>
                         <label htmlFor=''>(5.0)</label> */}
                       </div>
-                      <div className='details'>
+                      {/* <div className='details'>
                         {val.courTeacher.map((details) => (
                           <>
                             <div className='box'>
@@ -53,10 +53,10 @@ const HAbout = ({ scrollToCourse }) => {
                                 <h4>{details.name}</h4>
                               </div>
                             </div>
-                            {/* <span>{details.totalTime}</span> */}
+                            <span>{details.totalTime}</span>
                           </>
                         ))}
-                      </div>
+                      </div> */}
                     </div>
                   </div >
                   {/* <div className='price'>
@@ -65,7 +65,7 @@ const HAbout = ({ scrollToCourse }) => {
                     </h3>
                   </div> */}
                   <div className="pt50px">
-                  <Link to={`/courses${val.route}`} className="viewButton"  ><button className='outline-btn' >View !</button></Link>
+                    <Link to={`/courses${val.route}`} className="viewButton"  ><button className='outline-btn' >View !</button></Link>
                   </div>
                 </div>
               ))}

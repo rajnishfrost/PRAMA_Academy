@@ -151,5 +151,10 @@
   color: red !important;
 }
 /*-------------online---------*/
+@media screen and (max-width: 1200px) {
+  .coursesCard .text h1 {
+    font-size: 21px;
+  }
+}
 @media screen and (max-width: 768px) {
 }

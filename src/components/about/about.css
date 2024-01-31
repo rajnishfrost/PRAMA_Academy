@@ -93,6 +93,19 @@ list-style: disc;
   color: #f3b600;
 }
 /*----------awrapper------------*/
+
+@media screen and (max-width: 1200px) {
+  .aboutHome .item h2 {
+    font-size:  17px;
+    margin-bottom: 15px;
+  }
+  .aboutHome .item {
+    background-color: #fff;
+    margin-top: 30px;
+    padding: 10px;
+    transition: 0.5s;
+  }
+}
 @media screen and (max-width: 768px) {
   .aboutHome .container {
     flex-direction: column-reverse;
