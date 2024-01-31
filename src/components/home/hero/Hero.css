@@ -25,11 +25,16 @@
     height: 40vh;
   }
   .hero {
-    background-position: right;
-    padding-top: 50%;
-    height: 80vh;
+    background-position: center;
+    padding-top: 60%;
+    height:80vh;
   }
   .hero .row {
     width: 100%;
+  }
+  .hero #heading {
+    text-align: left;
+    margin: -3px;
+    padding: 10px;
   }
 }
