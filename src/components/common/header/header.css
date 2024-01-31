@@ -114,6 +114,7 @@ header ul li a:hover {
     position: absolute;
     right: 0;
     top: -20px;
+    box-shadow: none;
   }
   .mobile-nav {
     position: absolute;
