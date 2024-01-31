@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.f823172f.css",
-    "main.js": "/static/js/main.a1fc5a98.js",
+    "main.css": "/static/css/main.cd500118.css",
+    "main.js": "/static/js/main.a8777f38.js",
     "static/media/child-865116.jpg": "/static/media/child-865116.b7bc41850e6daa49d8a4.jpg",
     "static/media/brokenTeethChild_upscaled.jpg": "/static/media/brokenTeethChild_upscaled.c3722d1fd6a3ab83dc57.jpg",
     "static/media/awrapper.webp": "/static/media/awrapper.031ce77a398171427673.webp",
     "index.html": "/index.html",
-    "main.f823172f.css.map": "/static/css/main.f823172f.css.map",
-    "main.a1fc5a98.js.map": "/static/js/main.a1fc5a98.js.map"
+    "main.cd500118.css.map": "/static/css/main.cd500118.css.map",
+    "main.a8777f38.js.map": "/static/js/main.a8777f38.js.map"
   },
   "entrypoints": [
-    "static/css/main.f823172f.css",
-    "static/js/main.a1fc5a98.js"
+    "static/css/main.cd500118.css",
+    "static/js/main.a8777f38.js"
   ]
 }
