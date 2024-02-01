@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import Head from "./Head"
 import "./header.css"
 
-const Header = () => {
+const Header = ({handleCourse , handleContact}) => {
   const [click, setClick] = useState(false)
 
   return (
@@ -15,23 +15,23 @@ const Header = () => {
             <li>
               <Link to='/'>Home</Link>
             </li>
-            {/* <li>
-              <Link to='/courses'>All Courses</Link>
-            </li> */}
             <li>
-              <Link to='/about'>About</Link>
+              <Link onClick={() => handleCourse()} to="">Courses</Link>
             </li>
             <li>
               <Link to='/team'>Team</Link>
             </li>
             <li>
-              <Link to='/pricing'>Pricing</Link>
+              <Link to='/about'>About</Link>
             </li>
             <li>
-              <Link to='/journal'>Journal</Link>
+              <Link to='/brand-ambassdor'>Our Brand Ambasdor</Link>
             </li>
             <li>
-              <Link to='/contact'>Contact</Link>
+              <Link to='/journal'>question</Link>
+            </li>
+            <li>
+              <Link to='' onClick={()=> handleContact()}>Contact</Link>
             </li>
           </ul>
           <div className='start'>

@@ -1,11 +1,19 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { blog } from "../../../dummydata"
-import "./footer.css"
+import "./footer.css";
+import { Link } from "react-router-dom"
 
-const Footer = () => {
+const Footer = ({handleCourse , scrollToContact}) => {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollToContact !== null) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [scrollToContact]);
   return (
     <>
-      <section className='newletter'>
+      {/* <section className='newletter'>
         <div className='container flexSB'>
           <div className='left row'>
             <h1>Newsletter - Stay tune and get the latest update</h1>
@@ -16,19 +24,18 @@ const Footer = () => {
             <i className='fa fa-paper-plane'></i>
           </div>
         </div>
-      </section>
+      </section> */}
       <footer>
         <div className='container padding'>
           <div className='box logo'>
             <h1>PRAMA ACADEMY</h1>
             <span>Expanding Horizons Through Quality Education</span>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-
-            <i className='fab fa-facebook-f icon'></i>
-            <i className='fab fa-twitter icon'></i>
-            <i className='fab fa-instagram icon'></i>
+            <br />
+            <br />
+            <a href="https://www.instagram.com/pramaacademy/" target="_blank"><i className='fab fa-instagram icon'></i></a>
+            <a href="https://www.youtube.com/@pramaacademy1122" target="_blank"><i className='fab fa-youtube icon'></i></a>
           </div>
-          <div className='box link'>
+          {/* <div className='box link'>
             <h3>Explore</h3>
             <ul>
               <li>About Us</li>
@@ -37,18 +44,18 @@ const Footer = () => {
               <li>Blog</li>
               <li>Contact us</li>
             </ul>
-          </div>
+          </div> */}
           <div className='box link'>
             <h3>Quick Links</h3>
             <ul>
-              <li>Contact Us</li>
-              <li>Pricing</li>
-              <li>Terms & Conditions</li>
-              <li>Privacy</li>
-              <li>Feedbacks</li>
+            <li><Link className="footerInherit" to="/">Home</Link></li>
+              <li><Link className="footerInherit" to="" onClick={() => handleCourse()}>Course</Link></li>
+              <li><Link className="footerInherit" to="/term-and-condition">Terms & Conditions</Link></li>
+              <li><Link className="footerInherit" to="/about">About</Link></li>
+              <li><Link className="footerInherit" to="/brand-ambassdor">Our Brand Ambasdor</Link></li>
             </ul>
           </div>
-          <div className='box'>
+          {/* <div className='box'>
             <h3>Recent Post</h3>
             {blog.slice(0, 3).map((val) => (
               <div className='items flexSB'>
@@ -68,17 +75,17 @@ const Footer = () => {
                 </div>
               </div>
             ))}
-          </div>
-          <div className='box last'>
-            <h3>Have a Questions?</h3>
+          </div> */}
+          <div className='box last' ref={sectionRef}>
+            <h3>Contacts</h3>
             <ul>
               <li>
                 <i className='fa fa-map'></i>
-                203 Fake St. Mountain View, San Francisco, California, USA
+               some address of the office
               </li>
               <li>
                 <i className='fa fa-phone-alt'></i>
-                +2 392 3929 210
+               +91000000000
               </li>
               <li>
                 <i className='fa fa-paper-plane'></i>
@@ -90,7 +97,7 @@ const Footer = () => {
       </footer>
       <div className='legal'>
         <p>
-          Copyright ©2022 All rights reserved 
+          Copyright ©2024 All rights reserved 
         </p>
       </div>
     </>

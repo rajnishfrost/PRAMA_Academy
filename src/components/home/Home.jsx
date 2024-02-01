@@ -6,15 +6,15 @@ import Hero from "./hero/Hero"
 import Hprice from "./Hprice"
 // import Testimonal from "./testimonal/Testimonal"
 
-const Home = () => {
+const Home = ({scrollToCourse}) => {
   return (
     <>
       <Hero />
       <AboutCard />
-      <HAbout />
+      <HAbout scrollToCourse={scrollToCourse} />
       {/* <Testimonal /> */}
       {/* <Hblog /> */}
-      <Hprice />
+      {/* <Hprice /> */}
     </>
   )
 }

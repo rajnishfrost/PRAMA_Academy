@@ -36,15 +36,15 @@
 .aboutHome .item p {
   color: #999999;
 }
-.aboutHome .item:hover {
-  background-color: #f5d168;
+/* .aboutHome .item:hover {
+  background-color: #f3b600;
   color: #fff;
   cursor: pointer;
   box-shadow: 0 5px 25px -2px rgb(0 0 0 / 6%);
-}
-.aboutHome .item:hover p {
+} */
+/* .aboutHome .item:hover p {
   color: #fff;
-}
+} */
 /*----------awrapper------------*/
 .awrapper {
   background-image: url("../../../public/images/awrapper.webp");
@@ -67,8 +67,53 @@
   font-size: 20px;
   font-weight: 500;
 }
+.pt70 { 
+  padding-top: 70px !important;
+}
+.px100{
+  padding-left: 100px;
+  padding-right: 100px;
+}
+.grey-color{
+  color: #999999;;
+}
+.text-center{
+  text-align: center;
+}
+.mt20{
+  margin-top: 20px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.list-style-disc{
+list-style: disc;
+}
+.theme-text{
+  color: #f3b600;
+}
 /*----------awrapper------------*/
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 1200px) {
+  .aboutHome .item h2 {
+    font-size:  17px;
+    margin-bottom: 15px;
+  }
+  .aboutHome .item {
+    background-color: #fff;
+    margin-top: 30px;
+    padding: 10px;
+    transition: 0.5s;
+  }
+}
+@media screen and (max-width: 600px) {
+  .aboutHome img {
+    width: 50px;
+    height: 50px;
+  }
+  .aboutHome .right {
+    padding: 80px 10px;
+  }
   .aboutHome .container {
     flex-direction: column-reverse;
   }
