@@ -327,14 +327,14 @@ export const team = [
     course_conducted: "Abacus"
   },
   {
-    cover: "./images/team/t7.webp",
+    cover: "./images/team/noimage.png",
     name: "SWETHA NAGUR",
     work: "Franchise, Director and Head of Young Dynamic Academy Texas USA",
     exp : "",
     course_conducted: "Abacus and Vedic Maths"
   },
   {
-    cover: "./images/team/t6.webp",
+    cover: "./images/team/noimage.png",
     name: "AMIT KUMAR",
     work: "Instructor, Double MA, B.tech Computer Science",
     exp : "",

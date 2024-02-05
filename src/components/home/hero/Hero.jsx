@@ -8,7 +8,7 @@ const Hero = () => {
       <section className='hero'>
         <div className='container'>
           <div className='row'>
-            <Heading subtitle='WELCOME TO PRAMA ACADEMY' title='Best Online Education Expertise' />
+            <Heading subtitle='' title='WELCOME TO PRAMA ACADEMY' />
             <p>Unveiling the Profound Advantages of Expert Online Learning for Children</p>
             {/* <div className='button'>
               <button className='primary-btn'>

@@ -150,6 +150,9 @@
 .color-red{
   color: red !important;
 }
+.w50{
+  width: 50%;
+}
 /*-------------online---------*/
 @media screen and (max-width: 1200px) {
   .coursesCard .text h1 {
