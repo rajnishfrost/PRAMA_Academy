@@ -34,7 +34,7 @@ const ViewCourse = () => {
                     return <p key={index}>{part}</p>;
                   } else {
                     const bulletPoints = part.split('\n').filter(Boolean).map((point, pointIndex) => (
-                      <li className="ls mt10 ml30" key={pointIndex}>{point.trim()}</li>
+                      <li className="ls mt10 " key={pointIndex}>{point.trim()}</li>
                     ));
                     return (
                       <p key={index}>

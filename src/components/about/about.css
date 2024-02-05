@@ -123,4 +123,7 @@ list-style: disc;
   .awrapper {
     height: 50vh;
   }
+  .f15{
+    font-size: 15px;
+  }
 }

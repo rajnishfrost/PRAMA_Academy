@@ -88,7 +88,7 @@ p {
 .back {
   /* background-image: url("../public/images/child-865116.jpg"); */
   background-size: cover;
-  background-attachment: fixed;
+  background-attachment: scroll;
   position: absolute;
   top: 0;
   left: 0;
@@ -179,7 +179,7 @@ p {
     text-transform: capitalize;
   }
   button {
-    padding: 17px 30px;
+    padding: 10px 30px;
     background-color: #fff;
     color: #f3b600;
     font-weight: 600;
@@ -208,5 +208,20 @@ p {
     background-position: center;
     padding-top: 50%;
     height: 80vh;
+    background-position: left;
+  }
+  .back h1 {
+    font-size: 50px;
+  }
+  .grid4 {
+    display: block;
+  }
+  .ml42{
+    margin-left: 42px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 30px;
   }
 }

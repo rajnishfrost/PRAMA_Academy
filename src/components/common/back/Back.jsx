@@ -6,7 +6,8 @@ const Back = ({ title }) => {
   const location = useLocation();
 
   useEffect(() => {
-   checkPath();
+    checkPath();
+    // eslint-disable-next-line
   }, [location])
   
   const checkPath = () => {
@@ -22,8 +23,8 @@ const Back = ({ title }) => {
   return (
     <>
       <section className='back' style={{backgroundImage :`url(${backgroundImage})`}}>
-        <h2>Home / {location.pathname.split("/")[1]}</h2>
-        <h1>{title}</h1>
+        <h2 className="ml42">Home / {location.pathname.split("/")[1]}</h2>
+        <h1 className="ml42">{title}</h1>
       </section>
       <div className='margin'></div>
     </>

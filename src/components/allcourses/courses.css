@@ -162,5 +162,15 @@
     font-size: 21px;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 600px) {
+  .coursesCard img {
+    height: auto;
+}
+.coursesCard .text h1 {
+  font-size: 21px;
+  line-height: 25px;
+}
+.ml30{
+  margin-left: 15px;
+}
 }

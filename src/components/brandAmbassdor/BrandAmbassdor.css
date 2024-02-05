@@ -38,3 +38,10 @@
   .w-33{
     width: 33.3%;
   }
+
+  @media screen and (max-width: 600px) {
+    .px100{
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }

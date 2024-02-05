@@ -21,7 +21,7 @@ export default function BrandAmbassdor() {
           <source src="./images/video1.mp4" type="video/mp4" />
         </video>
 
-        <video className='video' controls>
+        <video className='video' controls >
           <source src="./images/video3.mp4" type="video/mp4" />
         </video>
         <video className='video' controls>
