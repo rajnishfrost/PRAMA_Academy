@@ -17,9 +17,7 @@ export default function BrandAmbassdor() {
         {/* <img className='w100' src="./images/childWithTable.jpg" alt="" /> */}
         <img className='w100' src="./images/medal3.jpg" alt="img" />
         <img className='w100' src="./images/medal4.jpg" alt="img" />
-        <video className='video' controls>
-          <source src="./images/video1.mp4" type="video/mp4" />
-        </video>
+       
 
         <video className='video' controls >
           <source src="./images/video3.mp4" type="video/mp4" />
@@ -36,9 +34,7 @@ export default function BrandAmbassdor() {
           <source src="./images/video8.mp4" type="video/mp4" />
         </video>
 
-        <video className='video' controls>
-          <source src="./images/video10.mp4" type="video/mp4" />
-        </video>
+      
 
         <video className='video' controls>
           <source src="./images/video12.mp4" type="video/mp4" />
