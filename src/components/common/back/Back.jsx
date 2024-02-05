@@ -1,12 +1,27 @@
-import React from "react"
-import { useLocation } from "react-router-dom"
+import React , {useEffect, useState} from "react"
+import { useLocation } from "react-router-dom";
 
 const Back = ({ title }) => {
-  const location = useLocation()
+  const [backgroundImage, setBackgroundImage] = useState("/images/child-865116.jpg");
+  const location = useLocation();
+
+  useEffect(() => {
+   checkPath();
+  }, [location])
+  
+  const checkPath = () => {
+    const {pathname} = location;
+    if(pathname.includes("about"))
+    setBackgroundImage("/images/delighfulChild.jpg")
+    if(pathname.includes("team"))
+    setBackgroundImage("/images/team.jpg")
+    if(pathname.includes("brand-ambassdor"))
+    setBackgroundImage("/images/childWithTable.jpg")
+  }
 
   return (
     <>
-      <section className='back'>
+      <section className='back' style={{backgroundImage :`url(${backgroundImage})`}}>
         <h2>Home / {location.pathname.split("/")[1]}</h2>
         <h1>{title}</h1>
       </section>

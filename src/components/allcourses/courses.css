@@ -153,6 +153,9 @@
 .w50{
   width: 50%;
 }
+.grey-color{
+  color: grey;
+}
 /*-------------online---------*/
 @media screen and (max-width: 1200px) {
   .coursesCard .text h1 {

@@ -7,6 +7,7 @@ import { coursesCard } from "../../dummydata"
 const ViewCourse = () => {
   const { id } = useParams();
   const [data] = useState(coursesCard.filter(d => d.route === `/${id}`)[0]);
+  const parts = data?.courseIntroduction.split('#');;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -18,11 +19,32 @@ const ViewCourse = () => {
         <div className='container grid4'>
           <div className='items shadow'>
             <div className='img'>
-              <img src={data?.bigImage} alt='' />
+              {
+                data.bigImage === ""
+                  ?
+                  <></>
+                  :
+                  <img src={data?.bigImage} alt='' />}
             </div>
             <div className='text'>
               <h1>Introduction</h1>
-              <p>{data?.courseIntroduction}</p>
+              <p>
+                {parts.map((part, index) => {
+                  if (index === 0) {
+                    return <p key={index}>{part}</p>;
+                  } else {
+                    const bulletPoints = part.split('\n').filter(Boolean).map((point, pointIndex) => (
+                      <li className="ls mt10 ml30" key={pointIndex}>{point.trim()}</li>
+                    ));
+                    return (
+                      <p key={index}>
+                        {bulletPoints}
+                      </p>
+                    );
+                  }
+                })}
+              </p>
+
               <h1>{data?.courseHistory === "" ? "" : "History"}</h1>
               <p>{data?.courseHistory}</p>
               <h1>{data?.courseBenefits.length > 0 ? "Benefits" : ""}</h1>
@@ -40,7 +62,12 @@ const ViewCourse = () => {
                   )
                 }
               </div>
-              <h1>Levels</h1>
+              {
+                data.levels.length > 0 ?
+                  <h1>Levels</h1>
+                  :
+                  <></>
+              }
               <div>
                 {
                   data?.levels.map(d => {
@@ -62,7 +89,7 @@ const ViewCourse = () => {
                                     {item.li && (
                                       <ul>
                                         {item.li.map((liItem, liIndex) => (
-                                          <li key={liIndex}>{liItem}</li>
+                                          <li className='ml30 grey-color' key={liIndex}>{liItem}</li>
                                         ))}
                                       </ul>
                                     )}
@@ -77,25 +104,27 @@ const ViewCourse = () => {
                   )
                 }
               </div>
-              <h1>Class Details</h1>
+              {data.classDetail.length > 0 ?
+                <h1>Class Details</h1>
+                :
+                <></>
+              }
               <div>
                 {
-                data?.classDetail?.map((detail, index) => (
-                  <div key={index}>
-                    <h2 className="mt20">{detail.heading}</h2>
-                    <ul className="mt20 ">
-                      {detail.li.map((item, idx) => (
-                        <li className="ls mt10 ml30" key={idx}>{item}</li>
-                      ))}
-                    </ul>
-                    <p className="mt20 color-red">{detail.note}</p>
-                  </div>
-                ))}
+                  data?.classDetail?.map((detail, index) => (
+                    <div key={index}>
+                      <h2 className="mt20">{detail.heading}</h2>
+                      <ul className="mt20 ">
+                        {detail.li.map((item, idx) => (
+                          <li className="ls mt10 ml30" key={idx}>{item}</li>
+                        ))}
+                      </ul>
+                      <p className="mt20 color-red">{detail.note}</p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
-          <h1>SUMMER CAMP</h1>
-          <p>Our summer camps are designed with international school vacation schedules in mind. The camps give children a break from routine schoolwork and immerse them in the beauty of Indian art through programs like Warli painting, sketch pen calligraphy, Madhubani painting, and handwriting classes. These activities help children discover new hobbies and take a break from stressful curricula.</p>
         </div>
       </section>
     </>
