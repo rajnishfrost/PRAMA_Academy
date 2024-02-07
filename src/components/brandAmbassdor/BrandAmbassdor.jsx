@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./BrandAmbassdor.css"
 import Back from '../common/back/Back';
 // import brand1 from "./images/medal1.jpg";
@@ -8,6 +8,9 @@ import Back from '../common/back/Back';
 
 
 export default function BrandAmbassdor() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [])
   return (
     <div>
       <Back title='Brand Ambassdor' />

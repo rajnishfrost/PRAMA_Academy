@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Back from '../common/back/Back'
 import "./termAndCondition.css"
 export default function TermAndCondition() {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [])
   return (
     <div>
         <Back title='Term And Condition'/>

@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useEffect } from "react"
 import "./about.css"
 import Back from "../common/back/Back"
 
 const About = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [])
   return (
     <>
       <Back title='About Us' />
