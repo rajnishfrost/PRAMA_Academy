@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.19f3fc4e.css",
-    "main.js": "/static/js/main.93db5f1a.js",
+    "main.js": "/static/js/main.879cfda8.js",
     "static/media/brokenTeethChild_upscaled.jpg": "/static/media/brokenTeethChild_upscaled.c3722d1fd6a3ab83dc57.jpg",
     "index.html": "/index.html",
     "main.19f3fc4e.css.map": "/static/css/main.19f3fc4e.css.map",
-    "main.93db5f1a.js.map": "/static/js/main.93db5f1a.js.map"
+    "main.879cfda8.js.map": "/static/js/main.879cfda8.js.map"
   },
   "entrypoints": [
     "static/css/main.19f3fc4e.css",
-    "static/js/main.93db5f1a.js"
+    "static/js/main.879cfda8.js"
   ]
 }
