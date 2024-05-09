@@ -200,7 +200,7 @@ export const coursesCard = [
             { l: "Basic Level:  In basic level we teach easy to grasp daily use shloka in a span of 3-4 month we cover 16 shlokas which can be recited daily while performing routine activities. Along with shloka kids are introduced to mythological stories and bhajans." },
           ]} ,
           {level : [
-            { l: "Advance Level : In Advance level along with shloka , bhajan, chalisa, shahastra naam of various good and puranas are taught." },
+            { l: "Advance Level : In Advance level along with shloka , bhajan, chalisa, shahastra naam of various god and puranas are taught." },
           ]}
         ]
       }

@@ -14,12 +14,12 @@ export default function BrandAmbassdor() {
   return (
     <div>
       <Back title='Brand Ambassdor' />
-      <div className='px100'>
-        <img className='w100' src="./images/medal1.jpg" alt="img" />
-        <img className='w100' src="./images/medal2.jpg" alt="img" />
+      <div className='px100 customContainer'>
+        <img className='imgCustom' src="./images/medal1.jpg" alt="img" />
+        <img className='imgCustom' src="./images/medal2.jpg" alt="img" />
         {/* <img className='w100' src="./images/childWithTable.jpg" alt="" /> */}
-        <img className='w100' src="./images/medal3.jpg" alt="img" />
-        <img className='w100' src="./images/medal4.jpg" alt="img" />
+        <img className='imgCustom' src="./images/medal3.jpg" alt="img" />
+        <img className='imgCustom' src="./images/medal4.jpg" alt="img" />
        
 
         <video className='video' controls >

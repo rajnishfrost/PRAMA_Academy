@@ -30,13 +30,24 @@
     width : 100%
   }
   .video{
-    width: 100%;
+    width: 400px;
+    height: auto;
   }
   .d-flex{
     display: flex;
   }
   .w-33{
     width: 33.3%;
+  }
+  .imgCustom{
+    height: auto;
+    width: 400px;
+  }
+  .customContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
   }
 
   @media screen and (max-width: 600px) {

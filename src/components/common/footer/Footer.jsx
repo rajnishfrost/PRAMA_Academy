@@ -3,7 +3,7 @@ import { blog } from "../../../dummydata"
 import "./footer.css";
 import { Link } from "react-router-dom"
 
-const Footer = ({handleCourse , scrollToContact}) => {
+const Footer = ({ handleCourse, scrollToContact }) => {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Footer = ({handleCourse , scrollToContact}) => {
           <div className='box link'>
             <h3>Quick Links</h3>
             <ul>
-            <li><Link className="footerInherit" to="/">Home</Link></li>
+              <li><Link className="footerInherit" to="/">Home</Link></li>
               <li><Link className="footerInherit" to="" onClick={() => handleCourse()}>Course</Link></li>
               <li><Link className="footerInherit" to="/term-and-condition">Terms & Conditions</Link></li>
               <li><Link className="footerInherit" to="/about">About</Link></li>
@@ -81,15 +81,21 @@ const Footer = ({handleCourse , scrollToContact}) => {
             <ul>
               <li>
                 <i className='fa fa-map'></i>
-               some address of the office
+                201 Green Park Apt,
+                Gaon Devi, Marol Maroshi
+                <br />
+                Andheri East
+                Mumbai 400059 ,
+                Maharashtra ,
+                India .
               </li>
-              <li>
+              {/* <li>
                 <i className='fa fa-phone-alt'></i>
-               +91000000000
-              </li>
+                +91000000000
+              </li> */}
               <li>
                 <i className='fa fa-paper-plane'></i>
-                info@yourdomain.com
+                prama.academyletslearn@gmail.com
               </li>
             </ul>
           </div>
@@ -97,7 +103,7 @@ const Footer = ({handleCourse , scrollToContact}) => {
       </footer>
       <div className='legal'>
         <p>
-          Copyright ©2024 All rights reserved 
+          Copyright ©2024 All rights reserved
         </p>
       </div>
     </>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Back from "../common/back/Back";
 import { useParams } from "react-router-dom";
 import { coursesCard } from "../../dummydata"
-// import "../blog/blog.css"
+import "./courses.css"
 
 const ViewCourse = () => {
   const { id } = useParams();
@@ -18,13 +18,13 @@ const ViewCourse = () => {
       <section className='blog padding'>
         <div className='container grid4'>
           <div className='items shadow'>
-            <div className='img'>
+            <div className='img '>
               {
                 data.bigImage === ""
                   ?
                   <></>
                   :
-                  <img src={data?.bigImage} alt='' />}
+                  <img className="bg-image" src={data?.bigImage} alt='' />}
             </div>
             <div className='text'>
               <h1>Introduction</h1>
