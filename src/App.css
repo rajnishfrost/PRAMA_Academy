@@ -38,9 +38,9 @@ a {
 li {
   list-style-type: none;
 }
-.row {
+/* .row {
   width: 50%;
-}
+} */
 button {
   padding: 17px 30px;
   background-color: #fff;

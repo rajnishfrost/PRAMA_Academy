@@ -26,12 +26,13 @@ header ul {
   padding: 30px 20px;
 }
 header ul li a {
-  color: #fff;
+  color: #ffffff;
   font-weight: 500;
   transition: 0.5s;
 }
 header ul li a:hover {
-  color: #f3b600;
+  color: #ffffff;
+  background: #f3b600;
 }
 .start {
   background-color: #f3b600;

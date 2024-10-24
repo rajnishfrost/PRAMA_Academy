@@ -25,10 +25,10 @@ const Header = ({handleCourse , handleContact}) => {
               <Link to='/about'>About</Link>
             </li>
             <li>
-              <Link to='/brand-ambassdor'>Our Brand Ambasdor</Link>
+              <Link to='/brand-ambassdor'>Our Brand Ambassdor</Link>
             </li>
             <li>
-              <Link to='/journal'>question</Link>
+              <Link to='/abacus-worksheet'>Let's Practice</Link>
             </li>
             <li>
               <Link to='' onClick={()=> handleContact()}>Contact</Link>

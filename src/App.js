@@ -32,7 +32,7 @@ function App() {
         <Route exact path='/courses/:id' component={ViewCourse} />
         <Route exact path='/team' component={Team} />
         <Route exact path='/term-and-condition' component={TermAndCondition} />
-        <Route exact path='/journal' component={Question} />
+        <Route exact path='/abacus-worksheet' component={Question} />
         <Route exact path='/brand-ambassdor' component={BrandAmbassdor} />
       </Switch>
       <Footer handleCourse={handleCourse} scrollToContact={scrollToContact}/>
