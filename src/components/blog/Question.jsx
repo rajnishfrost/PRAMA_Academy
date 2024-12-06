@@ -12,9 +12,19 @@ const Question = () => {
 
   function generateNumberOfRows(noOfDigit, noOfQuestion, rows, Substraction) {
     let dynamicArrays = {};
-    for (let index = 0; index < rows; index++)
-      dynamicArrays[`row${index}`] = generateNumberOfQuestion(noOfDigit, noOfQuestion, Substraction, dynamicArrays, index);
-    setQuestionRows(dynamicArrays);
+    const md = [payload.noOfRows, payload.noOfDigits]
+    if (payload.operators === "*" || payload.operators === "/") {
+      for (let index = 0; index < 2; index++) {
+        noOfDigit = md[index]
+        dynamicArrays[`row${index}`] = generateNumberOfQuestion(noOfDigit, noOfQuestion, Substraction, dynamicArrays, index);
+      }
+      setQuestionRows(dynamicArrays);
+    }
+    else {
+      for (let index = 0; index < rows; index++)
+        dynamicArrays[`row${index}`] = generateNumberOfQuestion(noOfDigit, noOfQuestion, Substraction, dynamicArrays, index);
+      setQuestionRows(dynamicArrays);
+    }
   }
 
   function generateNumberOfQuestion(noOfDigit, noOfQuestion, Subtraction, dynamicArrays, index) {
@@ -114,7 +124,7 @@ const Question = () => {
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-              <option value="3">4</option>
+              <option value="4">4</option>
             </select>
           </div>
         </div>
@@ -143,13 +153,28 @@ const Question = () => {
                   <div className="add" key={questionIndex}>
                     <div className="d-flex justify-content-center">
                       <div className="add-symbol">
-                        <h4>{payload?.operators === "-" ? <></> : payload?.operators}</h4>
+                        <h4>{payload?.operators === "-" || payload?.operators === "*" || payload?.operators === "/" ? <></> : payload?.operators}</h4>
                       </div>
                       <div>
+
                         {
-                          Array.from({ length: payload?.noOfRows }).map((_, rowsIndex) =>
-                            questionRows && <p className="text-center" key={rowsIndex}>{questionRows[`row${rowsIndex}`][questionIndex]}</p>
-                          )
+                          payload.operators === "*" || payload.operators === "/"
+                            ?
+                            <div className="d-flex">
+                              {/* Array.from({length: 2 }).map((_, rowsIndex) =>
+                              questionRows && <p className="text-center" key={rowsIndex}>{questionRows[`row${rowsIndex}`][questionIndex]}/</p>) */}
+                              {
+                                Array.from({ length: 1 }).map((_, rowsIndex) =>
+                                  questionRows && <p className="text-center" key={rowsIndex}>{questionRows[`row${rowsIndex}`][questionIndex]}</p>)
+                              }
+                              <h4 className="mx-1 my-auto">{payload.operators}</h4>
+                              {Array.from({ length: 1 }).map((_, rowsIndex) =>
+                                questionRows && <p className="text-center" key={rowsIndex + 1}>{questionRows[`row${rowsIndex + 1}`][questionIndex]}</p>)}
+                            </div>
+                            :
+                            Array.from({ length: payload?.noOfRows }).map((_, rowsIndex) =>
+                              questionRows && <p className="text-center" key={rowsIndex}>{questionRows[`row${rowsIndex}`][questionIndex]}</p>
+                            )
                         }
                       </div>
                     </div>
