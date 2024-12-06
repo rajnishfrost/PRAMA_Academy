@@ -15,8 +15,6 @@ const Question = () => {
     for (let index = 0; index < rows; index++)
       dynamicArrays[`row${index}`] = generateNumberOfQuestion(noOfDigit, noOfQuestion, Substraction, dynamicArrays, index);
     setQuestionRows(dynamicArrays);
-    console.log(dynamicArrays.row0);
-
   }
 
   function generateNumberOfQuestion(noOfDigit, noOfQuestion, Subtraction, dynamicArrays, index) {
@@ -85,8 +83,8 @@ const Question = () => {
             <select onChange={handlePayload} name='operators' className="form-select" id="select1">
               <option value="+">Addition </option>
               <option value="-">Substraction</option>
-              {/* <option value="*">Multiplication</option>
-              <option value="/">Division</option> */}
+              <option value="*">Multiplication</option>
+              <option value="/">Division</option>
             </select>
           </div>
           {/* Second Select Field */}
@@ -101,7 +99,7 @@ const Question = () => {
           </div>
           {/* Third Select Field */}
           <div className="col-lg-3 col-md-6 mb-3 p-2">
-            <label htmlFor="select3" className="form-label">No. of Rows</label>
+            <label htmlFor="select3" className="form-label">{payload.operators === "*" ? "Multiplicand digits:" : payload.operators === "/" ? "Dividend digits:" : "No. of Rows"}</label>
             <select onChange={handlePayload} name='noOfRows' className="form-select" id="select3">
               <option value="2">2</option>
               <option value="3">3</option>
@@ -111,7 +109,7 @@ const Question = () => {
           </div>
           {/* Fourth Select Field */}
           <div className="col-lg-3 col-md-6 mb-3 p-2">
-            <label htmlFor="select4" className="form-label">No. of Digits</label>
+            <label htmlFor="select4" className="form-label">{payload.operators === "*" ? "Multiplier digits:" : payload.operators === "/" ? "Divisor digits:" : "No. of Digits"}</label>
             <select onChange={handlePayload} name='noOfDigits' className="form-select" id="select4">
               <option value="1">1</option>
               <option value="2">2</option>
