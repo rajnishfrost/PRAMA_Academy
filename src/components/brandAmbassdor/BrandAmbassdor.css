@@ -50,6 +50,11 @@
     flex-wrap: wrap;
   }
 
+  .image-vid{
+    border: 4px solid #f3b600;
+    margin: 10px;
+  }
+
   @media screen and (max-width: 600px) {
     .px100{
       padding-left: 20px;
