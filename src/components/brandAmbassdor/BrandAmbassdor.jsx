@@ -41,7 +41,7 @@ export default function BrandAmbassdor() {
           <source src="./images/video12.mp4" type="video/mp4" />
         </video>
 
-        <div className='d-flex f-33'>
+        <div className='d-flex f-33 flex-wrap justify-content-center'>
           <video className='w-33 image-vid' controls>
             <source src="./images/video2.mp4" type="video/mp4" />
           </video>
@@ -52,7 +52,7 @@ export default function BrandAmbassdor() {
             <source src="./images/video7.mp4" type="video/mp4" />
           </video>
         </div>
-        <div className='d-flex'>
+        <div className='d-flex flex-wrap justify-content-center'>
           <video className='w-33 image-vid' controls>
             <source src="./images/video14.mp4" type="video/mp4" />
           </video>
