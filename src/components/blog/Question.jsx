@@ -92,7 +92,7 @@ const Question = () => {
             <label htmlFor="select1" className="form-label">Operators</label>
             <select onChange={handlePayload} name='operators' className="form-select" id="select1">
               <option value="+">Addition </option>
-              <option value="-">Substraction</option>
+              <option value="-">Subtraction</option>
               <option value="*">Multiplication</option>
               <option value="/">Division</option>
             </select>
@@ -111,10 +111,39 @@ const Question = () => {
           <div className="col-lg-3 col-md-6 mb-3 p-2">
             <label htmlFor="select3" className="form-label">{payload.operators === "*" ? "Multiplicand digits:" : payload.operators === "/" ? "Dividend digits:" : "No. of Rows"}</label>
             <select onChange={handlePayload} name='noOfRows' className="form-select" id="select3">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              {
+                payload.operators === "*" || payload.operators === "/"?
+                  <>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                  </>
+                  :
+                  <>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                  </>
+              }
             </select>
           </div>
           {/* Fourth Select Field */}
@@ -151,6 +180,7 @@ const Question = () => {
               {
                 Array.from({ length: payload?.noOfQuestion }).map((_, questionIndex) =>
                   <div className="add" key={questionIndex}>
+                    <h4 style={{ fontSize: "15px" }}>Question : {questionIndex + 1}</h4>
                     <div className="d-flex justify-content-center">
                       <div className="add-symbol">
                         <h4>{payload?.operators === "-" || payload?.operators === "*" || payload?.operators === "/" ? <></> : payload?.operators}</h4>
