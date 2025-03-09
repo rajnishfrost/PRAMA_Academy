@@ -354,13 +354,6 @@ export const team = [
     exp : "",
     course_conducted: "Abacus and Vedic Maths"
   },
-  {
-    cover: "./images/team/noimage.png",
-    name: "AMIT KUMAR",
-    work: "Instructor, Double MA, B.tech Computer Science",
-    exp : "",
-    course_conducted: "Vedic Math and Regular Math"
-  },
 ]
 export const price = [
   {
