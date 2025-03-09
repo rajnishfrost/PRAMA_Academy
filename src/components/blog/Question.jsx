@@ -9,6 +9,7 @@ const Question = () => {
   const [payload, setPayload] = useState({ operators: '+', noOfQuestion: "25", noOfRows: "2", noOfDigits: "1" });
   const [substract, setSubstract] = useState(false);
   const [questionRows, setQuestionRows] = useState(null);
+  const [sum, setSum] = useState(0);
 
   function generateNumberOfRows(noOfDigit, noOfQuestion, rows, Substraction) {
     let dynamicArrays = {};
@@ -112,7 +113,7 @@ const Question = () => {
             <label htmlFor="select3" className="form-label">{payload.operators === "*" ? "Multiplicand digits:" : payload.operators === "/" ? "Dividend digits:" : "No. of Rows"}</label>
             <select onChange={handlePayload} name='noOfRows' className="form-select" id="select3">
               {
-                payload.operators === "*" || payload.operators === "/"?
+                payload.operators === "*" || payload.operators === "/" ?
                   <>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -176,6 +177,7 @@ const Question = () => {
           ?
           <section id="test">
             <h1 className="text-center fw-bold">PRAMA ACADEMY</h1>
+            <h3 className="text-center fw-bold">Questions</h3>
             <div className="d-flex flex-wrap justify-content-center">
               {
                 Array.from({ length: payload?.noOfQuestion }).map((_, questionIndex) =>
@@ -203,12 +205,63 @@ const Question = () => {
                             </div>
                             :
                             Array.from({ length: payload?.noOfRows }).map((_, rowsIndex) =>
-                              questionRows && <p className="text-center" key={rowsIndex}>{questionRows[`row${rowsIndex}`][questionIndex]}</p>
+                              questionRows && <p className="text-center" key={rowsIndex}>
+                                {
+                                  questionRows[`row${rowsIndex}`][questionIndex]
+                                }
+                              </p>
                             )
                         }
                       </div>
                     </div>
                     <hr />
+                  </div>
+                )
+              }
+            </div>
+            <h3 className="text-center fw-bold">Answer Key</h3>
+            <div className="d-flex flex-wrap justify-content-center">
+              {
+                Array.from({ length: payload?.noOfQuestion }).map((_, questionIndex) =>
+                  <div className="add" key={questionIndex}>
+                    <h4 style={{ fontSize: "15px" }}>Answer : {questionIndex + 1}</h4>
+                    <div className="d-flex justify-content-center">
+                      <div>
+                        {
+                          payload.operators === "*" || payload.operators === "/"
+                            ?
+                            <div className="d-flex">
+                              {
+                                Array.from({ length: 1 }).map((_, rowsIndex) =>
+                                  questionRows && <p className="text-center" key={rowsIndex}>
+                                    {
+                                      payload.operators === "*"
+                                      ?
+                                      Number(questionRows[`row${rowsIndex}`][questionIndex])
+                                       * 
+                                      Number(questionRows[`row${rowsIndex + 1}`][questionIndex])
+                                      :
+                                      Math.round(Number(questionRows[`row${rowsIndex}`][questionIndex])
+                                       / 
+                                      Number(questionRows[`row${rowsIndex + 1}`][questionIndex]))
+                                    }</p>)
+                              }
+                            </div>
+                            :
+                            Array.from({ length: 1 }).map((_, rowsIndex) => {
+                              let sum = 0;
+                              for (let i = 0; i < payload?.noOfRows; i++) {
+                                sum += questionRows[`row${i}`][questionIndex];
+                              }
+                              return questionRows && <p className="text-center" key={rowsIndex}>
+                                {
+                                  sum
+                                }
+                              </p>
+                            })
+                        }
+                      </div>
+                    </div>
                   </div>
                 )
               }

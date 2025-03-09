@@ -327,8 +327,8 @@ export const team = [
     course_conducted: "Abacus, Vedic Math, Hindi, Handwriting and Art"
   },
   {
-    cover: "./images/team/shradhha.jpg",
-    name: "SHRADDHA SINGH (Clinical Psychologist)",
+    cover: "./images/team/shradhha2.jpg",
+    name: "SHRADDHA SINGH (Consultant Psychologist)",
     work: "Instructor , M.A Psychology.",
     exp : "Consultant clinical psychologist.consultant for one of the biggest publications for competency testing of school student.5 years’ experience in teaching.2 year experience in child psychology.",
     course_conducted: " Abacus, Handwriting, Art and Craft."
