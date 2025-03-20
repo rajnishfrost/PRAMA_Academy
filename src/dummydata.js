@@ -320,7 +320,7 @@ export const online = [
 ]
 export const team = [
   {
-    cover: "./images/team/image14.jpg",
+    cover: "./images/team/pratibha.jpg",
     name: "PRATIBHA SINGH ",
     work: "Director and Head Instructor (M. Tech Civil Engineering)",
     exp : "2years as Onsite engineer for Construction Company. 11 years of Teaching Experience for student 4 to 60 years old",
