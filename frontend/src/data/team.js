@@ -1,0 +1,42 @@
+export const teamMembers = [
+  {
+    name: 'Pratibha Singh',
+    role: 'Director & Head Instructor',
+    qualification: 'M.Tech (Mumbai University), B.E (Pune University)',
+    experience: '2 years as onsite engineer. 11 years of teaching experience for students aged 4 to 60.',
+    courses: 'Abacus, Vedic Math, Hindi, Handwriting and Art',
+    image: '/uploads/team/pratibha.jpg',
+  },
+  {
+    name: 'Shraddha Singh',
+    role: 'Instructor & Consultant Psychologist',
+    qualification: 'M.A Psychology',
+    experience: 'Consultant clinical psychologist. 5 years teaching experience. 2 years in child psychology.',
+    courses: 'Abacus, Handwriting, Art and Craft',
+    image: '/uploads/team/shradhha2.jpg',
+  },
+  {
+    name: 'Sowmya Bandhakavi Bhalerao',
+    role: 'Instructor',
+    qualification: 'MBA, B.Pharma (Pune University)',
+    experience: '10 years in training and customer service. 2 years teaching experience.',
+    courses: 'Abacus and Shlokas',
+    image: '/uploads/team/sowmya.jpg',
+  },
+  {
+    name: 'Snehal Mantri',
+    role: 'Instructor',
+    qualification: 'MBA, BSc Computer Science',
+    experience: '',
+    courses: 'Abacus',
+    image: '/uploads/team/sneha.jpg',
+  },
+  {
+    name: 'Swetha Nagur',
+    role: 'Franchise Director',
+    qualification: 'Head of Young Dynamic Academy, Texas USA',
+    experience: '',
+    courses: 'Abacus and Vedic Maths',
+    image: '/uploads/team/noimage.png',
+  },
+]

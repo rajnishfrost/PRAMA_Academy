@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(npx vite *)",
+      "Bash(node --input-type=module -e \"import\\('./src/pages/FlashAnzan.jsx'\\).catch\\(e => console.log\\('Import error \\(expected for JSX\\):', e.message\\)\\)\")",
+      "Bash(node node_modules/vite/bin/vite.js build)",
+      "Bash(node node_modules/vite/bin/vite.js --port 3020)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3020/)",
+      "Bash(curl -s http://localhost:3020/)",
+      "Bash(kill %1)",
+      "Bash(ls -la ~/Downloads/ 2>/dev/null | head -50)",
+      "Read(//Users/rajnish/Downloads/**)",
+      "Bash(npm run *)",
+      "Bash(node node_modules/vite/bin/vite.js)",
+      "Bash(curl -sf http://localhost:3020/ -o /dev/null)",
+      "Bash(curl -sf \"http://localhost:3020/src/index.css\")",
+      "Bash(curl -sf -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3020/worksheet)",
+      "Bash(curl -sf -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3020/team)",
+      "Bash(curl -sf -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3020/tools/flash-anzan)",
+      "Bash(curl -sf -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3020/)",
+      "Read(//private/tmp/**)",
+      "Bash(curl -L -s -o /tmp/test_abacus.jpg \"https://source.unsplash.com/1600x900/?abacus,child\")",
+      "Read(//tmp/**)",
+      "WebFetch(domain:www.pexels.com)",
+      "Bash(cp /tmp/pex_8612926.jpg '/Volumes/FrostPrivate/Local Disk/Website_Projects/prama/frontend/public/images/courses/abacus-hero.jpg')",
+      "Bash(cp /tmp/pex_8617713.jpg '/Volumes/FrostPrivate/Local Disk/Website_Projects/prama/frontend/public/images/courses/vedic-hero.jpg')",
+      "Bash(cp /tmp/pex_5425602.jpg '/Volumes/FrostPrivate/Local Disk/Website_Projects/prama/frontend/public/images/courses/handwriting-hero.jpg')",
+      "Bash(cp /tmp/pex_16014512.jpg '/Volumes/FrostPrivate/Local Disk/Website_Projects/prama/frontend/public/images/courses/shloka-hero.jpg')",
+      "Bash(cp /tmp/pex_7025972.jpg '/Volumes/FrostPrivate/Local Disk/Website_Projects/prama/frontend/public/images/courses/summer-hero.jpg')",
+      "Bash(curl -sf -o /dev/null -w '%{http_code}' http://localhost:3020/courses/__TRACKED_VAR__)",
+      "Bash(curl -sf -o /dev/null -w '%{http_code}' http://localhost:3020/images/courses/__TRACKED_VAR__.jpg)",
+      "Bash(rm -f /tmp/test_abacus.jpg /tmp/pex_*.jpg && echo \"tmp cleaned\")",
+      "Bash(node src/seeds/courses.js)",
+      "Bash(curl -s -m 3 -o /tmp/local_courses.json -w \"%{http_code}\\\\n\" \"http://localhost:4020/api/courses/public\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/tmp/local_courses.json'\\)\\); [print\\(c['slug'], '->', c.get\\('heroImage'\\)\\) for c in d.get\\('courses',[]\\)]\")",
+      "Bash(curl -s -m 5 -o /tmp/prod_courses.json -w \"%{http_code}\\\\n\" \"http://161.118.173.163:4020/api/courses/public\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('/tmp/prod_courses.json'\\)\\); [print\\(c['slug'], '->', c.get\\('heroImage'\\)\\) for c in d.get\\('courses',[]\\)]\")",
+      "Bash(curl -s -m 5 -o /dev/null -w '%{http_code}' http://161.118.173.163:4020/api/uploads/courses/__TRACKED_VAR__.jpg)",
+      "Bash(curl -s -m 3 -o /dev/null -w \"%{http_code}\\\\n\" \"http://161.118.173.163:4020/api\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3020/images/courses/__TRACKED_VAR__.jpg)",
+      "Bash(node src/seeds/team.js)",
+      "Bash(curl -s -m 5 \"http://161.118.173.163:4020/api/team/public\")",
+      "Bash(python3 -c \"import json, sys; d=json.load\\(sys.stdin\\); [print\\(m['name'], '|', m.get\\('qualification','-'\\), '|', m.get\\('education','-'\\)\\) for m in d.get\\('members',[]\\) if m['name'] in \\('Pratibha Singh','Sowmya Bandhakavi Bhalerao'\\)]\")"
+    ],
+    "additionalDirectories": [
+      "/private/tmp"
+    ]
+  }
+}

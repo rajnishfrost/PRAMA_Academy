@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-gray-800 bg-white antialiased;
+  }
+}
+
+@media print {
+  .no-print,
+  [data-no-print='true'],
+  nav,
+  footer {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+  }
+  .print-page-break {
+    page-break-after: always;
+  }
+  @page {
+    margin: 12mm;
+  }
+}
