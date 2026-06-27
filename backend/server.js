@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
 import connectDB from './src/config/db.js'
 import authRoutes from './src/routes/auth.js'
 import roleRoutes from './src/routes/roles.js'
@@ -15,7 +16,27 @@ import classVideoRoutes from './src/routes/classVideo.js'
 const app = express()
 const PORT = process.env.PORT || 3021
 
-app.use(cors())
+// Security middleware
+// First-party origins only. Override with CORS_ORIGINS env (comma-separated) if needed.
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',').map((o) => o.trim())
+  : [
+      'https://pramaacademy.com',
+      'https://www.pramaacademy.com',
+      'http://pramaacademy.com',
+      'http://localhost:3020',
+    ]
+const corsOptions = {
+  origin(origin, cb) {
+    // allow non-browser callers (curl, server-to-server) that send no Origin
+    if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
+    return cb(new Error(`CORS blocked: ${origin}`))
+  },
+  credentials: true,
+}
+
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
+app.use(cors(corsOptions))
 app.use(express.json({ limit: '10mb' }))
 app.use('/uploads', express.static('uploads'))
 
@@ -33,5 +54,5 @@ app.use('/api/class-video', classVideoRoutes)
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
 
 connectDB().then(() => {
-  app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`))
+  app.listen(PORT, '127.0.0.1', () => console.log(`Server running on port ${PORT} (localhost only, behind nginx)`))
 })
