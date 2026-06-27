@@ -98,7 +98,7 @@ export default function AdminClassVideo() {
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
 
-  const baseUrl = API?.replace('/api', '') || ''
+  const baseUrl = API?.replace(/\/api\/?$/, '') || ''
 
   if (loading && videos.length === 0) return <p className="text-gray-500">Loading...</p>
 

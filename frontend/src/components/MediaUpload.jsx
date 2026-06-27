@@ -49,7 +49,7 @@ export default function MediaUpload({ value, onChange, module = 'general', accep
     ? value.startsWith('http')
       ? value
       : value.startsWith('/uploads')
-        ? `${API.replace('/api', '')}${value}`
+        ? `${API.replace(/\/api\/?$/, '')}${value}`
         : value
     : null
 

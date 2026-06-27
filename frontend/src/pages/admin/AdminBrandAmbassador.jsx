@@ -85,7 +85,7 @@ export default function AdminBrandAmbassador() {
                       {item.type === 'video' ? (
                         <>
                           <video
-                            src={item.url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace('/api', '')}${item.url}` : item.url}
+                            src={item.url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, '')}${item.url}` : item.url}
                             preload="metadata"
                             muted
                             className="w-full h-full object-cover"
@@ -98,7 +98,7 @@ export default function AdminBrandAmbassador() {
                         </>
                       ) : (
                         <img
-                          src={item.url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace('/api', '')}${item.url}` : item.url}
+                          src={item.url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, '')}${item.url}` : item.url}
                           alt=""
                           className="w-full h-full object-cover"
                         />

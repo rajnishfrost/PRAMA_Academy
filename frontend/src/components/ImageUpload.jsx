@@ -67,7 +67,7 @@ export default function ImageUpload({ value, onChange, module = 'general', label
     ? value.startsWith('http')
       ? value
       : value.startsWith('/uploads')
-        ? `${API.replace('/api', '')}${value}`
+        ? `${API.replace(/\/api\/?$/, '')}${value}`
         : value
     : null
 

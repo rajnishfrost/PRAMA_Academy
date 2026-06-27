@@ -14,7 +14,7 @@ export default function ClassVideo() {
       .finally(() => setLoading(false))
   }, [])
 
-  const baseUrl = API?.replace('/api', '') || ''
+  const baseUrl = API?.replace(/\/api\/?$/, '') || ''
 
   return (
     <>
