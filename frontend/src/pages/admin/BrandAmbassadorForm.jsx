@@ -6,6 +6,10 @@ import MediaUpload from '../../components/MediaUpload'
 
 const API = import.meta.env.VITE_API_URL
 
+// Per-section media limits (must match backend brandAmbassador route)
+const MAX_IMAGES = 8
+const MAX_VIDEOS = 15
+
 const empty = {
   section: '',
   title: '',
@@ -44,6 +48,12 @@ export default function BrandAmbassadorForm() {
   }
 
   const addItem = (type) => {
+    const count = form.items.filter((i) => i.type === type).length
+    const max = type === 'video' ? MAX_VIDEOS : MAX_IMAGES
+    if (count >= max) {
+      alert(`Maximum ${max} ${type}s allowed per section.`)
+      return
+    }
     setForm((prev) => ({
       ...prev,
       items: [...prev.items, { url: '', type, caption: '', order: prev.items.length + 1 }],
@@ -66,9 +76,23 @@ export default function BrandAmbassadorForm() {
     const newItems = []
 
     const skipped = []
+    const limitSkipped = []
+    let imgCount = form.items.filter((i) => i.type === 'image').length
+    let vidCount = form.items.filter((i) => i.type === 'video').length
     for (const file of files) {
       try {
         const isVideo = /\.(mp4|mov|webm|avi)$/i.test(file.name)
+
+        // enforce per-section limits
+        if (isVideo && vidCount >= MAX_VIDEOS) {
+          limitSkipped.push(`${file.name} (video limit ${MAX_VIDEOS})`)
+          continue
+        }
+        if (!isVideo && imgCount >= MAX_IMAGES) {
+          limitSkipped.push(`${file.name} (image limit ${MAX_IMAGES})`)
+          continue
+        }
+
         const maxSize = isVideo ? 100 * 1024 * 1024 : 5 * 1024 * 1024
         if (file.size > maxSize) {
           skipped.push(`${file.name} (${(file.size / (1024 * 1024)).toFixed(1)}MB)`)
@@ -95,6 +119,8 @@ export default function BrandAmbassadorForm() {
           caption: '',
           order: form.items.length + newItems.length + 1,
         })
+        if (isVideo) vidCount++
+        else imgCount++
       } catch {
         // skip failed uploads
       }
@@ -102,6 +128,10 @@ export default function BrandAmbassadorForm() {
 
     if (newItems.length > 0) {
       setForm((prev) => ({ ...prev, items: [...prev.items, ...newItems] }))
+    }
+
+    if (limitSkipped.length > 0) {
+      alert(`${limitSkipped.length} file(s) skipped (limit reached — max ${MAX_IMAGES} images, ${MAX_VIDEOS} videos):\n${limitSkipped.join('\n')}`)
     }
 
     if (skipped.length > 0) {
@@ -191,9 +221,9 @@ export default function BrandAmbassadorForm() {
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-gray-900">Bulk Upload</h2>
-            <p className="text-xs text-gray-500">{form.items.length} items total</p>
+            <p className="text-xs text-gray-500">{images.length}/{MAX_IMAGES} images · {videos.length}/{MAX_VIDEOS} videos</p>
           </div>
-          <p className="text-sm text-gray-500 mb-3">Select multiple images or videos at once. They will be uploaded and added automatically.</p>
+          <p className="text-sm text-gray-500 mb-3">Select multiple images or videos at once. They will be uploaded and added automatically. Max {MAX_IMAGES} images and {MAX_VIDEOS} videos per section — extra files are skipped.</p>
           <input
             ref={bulkRef}
             type="file"
@@ -215,18 +245,21 @@ export default function BrandAmbassadorForm() {
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-gray-900">Media Items</h2>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500 mr-1">{images.length}/{MAX_IMAGES} images · {videos.length}/{MAX_VIDEOS} videos</span>
               <button
                 type="button"
                 onClick={() => addItem('image')}
-                className="text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
+                disabled={images.length >= MAX_IMAGES}
+                className="text-xs bg-blue-50 text-blue-600 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 + Image
               </button>
               <button
                 type="button"
                 onClick={() => addItem('video')}
-                className="text-xs bg-purple-50 text-purple-600 hover:bg-purple-100 px-3 py-1.5 rounded-lg transition-colors"
+                disabled={videos.length >= MAX_VIDEOS}
+                className="text-xs bg-purple-50 text-purple-600 hover:bg-purple-100 px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 + Video
               </button>

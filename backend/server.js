@@ -14,6 +14,9 @@ import contactRoutes from './src/routes/contact.js'
 import classVideoRoutes from './src/routes/classVideo.js'
 
 const app = express()
+// Behind nginx + rathole — trust the proxy so req.ip is the real client IP
+// (needed for correct per-IP login rate limiting).
+app.set('trust proxy', 1)
 const PORT = process.env.PORT || 3021
 
 // Security middleware

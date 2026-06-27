@@ -5,6 +5,20 @@ import { checkPermission } from '../middleware/rbac.js'
 
 const router = Router()
 
+// Per-section media limits
+const MAX_IMAGES = 8
+const MAX_VIDEOS = 15
+
+// Returns an error message if the items exceed limits, otherwise null
+function validateItems(items) {
+  if (!Array.isArray(items)) return null
+  const images = items.filter((i) => i.type === 'image').length
+  const videos = items.filter((i) => i.type === 'video').length
+  if (images > MAX_IMAGES) return `Maximum ${MAX_IMAGES} images allowed per section (got ${images}).`
+  if (videos > MAX_VIDEOS) return `Maximum ${MAX_VIDEOS} videos allowed per section (got ${videos}).`
+  return null
+}
+
 // PUBLIC: Get all active sections
 router.get('/public', async (req, res) => {
   try {
@@ -46,6 +60,8 @@ router.get('/:id', authenticate, checkPermission('brand-ambassador', 'read'), as
 // ADMIN: Create section
 router.post('/', authenticate, checkPermission('brand-ambassador', 'write'), async (req, res) => {
   try {
+    const limitError = validateItems(req.body.items)
+    if (limitError) return res.status(400).json({ message: limitError })
     const section = await BrandAmbassador.create(req.body)
     res.status(201).json({ section })
   } catch (err) {
@@ -57,6 +73,8 @@ router.post('/', authenticate, checkPermission('brand-ambassador', 'write'), asy
 // ADMIN: Update section
 router.put('/:id', authenticate, checkPermission('brand-ambassador', 'edit'), async (req, res) => {
   try {
+    const limitError = validateItems(req.body.items)
+    if (limitError) return res.status(400).json({ message: limitError })
     const section = await BrandAmbassador.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
     if (!section) return res.status(404).json({ message: 'Section not found' })
     res.json({ section })
