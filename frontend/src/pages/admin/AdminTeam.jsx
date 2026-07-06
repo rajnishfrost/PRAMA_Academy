@@ -16,6 +16,7 @@ export default function AdminTeam() {
   const canEdit = hasPermission('team', 'edit')
   const canDelete = hasPermission('team', 'delete')
   const [reordering, setReordering] = useState(false)
+  const [dragIndex, setDragIndex] = useState(null)
 
   const fetchMembers = (p = 1) => {
     setLoading(true)
@@ -28,12 +29,8 @@ export default function AdminTeam() {
 
   useEffect(() => { fetchMembers() }, [])
 
-  // Reorder: swap a member with its neighbour, renumber the page, persist changed ones
-  const moveMember = async (index, dir) => {
-    const target = index + dir
-    if (reordering || target < 0 || target >= members.length) return
-    const reordered = [...members]
-    ;[reordered[index], reordered[target]] = [reordered[target], reordered[index]]
+  // Renumber the page (order = base + index) and persist only the changed members
+  const persistReorder = async (reordered) => {
     const base = (page - 1) * 10
     const updates = []
     const normalized = reordered.map((m, i) => {
@@ -41,6 +38,7 @@ export default function AdminTeam() {
       if (m.order !== newOrder) updates.push({ id: m._id, order: newOrder })
       return { ...m, order: newOrder }
     })
+    if (updates.length === 0) return
     setMembers(normalized) // optimistic
     setReordering(true)
     try {
@@ -51,6 +49,26 @@ export default function AdminTeam() {
     } finally {
       setReordering(false)
     }
+  }
+
+  // Up/down buttons (used on mobile)
+  const moveMember = (index, dir) => {
+    const target = index + dir
+    if (reordering || target < 0 || target >= members.length) return
+    const reordered = [...members]
+    ;[reordered[index], reordered[target]] = [reordered[target], reordered[index]]
+    persistReorder(reordered)
+  }
+
+  // Drag-and-drop (desktop): move dragged row to the drop position
+  const handleDrop = (dropIdx) => {
+    const from = dragIndex
+    setDragIndex(null)
+    if (reordering || from === null || from === dropIdx) return
+    const reordered = [...members]
+    const [moved] = reordered.splice(from, 1)
+    reordered.splice(dropIdx, 0, moved)
+    persistReorder(reordered)
   }
 
   const handleDelete = async (id) => {
@@ -79,6 +97,10 @@ export default function AdminTeam() {
         )}
       </div>
 
+      {canEdit && members.length > 1 && (
+        <p className="hidden md:block text-xs text-gray-400 mb-3">Drag the <span className="text-gray-500">⠿</span> handle on the left to reorder members.</p>
+      )}
+
       {members.length === 0 ? (
         <p className="text-gray-500">No team members yet.</p>
       ) : (
@@ -98,9 +120,20 @@ export default function AdminTeam() {
               </thead>
               <tbody className="divide-y">
                 {members.map((m, idx) => (
-                  <tr key={m._id} className="hover:bg-gray-50 align-top">
+                  <tr
+                    key={m._id}
+                    draggable={canEdit && !reordering}
+                    onDragStart={() => setDragIndex(idx)}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={() => handleDrop(idx)}
+                    onDragEnd={() => setDragIndex(null)}
+                    className={`hover:bg-gray-50 align-top ${dragIndex === idx ? 'opacity-40' : ''}`}
+                  >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
+                        {canEdit && (
+                          <span className="cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 select-none shrink-0 text-lg leading-none" title="Drag to reorder">⠿</span>
+                        )}
                         <img
                           src={m.image ? getImageUrl(m.image) : ''}
                           alt=""
@@ -125,12 +158,6 @@ export default function AdminTeam() {
                     </td>
                     <td className="px-6 py-4 text-right whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
-                        {canEdit && (
-                          <span className="inline-flex items-center">
-                            <button onClick={() => moveMember(idx, -1)} disabled={reordering || idx === 0} title="Move up" className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed px-0.5">↑</button>
-                            <button onClick={() => moveMember(idx, 1)} disabled={reordering || idx === members.length - 1} title="Move down" className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed px-0.5">↓</button>
-                          </span>
-                        )}
                         <Link to={`/admin/team/${m._id}/edit`} className="text-primary hover:underline text-xs">Edit</Link>
                         {canDelete && (
                           <button onClick={() => handleDelete(m._id)} className="text-red-500 hover:underline text-xs">Delete</button>
