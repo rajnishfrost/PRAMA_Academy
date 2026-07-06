@@ -22,7 +22,7 @@ export default function CourseForm() {
 
   useEffect(() => {
     if (isEdit) {
-      api.get(`/courses/${id}`).then((d) => setForm(d.course)).catch((e) => setError(e.message))
+      api.get(`/courses/${id}`).then((d) => setForm({ ...empty, ...d.course })).catch((e) => setError(e.message))
     }
   }, [id, isEdit])
 
@@ -53,12 +53,13 @@ export default function CourseForm() {
     arr[index] = value
     set(key, arr)
   }
-  const addArrayItem = (key, template) => set(key, [...form[key], template])
-  const removeArrayItem = (key, index) => set(key, form[key].filter((_, i) => i !== index))
+  const addArrayItem = (key, template) => set(key, [...(form[key] || []), template])
+  const removeArrayItem = (key, index) => set(key, (form[key] || []).filter((_, i) => i !== index))
   const moveArrayItem = (key, index, dir) => {
+    const list = form[key] || []
     const target = index + dir
-    if (target < 0 || target >= form[key].length) return
-    const arr = [...form[key]]
+    if (target < 0 || target >= list.length) return
+    const arr = [...list]
     ;[arr[index], arr[target]] = [arr[target], arr[index]]
     set(key, arr)
   }

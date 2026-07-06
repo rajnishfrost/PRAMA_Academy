@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useId } from 'react'
 import ImageCropper from './ImageCropper'
 
 const API = import.meta.env.VITE_API_URL
@@ -8,6 +8,7 @@ export default function ImageUpload({ value, onChange, module = 'general', label
   const [cropSrc, setCropSrc] = useState(null)
   const [originalFile, setOriginalFile] = useState(null)
   const fileRef = useRef()
+  const inputId = useId() // unique per instance so multiple uploaders don't collide
 
   // When file is selected, check size then open cropper
   const handleFileSelect = (e) => {
@@ -108,10 +109,10 @@ export default function ImageUpload({ value, onChange, module = 'general', label
               accept="image/*"
               onChange={handleFileSelect}
               className="hidden"
-              id={`upload-${label}`}
+              id={inputId}
             />
             <label
-              htmlFor={`upload-${label}`}
+              htmlFor={inputId}
               className="cursor-pointer text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition-colors"
             >
               {uploading ? 'Uploading...' : 'Upload Image'}
