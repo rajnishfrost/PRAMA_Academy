@@ -16,6 +16,12 @@ const programSchema = new mongoose.Schema({
   note: { type: String, default: '' },
 }, { _id: false })
 
+// Class-details image gallery (order = array position)
+const galleryImageSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  caption: { type: String, default: '' },
+}, { _id: false })
+
 const courseSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
@@ -27,6 +33,7 @@ const courseSchema = new mongoose.Schema({
   benefits: [benefitSchema],
   levels: [levelSchema],
   programs: [programSchema],
+  gallery: [galleryImageSchema],
   teacher: {
     name: { type: String, default: '' },
     image: { type: String, default: '' },

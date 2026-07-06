@@ -122,6 +122,27 @@ export default function CourseDetail() {
           </section>
         )}
 
+        {/* Class Details Images */}
+        {course.gallery?.length > 0 && (
+          <section className="mb-16">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {course.gallery.map((img, i) => (
+                <figure key={i} className="rounded-2xl overflow-hidden bg-gray-100">
+                  <img
+                    src={getImageUrl(img.url)}
+                    alt={img.caption || ''}
+                    loading="lazy"
+                    className="w-full h-48 md:h-56 object-cover"
+                  />
+                  {img.caption && (
+                    <figcaption className="text-xs text-gray-500 mt-1 px-1 pb-1">{img.caption}</figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Teacher */}
         <section className="bg-gray-900 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-5">

@@ -6,7 +6,7 @@ import ImageUpload from '../../components/ImageUpload'
 const empty = {
   name: '', slug: '', tagline: '', cover: '', heroImage: '',
   intro: [''], history: '',
-  benefits: [], levels: [], programs: [],
+  benefits: [], levels: [], programs: [], gallery: [],
   teacher: { name: '', image: '', hours: '' },
   price: { full: '', monthly: '' },
   isActive: true, order: 0,
@@ -55,6 +55,13 @@ export default function CourseForm() {
   }
   const addArrayItem = (key, template) => set(key, [...form[key], template])
   const removeArrayItem = (key, index) => set(key, form[key].filter((_, i) => i !== index))
+  const moveArrayItem = (key, index, dir) => {
+    const target = index + dir
+    if (target < 0 || target >= form[key].length) return
+    const arr = [...form[key]]
+    ;[arr[index], arr[target]] = [arr[target], arr[index]]
+    set(key, arr)
+  }
 
   return (
     <div className="max-w-4xl">
@@ -181,6 +188,32 @@ export default function CourseForm() {
                 set('programs', arr)
               }} className="text-xs text-primary hover:underline pl-4">+ Add Detail</button>
               <Input placeholder="Note" value={prog.note} onChange={(v) => { const arr = [...form.programs]; arr[pi] = { ...arr[pi], note: v }; set('programs', arr) }} />
+            </div>
+          ))}
+        </section>
+
+        {/* Class Details Images (gallery) */}
+        <section className="bg-white rounded-xl p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-gray-900">Class Details Images</h2>
+              <p className="text-xs text-gray-500">Shown below the Class Details section on the course page. Use ↑ ↓ to order.</p>
+            </div>
+            <button type="button" onClick={() => addArrayItem('gallery', { url: '', caption: '' })} className="text-xs text-primary hover:underline">+ Add Image</button>
+          </div>
+          {form.gallery?.length === 0 && <p className="text-sm text-gray-400">No images yet.</p>}
+          {form.gallery?.map((img, i) => (
+            <div key={i} className="border border-gray-100 rounded-lg p-3 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-500">Image #{i + 1}</span>
+                <div className="flex items-center gap-1">
+                  <button type="button" onClick={() => moveArrayItem('gallery', i, -1)} disabled={i === 0} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move up">↑</button>
+                  <button type="button" onClick={() => moveArrayItem('gallery', i, 1)} disabled={i === form.gallery.length - 1} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move down">↓</button>
+                  <button type="button" onClick={() => removeArrayItem('gallery', i)} className="text-red-400 hover:text-red-600 text-xs px-2 ml-1">x</button>
+                </div>
+              </div>
+              <ImageUpload label="" value={img.url} onChange={(v) => { const arr = [...form.gallery]; arr[i] = { ...arr[i], url: v }; set('gallery', arr) }} module="courses" />
+              <Input placeholder="Caption (optional)" value={img.caption} onChange={(v) => { const arr = [...form.gallery]; arr[i] = { ...arr[i], caption: v }; set('gallery', arr) }} />
             </div>
           ))}
         </section>
