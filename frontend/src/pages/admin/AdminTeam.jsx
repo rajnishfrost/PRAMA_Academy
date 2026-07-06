@@ -13,7 +13,9 @@ export default function AdminTeam() {
   const { hasPermission } = useAuth()
 
   const canWrite = hasPermission('team', 'write')
+  const canEdit = hasPermission('team', 'edit')
   const canDelete = hasPermission('team', 'delete')
+  const [reordering, setReordering] = useState(false)
 
   const fetchMembers = (p = 1) => {
     setLoading(true)
@@ -25,6 +27,31 @@ export default function AdminTeam() {
   }
 
   useEffect(() => { fetchMembers() }, [])
+
+  // Reorder: swap a member with its neighbour, renumber the page, persist changed ones
+  const moveMember = async (index, dir) => {
+    const target = index + dir
+    if (reordering || target < 0 || target >= members.length) return
+    const reordered = [...members]
+    ;[reordered[index], reordered[target]] = [reordered[target], reordered[index]]
+    const base = (page - 1) * 10
+    const updates = []
+    const normalized = reordered.map((m, i) => {
+      const newOrder = base + i
+      if (m.order !== newOrder) updates.push({ id: m._id, order: newOrder })
+      return { ...m, order: newOrder }
+    })
+    setMembers(normalized) // optimistic
+    setReordering(true)
+    try {
+      await Promise.all(updates.map((u) => api.put(`/team/${u.id}`, { order: u.order })))
+    } catch (err) {
+      alert(err.message || 'Reorder failed')
+      fetchMembers(page) // revert to server truth
+    } finally {
+      setReordering(false)
+    }
+  }
 
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this team member?')) return
@@ -70,7 +97,7 @@ export default function AdminTeam() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {members.map((m) => (
+                {members.map((m, idx) => (
                   <tr key={m._id} className="hover:bg-gray-50 align-top">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -96,11 +123,19 @@ export default function AdminTeam() {
                         {m.isActive ? 'Active' : 'Inactive'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right space-x-2 whitespace-nowrap">
-                      <Link to={`/admin/team/${m._id}/edit`} className="text-primary hover:underline text-xs">Edit</Link>
-                      {canDelete && (
-                        <button onClick={() => handleDelete(m._id)} className="text-red-500 hover:underline text-xs">Delete</button>
-                      )}
+                    <td className="px-6 py-4 text-right whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-2">
+                        {canEdit && (
+                          <span className="inline-flex items-center">
+                            <button onClick={() => moveMember(idx, -1)} disabled={reordering || idx === 0} title="Move up" className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed px-0.5">↑</button>
+                            <button onClick={() => moveMember(idx, 1)} disabled={reordering || idx === members.length - 1} title="Move down" className="text-gray-400 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed px-0.5">↓</button>
+                          </span>
+                        )}
+                        <Link to={`/admin/team/${m._id}/edit`} className="text-primary hover:underline text-xs">Edit</Link>
+                        {canDelete && (
+                          <button onClick={() => handleDelete(m._id)} className="text-red-500 hover:underline text-xs">Delete</button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -110,7 +145,7 @@ export default function AdminTeam() {
 
           {/* Mobile cards */}
           <div className="md:hidden space-y-3">
-            {members.map((m) => (
+            {members.map((m, idx) => (
               <div key={m._id} className="bg-white rounded-xl shadow-sm p-4">
                 <div className="flex items-center gap-3 mb-3">
                   <img
@@ -140,7 +175,13 @@ export default function AdminTeam() {
                 {m.courses && (
                   <p className="text-xs text-gray-500 mb-2"><span className="font-medium text-gray-600">Courses:</span> {m.courses}</p>
                 )}
-                <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
+                <div className="flex items-center justify-end gap-4 pt-2 border-t border-gray-100">
+                  {canEdit && (
+                    <span className="inline-flex items-center gap-3 mr-auto">
+                      <button onClick={() => moveMember(idx, -1)} disabled={reordering || idx === 0} className="text-gray-500 disabled:opacity-30 text-lg leading-none" aria-label="Move up">↑</button>
+                      <button onClick={() => moveMember(idx, 1)} disabled={reordering || idx === members.length - 1} className="text-gray-500 disabled:opacity-30 text-lg leading-none" aria-label="Move down">↓</button>
+                    </span>
+                  )}
                   <Link to={`/admin/team/${m._id}/edit`} className="text-primary text-sm font-medium">Edit</Link>
                   {canDelete && (
                     <button onClick={() => handleDelete(m._id)} className="text-red-500 text-sm font-medium">Delete</button>
