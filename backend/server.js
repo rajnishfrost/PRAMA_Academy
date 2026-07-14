@@ -27,12 +27,17 @@ const allowedOrigins = process.env.CORS_ORIGINS
       'https://pramaacademy.com',
       'https://www.pramaacademy.com',
       'http://pramaacademy.com',
-      'http://localhost:3020',
     ]
+
+// Local development origins (localhost / 127.0.0.1 / private LAN, any port) so the
+// dev frontend can call this backend directly. A browser only sends these when the
+// page is genuinely served from that host, so a public site cannot forge them.
+const devOriginRe = /^https?:\/\/(localhost|127\.0\.0\.1|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?$/
+
 const corsOptions = {
   origin(origin, cb) {
     // allow non-browser callers (curl, server-to-server) that send no Origin
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
+    if (!origin || allowedOrigins.includes(origin) || devOriginRe.test(origin)) return cb(null, true)
     return cb(new Error(`CORS blocked: ${origin}`))
   },
   credentials: true,
