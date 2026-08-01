@@ -8,8 +8,8 @@ import { checkPermission } from '../middleware/rbac.js'
 
 const router = Router()
 
-const MAX_VIDEOS = 6
-const VIDEO_MAX = 100 * 1024 * 1024 // 100MB
+const MAX_VIDEOS = 15
+const VIDEO_MAX = 1.5 * 1024 * 1024 * 1024 // 1.5GB
 const videoExts = /mp4|mov|webm|avi/
 
 const upload = multer({
@@ -25,7 +25,7 @@ const upload = multer({
 function handleUploadError(req, res, next) {
   upload.single('video')(req, res, (err) => {
     if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(413).json({ message: 'Video size exceeds the 100MB limit.' })
+      return res.status(413).json({ message: 'Video size exceeds the 1.5GB limit.' })
     }
     if (err) return res.status(400).json({ message: err.message })
     next()
@@ -52,7 +52,7 @@ router.get('/', authenticate, checkPermission('class-video', 'read'), async (req
   }
 })
 
-// ADMIN: Upload a class video (FIFO - auto-delete oldest if >6)
+// ADMIN: Upload a class video (FIFO - keep newest 15, auto-delete oldest beyond that)
 router.post('/', authenticate, checkPermission('class-video', 'write'), handleUploadError, async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No video file uploaded' })

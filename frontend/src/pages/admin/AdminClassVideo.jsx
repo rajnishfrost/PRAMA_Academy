@@ -31,7 +31,7 @@ export default function AdminClassVideo() {
   const handleUpload = async () => {
     const file = fileRef.current?.files?.[0]
     if (!file) return alert('Please select a video file')
-    if (file.size > 100 * 1024 * 1024) return alert('Video size exceeds 100MB limit')
+    if (file.size > 1.5 * 1024 * 1024 * 1024) return alert('Video size exceeds 1.5GB limit')
 
     setUploading(true)
     setProgress(0)
@@ -93,7 +93,8 @@ export default function AdminClassVideo() {
 
   const formatSize = (bytes) => {
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+    if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`
   }
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -106,7 +107,7 @@ export default function AdminClassVideo() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl md:text-2xl font-bold text-gray-900">Class Videos</h1>
-        <span className="text-sm text-gray-500">{videos.length} / 6 videos</span>
+        <span className="text-sm text-gray-500">{videos.length} / 15 videos</span>
       </div>
 
       {/* Upload Section */}
@@ -124,7 +125,7 @@ export default function AdminClassVideo() {
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Video File (max 100MB)</label>
+              <label className="block text-xs font-medium text-gray-600 mb-1">Video File (max 1.5GB)</label>
               <input
                 ref={fileRef}
                 type="file"
@@ -147,9 +148,9 @@ export default function AdminClassVideo() {
             >
               {uploading ? `Uploading... ${progress}%` : 'Upload Video'}
             </button>
-            {videos.length >= 6 && (
+            {videos.length >= 15 && (
               <p className="text-xs text-amber-600">
-                Maximum 6 videos reached. Uploading a new video will automatically delete the oldest one.
+                Maximum 15 videos reached. Uploading a new video will automatically delete the oldest one.
               </p>
             )}
           </div>
