@@ -1,21 +1,13 @@
 import { useState } from 'react'
 import { useBrandAmbassador } from '../lib/useBrandAmbassador'
 import { getImageUrl } from '../lib/imageUrl'
+import Lightbox from '../components/Lightbox'
 
 export default function BrandAmbassador() {
   const { sections, loading } = useBrandAmbassador()
   const [lightbox, setLightbox] = useState(null)
 
   const openLightbox = (images, index) => setLightbox({ images, index })
-  const closeLightbox = () => setLightbox(null)
-
-  const navLightbox = (dir) => {
-    if (!lightbox) return
-    const next = lightbox.index + dir
-    if (next >= 0 && next < lightbox.images.length) {
-      setLightbox({ ...lightbox, index: next })
-    }
-  }
 
   return (
     <>
@@ -101,61 +93,7 @@ export default function BrandAmbassador() {
         })
       )}
 
-      {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-          onClick={closeLightbox}
-        >
-          <button
-            className="absolute top-4 right-4 text-white/70 hover:text-white z-10"
-            onClick={closeLightbox}
-          >
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          {lightbox.index > 0 && (
-            <button
-              className="absolute left-4 text-white/70 hover:text-white z-10"
-              onClick={(e) => { e.stopPropagation(); navLightbox(-1) }}
-            >
-              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
-
-          <img
-            src={getImageUrl(lightbox.images[lightbox.index].url)}
-            alt=""
-            className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
-            onClick={(e) => e.stopPropagation()}
-          />
-
-          {lightbox.index < lightbox.images.length - 1 && (
-            <button
-              className="absolute right-4 text-white/70 hover:text-white z-10"
-              onClick={(e) => { e.stopPropagation(); navLightbox(1) }}
-            >
-              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          )}
-
-          <div className="absolute bottom-4 text-white/60 text-sm">
-            {lightbox.index + 1} / {lightbox.images.length}
-          </div>
-
-          {lightbox.images[lightbox.index].caption && (
-            <div className="absolute bottom-10 text-white text-sm bg-black/50 px-4 py-2 rounded-lg">
-              {lightbox.images[lightbox.index].caption}
-            </div>
-          )}
-        </div>
-      )}
+      <Lightbox state={lightbox} onChange={setLightbox} />
     </>
   )
 }

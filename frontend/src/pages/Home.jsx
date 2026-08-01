@@ -125,13 +125,9 @@ function CoursePreview({ courses }) {
                     {course.name}
                   </h3>
                 </div>
-                <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   {course.tagline}
                 </p>
-                <div className="flex items-center gap-2">
-                  <img src={getImageUrl(course.teacher?.image)} alt="" className="w-7 h-7 rounded-full object-cover" />
-                  <span className="text-xs text-gray-500">{course.teacher.name}</span>
-                </div>
               </div>
             </Link>
           ))}

@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useCourse } from '../lib/useCourses'
 import { getImageUrl } from '../lib/imageUrl'
+import Lightbox from '../components/Lightbox'
 
 export default function CourseDetail() {
   const { slug } = useParams()
   const { course, loading } = useCourse(slug)
+  const [lightbox, setLightbox] = useState(null)
 
   if (loading) {
     return <div className="pt-40 pb-20 text-center text-gray-500">Loading...</div>
@@ -93,7 +96,7 @@ export default function CourseDetail() {
           </section>
         )}
 
-        {/* Programs / Class Details */}
+        {/* Programs / Class Details (with nested images) */}
         {course.programs.length > 0 && (
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 mb-8">Class Details</h2>
@@ -112,9 +115,31 @@ export default function CourseDetail() {
                     ))}
                   </ul>
                   {prog.note && (
-                    <p className="text-xs text-gray-500 bg-white rounded-lg p-3 border border-gray-100">
+                    <p className="text-xs text-gray-500 bg-white rounded-lg p-3 border border-gray-100 mb-4">
                       <span className="font-medium text-gray-700">Note: </span>{prog.note}
                     </p>
+                  )}
+                  {prog.images?.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                      {prog.images.map((img, k) => (
+                        <figure key={k} className="rounded-xl overflow-hidden bg-gray-100 cursor-pointer group">
+                          <div
+                            className="aspect-[4/5] w-full flex items-center justify-center"
+                            onClick={() => setLightbox({ images: prog.images, index: k })}
+                          >
+                            <img
+                              src={getImageUrl(img.url)}
+                              alt={img.caption || ''}
+                              loading="lazy"
+                              className="max-w-full max-h-full object-contain group-hover:scale-[1.02] transition-transform"
+                            />
+                          </div>
+                          {img.caption && (
+                            <figcaption className="text-xs text-gray-500 px-3 py-2 bg-white">{img.caption}</figcaption>
+                          )}
+                        </figure>
+                      ))}
+                    </div>
                   )}
                 </div>
               ))}
@@ -122,42 +147,37 @@ export default function CourseDetail() {
           </section>
         )}
 
-        {/* Class Details Images */}
-        {course.gallery?.length > 0 && (
+        {/* Testimonials */}
+        {course.testimonials?.length > 0 && (
           <section className="mb-16">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {course.gallery.map((img, i) => (
-                <figure key={i} className="rounded-2xl overflow-hidden bg-gray-100">
-                  <img
-                    src={getImageUrl(img.url)}
-                    alt={img.caption || ''}
-                    loading="lazy"
-                    className="w-full h-48 md:h-56 object-cover"
-                  />
-                  {img.caption && (
-                    <figcaption className="text-xs text-gray-500 mt-1 px-1 pb-1">{img.caption}</figcaption>
-                  )}
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">What Students & Parents Say</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {course.testimonials.map((t, i) => (
+                <figure key={i} className="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-[340px] overflow-hidden">
+                  <div className="h-1 bg-gradient-to-r from-primary via-primary/70 to-primary/30 shrink-0" />
+                  <div className="flex flex-col flex-1 p-6 md:p-7 overflow-hidden">
+                    <svg className="w-10 h-10 text-primary mb-2 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M7.17 6C4.87 6 3 7.87 3 10.17V18h6v-7.83c0-1.19-.98-2.17-2.17-2.17H6.5V6h.67zm10 0c-2.3 0-4.17 1.87-4.17 4.17V18h6v-7.83c0-1.19-.98-2.17-2.17-2.17h-.33V6h.67z" />
+                    </svg>
+                    <blockquote className="text-gray-700 leading-relaxed flex-1 overflow-y-auto pr-2 italic text-[15px] scroll-thin">
+                      {t.quote}
+                    </blockquote>
+                    {(t.author || t.role) && (
+                      <figcaption className="text-sm mt-4 pt-3 border-t border-gray-100 shrink-0">
+                        {t.author && <span className="font-semibold text-gray-900">{t.author}</span>}
+                        {t.author && t.role && <span className="mx-2 text-gray-400">·</span>}
+                        {t.role && <span className="text-gray-500">{t.role}</span>}
+                      </figcaption>
+                    )}
+                  </div>
                 </figure>
               ))}
             </div>
           </section>
         )}
-
-        {/* Teacher */}
-        <section className="bg-gray-900 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-5">
-            <img
-              src={getImageUrl(course.teacher.image)}
-              alt={course.teacher.name}
-              className="w-16 h-16 rounded-full object-cover border-2 border-primary"
-            />
-            <div>
-              <p className="text-white font-semibold">{course.teacher.name}</p>
-              <p className="text-gray-400 text-sm">{course.teacher.hours}</p>
-            </div>
-          </div>
-        </section>
       </div>
+
+      <Lightbox state={lightbox} onChange={setLightbox} />
     </>
   )
 }

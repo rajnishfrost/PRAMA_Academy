@@ -6,11 +6,11 @@ import ImageUpload from '../../components/ImageUpload'
 const empty = {
   name: '', slug: '', tagline: '', cover: '', heroImage: '',
   intro: [''], history: '',
-  benefits: [], levels: [], programs: [], gallery: [],
-  teacher: { name: '', image: '', hours: '' },
-  price: { full: '', monthly: '' },
+  benefits: [], levels: [], programs: [], testimonials: [],
   isActive: true, order: 0,
 }
+
+const newProgram = () => ({ title: '', details: [''], note: '', images: [] })
 
 export default function CourseForm() {
   const { id } = useParams()
@@ -27,7 +27,6 @@ export default function CourseForm() {
   }, [id, isEdit])
 
   const set = (key, val) => setForm((p) => ({ ...p, [key]: val }))
-  const setNested = (parent, key, val) => setForm((p) => ({ ...p, [parent]: { ...p[parent], [key]: val } }))
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -62,6 +61,33 @@ export default function CourseForm() {
     const arr = [...list]
     ;[arr[index], arr[target]] = [arr[target], arr[index]]
     set(key, arr)
+  }
+
+  // Program-nested images helpers
+  const updateProgramImages = (pi, newImages) => {
+    const arr = [...form.programs]
+    arr[pi] = { ...arr[pi], images: newImages }
+    set('programs', arr)
+  }
+  const addProgramImage = (pi) => {
+    const current = form.programs[pi].images || []
+    updateProgramImages(pi, [...current, { url: '', caption: '' }])
+  }
+  const updateProgramImage = (pi, ii, patch) => {
+    const current = [...(form.programs[pi].images || [])]
+    current[ii] = { ...current[ii], ...patch }
+    updateProgramImages(pi, current)
+  }
+  const removeProgramImage = (pi, ii) => {
+    const current = (form.programs[pi].images || []).filter((_, i) => i !== ii)
+    updateProgramImages(pi, current)
+  }
+  const moveProgramImage = (pi, ii, dir) => {
+    const current = [...(form.programs[pi].images || [])]
+    const target = ii + dir
+    if (target < 0 || target >= current.length) return
+    ;[current[ii], current[target]] = [current[target], current[ii]]
+    updateProgramImages(pi, current)
   }
 
   return (
@@ -150,11 +176,11 @@ export default function CourseForm() {
           ))}
         </section>
 
-        {/* Programs */}
+        {/* Programs (with nested Class Detail Images) */}
         <section className="bg-white rounded-xl p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-gray-900">Programs / Class Details</h2>
-            <button type="button" onClick={() => addArrayItem('programs', { title: '', details: [''], note: '' })} className="text-xs text-primary hover:underline">+ Add Program</button>
+            <button type="button" onClick={() => addArrayItem('programs', newProgram())} className="text-xs text-primary hover:underline">+ Add Program</button>
           </div>
           {form.programs?.map((prog, pi) => (
             <div key={pi} className="border border-gray-200 rounded-lg p-4 space-y-3">
@@ -189,48 +215,69 @@ export default function CourseForm() {
                 set('programs', arr)
               }} className="text-xs text-primary hover:underline pl-4">+ Add Detail</button>
               <Input placeholder="Note" value={prog.note} onChange={(v) => { const arr = [...form.programs]; arr[pi] = { ...arr[pi], note: v }; set('programs', arr) }} />
+
+              {/* Nested Class Detail Images */}
+              <div className="bg-gray-50 rounded-lg p-3 space-y-2 mt-2">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-700">Class Detail Images</h3>
+                    <p className="text-xs text-gray-500">Images shown under this program on the course page. Use ↑ ↓ to order.</p>
+                  </div>
+                  <button type="button" onClick={() => addProgramImage(pi)} className="text-xs text-primary hover:underline">+ Add Image</button>
+                </div>
+                {(prog.images || []).length === 0 && <p className="text-xs text-gray-400">No images yet.</p>}
+                {(prog.images || []).map((img, ii) => (
+                  <div key={ii} className="border border-gray-200 bg-white rounded-lg p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-gray-500">Image #{ii + 1}</span>
+                      <div className="flex items-center gap-1">
+                        <button type="button" onClick={() => moveProgramImage(pi, ii, -1)} disabled={ii === 0} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move up">↑</button>
+                        <button type="button" onClick={() => moveProgramImage(pi, ii, 1)} disabled={ii === (prog.images.length - 1)} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move down">↓</button>
+                        <button type="button" onClick={() => removeProgramImage(pi, ii)} className="text-red-400 hover:text-red-600 text-xs px-2 ml-1">x</button>
+                      </div>
+                    </div>
+                    <ImageUpload label="" value={img.url} onChange={(v) => updateProgramImage(pi, ii, { url: v })} module="courses" />
+                    <Input placeholder="Caption (optional)" value={img.caption} onChange={(v) => updateProgramImage(pi, ii, { caption: v })} />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </section>
 
-        {/* Class Details Images (gallery) */}
+        {/* Testimonials */}
         <section className="bg-white rounded-xl p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-gray-900">Class Details Images</h2>
-              <p className="text-xs text-gray-500">Shown below the Class Details section on the course page. Use ↑ ↓ to order.</p>
+              <h2 className="font-semibold text-gray-900">Testimonials</h2>
+              <p className="text-xs text-gray-500">Student / parent quotes shown on the course page.</p>
             </div>
-            <button type="button" onClick={() => addArrayItem('gallery', { url: '', caption: '' })} className="text-xs text-primary hover:underline">+ Add Image</button>
+            <button type="button" onClick={() => addArrayItem('testimonials', { quote: '', author: '', role: '' })} className="text-xs text-primary hover:underline">+ Add Testimonial</button>
           </div>
-          {form.gallery?.length === 0 && <p className="text-sm text-gray-400">No images yet.</p>}
-          {form.gallery?.map((img, i) => (
+          {form.testimonials?.length === 0 && <p className="text-sm text-gray-400">No testimonials yet.</p>}
+          {form.testimonials?.map((t, i) => (
             <div key={i} className="border border-gray-100 rounded-lg p-3 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-500">Image #{i + 1}</span>
+                <span className="text-xs font-medium text-gray-500">Testimonial #{i + 1}</span>
                 <div className="flex items-center gap-1">
-                  <button type="button" onClick={() => moveArrayItem('gallery', i, -1)} disabled={i === 0} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move up">↑</button>
-                  <button type="button" onClick={() => moveArrayItem('gallery', i, 1)} disabled={i === form.gallery.length - 1} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move down">↓</button>
-                  <button type="button" onClick={() => removeArrayItem('gallery', i)} className="text-red-400 hover:text-red-600 text-xs px-2 ml-1">x</button>
+                  <button type="button" onClick={() => moveArrayItem('testimonials', i, -1)} disabled={i === 0} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move up">↑</button>
+                  <button type="button" onClick={() => moveArrayItem('testimonials', i, 1)} disabled={i === form.testimonials.length - 1} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move down">↓</button>
+                  <button type="button" onClick={() => removeArrayItem('testimonials', i)} className="text-red-400 hover:text-red-600 text-xs px-2 ml-1">x</button>
                 </div>
               </div>
-              <ImageUpload label="" value={img.url} onChange={(v) => { const arr = [...form.gallery]; arr[i] = { ...arr[i], url: v }; set('gallery', arr) }} module="courses" />
-              <Input placeholder="Caption (optional)" value={img.caption} onChange={(v) => { const arr = [...form.gallery]; arr[i] = { ...arr[i], caption: v }; set('gallery', arr) }} />
+              <textarea
+                placeholder="Quote"
+                value={t.quote}
+                onChange={(e) => { const arr = [...form.testimonials]; arr[i] = { ...arr[i], quote: e.target.value }; set('testimonials', arr) }}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <Input placeholder="Author name" value={t.author} onChange={(v) => { const arr = [...form.testimonials]; arr[i] = { ...arr[i], author: v }; set('testimonials', arr) }} />
+                <Input placeholder="Role (e.g. Parent, Student Age 8)" value={t.role} onChange={(v) => { const arr = [...form.testimonials]; arr[i] = { ...arr[i], role: v }; set('testimonials', arr) }} />
+              </div>
             </div>
           ))}
-        </section>
-
-        {/* Teacher & Price */}
-        <section className="bg-white rounded-xl p-6 shadow-sm space-y-4">
-          <h2 className="font-semibold text-gray-900">Teacher & Pricing</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input label="Teacher Name" value={form.teacher?.name} onChange={(v) => setNested('teacher', 'name', v)} />
-            <Input label="Total Hours" value={form.teacher?.hours} onChange={(v) => setNested('teacher', 'hours', v)} />
-          </div>
-          <ImageUpload label="Teacher Image" value={form.teacher?.image} onChange={(v) => setNested('teacher', 'image', v)} module="courses" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input label="Full Price" value={form.price?.full} onChange={(v) => setNested('price', 'full', v)} placeholder="e.g. $100" />
-            <Input label="Monthly Price" value={form.price?.monthly} onChange={(v) => setNested('price', 'monthly', v)} placeholder="e.g. $15/month" />
-          </div>
         </section>
 
         <div className="flex gap-3">

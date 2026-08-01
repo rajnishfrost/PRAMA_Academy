@@ -42,8 +42,7 @@ const coursesData = [
         note: 'Parents need to purchase 17 rod abacus. Indian students get hardcopy books, international students receive PDF.',
       },
     ],
-    teacher: { name: 'Pratibha Singh', image: '/images/priti.jpg', hours: '190 hrs' },
-    price: { full: '$100', monthly: '$15/month' },
+    testimonials: [],
     isActive: true,
     order: 1,
   },
@@ -72,8 +71,7 @@ const coursesData = [
         note: 'Indian students get hardcopy books, international students receive PDF.',
       },
     ],
-    teacher: { name: 'Pratibha Singh', image: '/images/priti.jpg', hours: '125 hrs' },
-    price: { full: '$200', monthly: '$25/month' },
+    testimonials: [],
     isActive: true,
     order: 2,
   },
@@ -98,8 +96,7 @@ const coursesData = [
         note: 'Indian students get hardcopy books, international students receive PDF.',
       },
     ],
-    teacher: { name: 'Pratibha Singh', image: '/images/priti.jpg', hours: '50 hrs' },
-    price: { full: '$50', monthly: '$5/month' },
+    testimonials: [],
     isActive: true,
     order: 3,
   },
@@ -127,8 +124,7 @@ const coursesData = [
         note: '',
       },
     ],
-    teacher: { name: 'Pratibha Singh', image: '/images/priti.jpg', hours: '20 hrs' },
-    price: { full: '$30', monthly: '$3/month' },
+    testimonials: [],
     isActive: true,
     order: 4,
   },
@@ -147,8 +143,7 @@ const coursesData = [
     benefits: [],
     levels: [],
     programs: [],
-    teacher: { name: 'Pratibha Singh', image: '/images/priti.jpg', hours: '' },
-    price: { full: '$30', monthly: '$3/month' },
+    testimonials: [],
     isActive: true,
     order: 5,
   },
@@ -163,10 +158,13 @@ async function seed() {
     for (const data of coursesData) {
       await Course.findOneAndUpdate(
         { slug: data.slug },
-        { $set: { heroImage: data.heroImage, cover: data.cover } },
+        {
+          $set: { heroImage: data.heroImage, cover: data.cover },
+          $unset: { teacher: '', price: '', gallery: '' },
+        },
       )
     }
-    console.log(`Updated ${existing} courses with new heroImage/cover paths`)
+    console.log(`Updated ${existing} courses (heroImage/cover set; teacher/price/gallery removed)`)
   } else {
     await Course.insertMany(coursesData)
     console.log(`${coursesData.length} courses seeded successfully`)

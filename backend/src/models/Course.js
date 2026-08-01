@@ -10,16 +10,22 @@ const levelSchema = new mongoose.Schema({
   desc: { type: String, default: '' },
 }, { _id: false })
 
+const programImageSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  caption: { type: String, default: '' },
+}, { _id: false })
+
 const programSchema = new mongoose.Schema({
   title: { type: String, required: true },
   details: [String],
   note: { type: String, default: '' },
+  images: [programImageSchema],
 }, { _id: false })
 
-// Class-details image gallery (order = array position)
-const galleryImageSchema = new mongoose.Schema({
-  url: { type: String, required: true },
-  caption: { type: String, default: '' },
+const testimonialSchema = new mongoose.Schema({
+  quote: { type: String, required: true },
+  author: { type: String, default: '' },
+  role: { type: String, default: '' },
 }, { _id: false })
 
 const courseSchema = new mongoose.Schema({
@@ -33,16 +39,7 @@ const courseSchema = new mongoose.Schema({
   benefits: [benefitSchema],
   levels: [levelSchema],
   programs: [programSchema],
-  gallery: [galleryImageSchema],
-  teacher: {
-    name: { type: String, default: '' },
-    image: { type: String, default: '' },
-    hours: { type: String, default: '' },
-  },
-  price: {
-    full: { type: String, default: '' },
-    monthly: { type: String, default: '' },
-  },
+  testimonials: [testimonialSchema],
   isActive: { type: Boolean, default: true },
   order: { type: Number, default: 0 },
 }, { timestamps: true })

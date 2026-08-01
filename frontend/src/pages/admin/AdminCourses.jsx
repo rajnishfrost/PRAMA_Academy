@@ -63,7 +63,6 @@ export default function AdminCourses() {
                 <tr>
                   <th className="text-left px-6 py-3 font-medium text-gray-500">Course</th>
                   <th className="text-left px-6 py-3 font-medium text-gray-500">Slug</th>
-                  <th className="text-left px-6 py-3 font-medium text-gray-500">Price</th>
                   <th className="text-left px-6 py-3 font-medium text-gray-500">Status</th>
                   <th className="text-right px-6 py-3 font-medium text-gray-500">Actions</th>
                 </tr>
@@ -78,7 +77,6 @@ export default function AdminCourses() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-gray-500">{c.slug}</td>
-                    <td className="px-6 py-4 text-gray-500">{c.price?.monthly || '-'}</td>
                     <td className="px-6 py-4">
                       <span className={`text-xs font-medium px-2 py-1 rounded-full ${c.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
                         {c.isActive ? 'Active' : 'Inactive'}
@@ -110,14 +108,11 @@ export default function AdminCourses() {
                     {c.isActive ? 'Active' : 'Inactive'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">{c.price?.monthly || '-'}</span>
-                  <div className="flex gap-3">
-                    <Link to={`/admin/courses/${c._id}/edit`} className="text-primary text-sm font-medium">Edit</Link>
-                    {canDelete && (
-                      <button onClick={() => handleDelete(c._id)} className="text-red-500 text-sm font-medium">Delete</button>
-                    )}
-                  </div>
+                <div className="flex items-center justify-end gap-3">
+                  <Link to={`/admin/courses/${c._id}/edit`} className="text-primary text-sm font-medium">Edit</Link>
+                  {canDelete && (
+                    <button onClick={() => handleDelete(c._id)} className="text-red-500 text-sm font-medium">Delete</button>
+                  )}
                 </div>
               </div>
             ))}
