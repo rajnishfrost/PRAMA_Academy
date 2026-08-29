@@ -126,6 +126,7 @@ export default function FlashAnzan() {
   const [sequence, setSequence] = useState([])
   const [currentIndex, setCurrentIndex] = useState(-1)
   const [showNumber, setShowNumber] = useState(false)
+  const [flashAnswer, setFlashAnswer] = useState(null) // answer shown briefly between continuous rounds
   const [answer, setAnswer] = useState('')
   const [pairAnswers, setPairAnswers] = useState([]) // array of strings for pair mode
   const [isCorrect, setIsCorrect] = useState(null)
@@ -162,20 +163,25 @@ export default function FlashAnzan() {
     setPairResults([])
     setCurrentIndex(-1)
     setShowNumber(false)
+    setFlashAnswer(null)
 
     let i = 0
     const { flash, timeout, voice } = settings
+    const pairMode = settings.mode !== 'addsub'
 
     const showNext = () => {
       if (i >= seq.length) {
         setShowNumber(false)
         setCurrentIndex(-1)
         if (settings.continuous) {
+          // Flash the answer briefly at the end of the round, then auto-start the next
+          if (!pairMode) setFlashAnswer(calculateAnswer(seq))
           timerRef.current = setTimeout(() => {
+            setFlashAnswer(null)
             const newSeq = generateSequence(settings)
             setSequence(newSeq)
             playSequence(newSeq)
-          }, 1000)
+          }, pairMode ? 1000 : 1600)
         } else {
           setState('answering')
           setTimeout(() => inputRef.current?.focus(), 100)
@@ -187,7 +193,11 @@ export default function FlashAnzan() {
       setShowNumber(true)
       if (voice) {
         const item = seq[i]
-        speak(item.type === 'pair' ? `${item.a} ${item.op} ${item.b}` : item.value)
+        if (item.type === 'pair') {
+          speak(`${item.a} ${item.op} ${item.b}`)
+        } else {
+          speak(item.op === '-' ? `minus ${item.value}` : `${item.value}`)
+        }
       }
 
       timerRef.current = setTimeout(() => {
@@ -220,6 +230,7 @@ export default function FlashAnzan() {
     setShowSettings(true)
     setCurrentIndex(-1)
     setShowNumber(false)
+    setFlashAnswer(null)
   }
 
   const handleSubmit = (e) => {
@@ -461,10 +472,12 @@ export default function FlashAnzan() {
             {state === 'playing' && (
               <div className="text-center py-12 md:py-20">
                 <div className="mb-4 text-xs font-medium text-gray-400">
-                  {currentIndex >= 0 ? `${currentIndex + 1} / ${sequence.length}` : 'Get ready...'}
+                  {flashAnswer !== null ? 'Answer' : currentIndex >= 0 ? `${currentIndex + 1} / ${sequence.length}` : 'Get ready...'}
                 </div>
                 <div className="h-32 md:h-40 flex items-center justify-center">
-                  {showNumber && currentIndex >= 0 && (() => {
+                  {flashAnswer !== null ? (
+                    <span className="text-6xl md:text-8xl font-bold tabular-nums text-primary">= {flashAnswer}</span>
+                  ) : showNumber && currentIndex >= 0 ? (() => {
                     const item = sequence[currentIndex]
                     const opColors = { '+': 'text-gray-900', '-': 'text-red-500', '×': 'text-blue-600', '÷': 'text-purple-600' }
                     if (item.type === 'pair') {
@@ -480,7 +493,7 @@ export default function FlashAnzan() {
                         {prefix}{item.value}
                       </span>
                     )
-                  })()}
+                  })() : null}
                 </div>
                 <button
                   onClick={handleStop}
