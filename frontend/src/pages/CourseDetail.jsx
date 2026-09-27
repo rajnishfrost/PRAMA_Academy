@@ -51,6 +51,38 @@ export default function CourseDetail() {
           ))}
         </section>
 
+        {/* Class Cards (catalog-style grid) */}
+        {course.classCards?.length > 0 && (
+          <section className="mb-16">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Our Classes</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              {course.classCards.map((c, i) => (
+                <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col">
+                  <div className="relative aspect-[4/3] bg-gray-100">
+                    {c.image ? (
+                      <img src={getImageUrl(c.image)} alt={c.title} loading="lazy" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-300 text-xs">No image</div>
+                    )}
+                    {c.badge && (
+                      <span className="absolute top-2 left-2 bg-primary text-white text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full">
+                        {c.badge}
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-4 flex flex-col flex-1">
+                    <p className="text-[11px] font-medium text-gray-400 uppercase tracking-wide mb-1">Class</p>
+                    <h3 className="text-sm font-semibold text-gray-900 leading-snug line-clamp-2 flex-1">{c.title}</h3>
+                    {c.price && (
+                      <p className="mt-3 text-base font-bold text-primary">{c.price}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* History */}
         {course.history && (
           <section className="max-w-4xl mb-16">

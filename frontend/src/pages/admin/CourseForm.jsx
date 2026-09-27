@@ -6,7 +6,7 @@ import ImageUpload from '../../components/ImageUpload'
 const empty = {
   name: '', slug: '', tagline: '', cover: '', heroImage: '',
   intro: [''], history: '',
-  benefits: [], levels: [], programs: [], testimonials: [],
+  benefits: [], levels: [], programs: [], classCards: [], testimonials: [],
   isActive: true, order: 0,
 }
 
@@ -240,6 +240,36 @@ export default function CourseForm() {
                     <Input placeholder="Caption (optional)" value={img.caption} onChange={(v) => updateProgramImage(pi, ii, { caption: v })} />
                   </div>
                 ))}
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* Class Cards (catalog-style: image + title + price) */}
+        <section className="bg-white rounded-xl p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-gray-900">Class Cards</h2>
+              <p className="text-xs text-gray-500">Shown as an "Our Classes" card grid on the course page. Use ↑ ↓ to order.</p>
+            </div>
+            <button type="button" onClick={() => addArrayItem('classCards', { title: '', image: '', price: '', badge: '' })} className="text-xs text-primary hover:underline">+ Add Card</button>
+          </div>
+          {form.classCards?.length === 0 && <p className="text-sm text-gray-400">No class cards yet.</p>}
+          {form.classCards?.map((c, i) => (
+            <div key={i} className="border border-gray-100 rounded-lg p-3 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-500">Card #{i + 1}</span>
+                <div className="flex items-center gap-1">
+                  <button type="button" onClick={() => moveArrayItem('classCards', i, -1)} disabled={i === 0} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move up">↑</button>
+                  <button type="button" onClick={() => moveArrayItem('classCards', i, 1)} disabled={i === form.classCards.length - 1} className="text-gray-500 hover:text-gray-800 disabled:opacity-30 disabled:cursor-not-allowed text-sm px-1" aria-label="Move down">↓</button>
+                  <button type="button" onClick={() => removeArrayItem('classCards', i)} className="text-red-400 hover:text-red-600 text-xs px-2 ml-1">x</button>
+                </div>
+              </div>
+              <ImageUpload label="" value={c.image} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], image: v }; set('classCards', arr) }} module="courses" />
+              <Input placeholder="Title (e.g. Crochet Demo Workshop)" value={c.title} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], title: v }; set('classCards', arr) }} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <Input placeholder="Price (e.g. ₹999)" value={c.price} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], price: v }; set('classCards', arr) }} />
+                <Input placeholder="Badge (optional, e.g. New)" value={c.badge} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], badge: v }; set('classCards', arr) }} />
               </div>
             </div>
           ))}

@@ -28,6 +28,14 @@ const testimonialSchema = new mongoose.Schema({
   role: { type: String, default: '' },
 }, { _id: false })
 
+// Catalog-style class cards (image + title + price), order = array position
+const classCardSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  image: { type: String, default: '' },
+  price: { type: String, default: '' },
+  badge: { type: String, default: '' },
+}, { _id: false })
+
 const courseSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   slug: { type: String, required: true, unique: true, lowercase: true, trim: true },
@@ -39,6 +47,7 @@ const courseSchema = new mongoose.Schema({
   benefits: [benefitSchema],
   levels: [levelSchema],
   programs: [programSchema],
+  classCards: [classCardSchema],
   testimonials: [testimonialSchema],
   isActive: { type: Boolean, default: true },
   order: { type: Number, default: 0 },
