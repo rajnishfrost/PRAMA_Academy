@@ -265,11 +265,33 @@ export default function CourseForm() {
                   <button type="button" onClick={() => removeArrayItem('classCards', i)} className="text-red-400 hover:text-red-600 text-xs px-2 ml-1">x</button>
                 </div>
               </div>
-              <ImageUpload label="" value={c.image} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], image: v }; set('classCards', arr) }} module="courses" />
+              <ImageUpload label="Card cover" value={c.image} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], image: v }; set('classCards', arr) }} module="courses" />
               <Input placeholder="Title (e.g. Crochet Demo Workshop)" value={c.title} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], title: v }; set('classCards', arr) }} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <Input placeholder="Price (e.g. ₹999)" value={c.price} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], price: v }; set('classCards', arr) }} />
                 <Input placeholder="Badge (optional, e.g. New)" value={c.badge} onChange={(v) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], badge: v }; set('classCards', arr) }} />
+              </div>
+              <textarea
+                placeholder="Full description (shown when the card is opened)"
+                value={c.description || ''}
+                onChange={(e) => { const arr = [...form.classCards]; arr[i] = { ...arr[i], description: e.target.value }; set('classCards', arr) }}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"
+              />
+              {/* Detail images for this class */}
+              <div className="border-t border-gray-100 pt-2">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs font-medium text-gray-500">Detail images ({c.images?.length || 0})</span>
+                  <button type="button" onClick={() => { const arr = [...form.classCards]; arr[i] = { ...arr[i], images: [...(arr[i].images || []), { url: '', caption: '' }] }; set('classCards', arr) }} className="text-xs text-primary hover:underline">+ Add image</button>
+                </div>
+                {c.images?.map((img, k) => (
+                  <div key={k} className="flex items-start gap-2 mb-2">
+                    <div className="flex-1">
+                      <ImageUpload label="" value={img.url} onChange={(v) => { const arr = [...form.classCards]; const imgs = [...(arr[i].images || [])]; imgs[k] = { ...imgs[k], url: v }; arr[i] = { ...arr[i], images: imgs }; set('classCards', arr) }} module="courses" />
+                    </div>
+                    <button type="button" onClick={() => { const arr = [...form.classCards]; arr[i] = { ...arr[i], images: arr[i].images.filter((_, ii) => ii !== k) }; set('classCards', arr) }} className="text-red-400 hover:text-red-600 text-xs px-2 pt-2">x</button>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

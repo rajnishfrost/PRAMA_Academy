@@ -11,6 +11,7 @@ import Tools from './pages/Tools'
 import Worksheet from './pages/Worksheet'
 import ScreenRecording from './pages/ScreenRecording'
 import FlashAnzan from './pages/FlashAnzan'
+import VirtualAbacus from './pages/VirtualAbacus'
 import Login from './pages/admin/Login'
 import AdminLayout from './pages/admin/AdminLayout'
 import Dashboard from './pages/admin/Dashboard'
@@ -73,6 +74,7 @@ export default function App() {
         <Route path="tools/worksheet" element={<Worksheet />} />
         <Route path="tools/screen-recording" element={<ScreenRecording />} />
         <Route path="tools/flash-anzan" element={<FlashAnzan />} />
+        <Route path="tools/virtual-abacus" element={<VirtualAbacus />} />
         <Route path="class-video" element={<ClassVideo />} />
         <Route path="*" element={<NotFound />} />
       </Route>

@@ -174,14 +174,15 @@ export default function FlashAnzan() {
         setShowNumber(false)
         setCurrentIndex(-1)
         if (settings.continuous) {
-          // Flash the answer briefly at the end of the round, then auto-start the next
-          if (!pairMode) setFlashAnswer(calculateAnswer(seq))
+          // Flash the answer(s) at the end of the round, then auto-start the next.
+          // addsub -> single total; multiplication/division -> each problem's answer
+          setFlashAnswer(pairMode ? { pairs: seq } : { total: calculateAnswer(seq) })
           timerRef.current = setTimeout(() => {
             setFlashAnswer(null)
             const newSeq = generateSequence(settings)
             setSequence(newSeq)
             playSequence(newSeq)
-          }, pairMode ? 1000 : 1600)
+          }, pairMode ? 2600 : 1600)
         } else {
           setState('answering')
           setTimeout(() => inputRef.current?.focus(), 100)
@@ -472,11 +473,21 @@ export default function FlashAnzan() {
             {state === 'playing' && (
               <div className="text-center py-12 md:py-20">
                 <div className="mb-4 text-xs font-medium text-gray-400">
-                  {flashAnswer !== null ? 'Answer' : currentIndex >= 0 ? `${currentIndex + 1} / ${sequence.length}` : 'Get ready...'}
+                  {flashAnswer !== null ? (flashAnswer.pairs ? 'Answers' : 'Answer') : currentIndex >= 0 ? `${currentIndex + 1} / ${sequence.length}` : 'Get ready...'}
                 </div>
-                <div className="h-32 md:h-40 flex items-center justify-center">
+                <div className="min-h-32 md:min-h-40 flex items-center justify-center py-2">
                   {flashAnswer !== null ? (
-                    <span className="text-6xl md:text-8xl font-bold tabular-nums text-primary">= {flashAnswer}</span>
+                    flashAnswer.pairs ? (
+                      <div className="flex flex-col items-center justify-center gap-1 max-h-56 overflow-auto px-2">
+                        {flashAnswer.pairs.map((it, idx) => (
+                          <span key={idx} className="text-2xl md:text-4xl font-bold tabular-nums text-primary">
+                            {it.a} {it.op} {it.b} = {it.answer}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-6xl md:text-8xl font-bold tabular-nums text-primary">= {flashAnswer.total}</span>
+                    )
                   ) : showNumber && currentIndex >= 0 ? (() => {
                     const item = sequence[currentIndex]
                     const opColors = { '+': 'text-gray-900', '-': 'text-red-500', '×': 'text-blue-600', '÷': 'text-purple-600' }

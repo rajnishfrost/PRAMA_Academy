@@ -28,12 +28,14 @@ const testimonialSchema = new mongoose.Schema({
   role: { type: String, default: '' },
 }, { _id: false })
 
-// Catalog-style class cards (image + title + price), order = array position
+// Catalog-style class cards (image + title + price) that open a full detail view
 const classCardSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  image: { type: String, default: '' },
+  image: { type: String, default: '' },        // card cover
   price: { type: String, default: '' },
   badge: { type: String, default: '' },
+  description: { type: String, default: '' },   // shown in the detail view
+  images: [programImageSchema],                 // extra images in the detail view
 }, { _id: false })
 
 const courseSchema = new mongoose.Schema({
