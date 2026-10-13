@@ -41,7 +41,13 @@
       "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3020/images/courses/__TRACKED_VAR__.jpg)",
       "Bash(node src/seeds/team.js)",
       "Bash(curl -s -m 5 \"http://161.118.173.163:4020/api/team/public\")",
-      "Bash(python3 -c \"import json, sys; d=json.load\\(sys.stdin\\); [print\\(m['name'], '|', m.get\\('qualification','-'\\), '|', m.get\\('education','-'\\)\\) for m in d.get\\('members',[]\\) if m['name'] in \\('Pratibha Singh','Sowmya Bandhakavi Bhalerao'\\)]\")"
+      "Bash(python3 -c \"import json, sys; d=json.load\\(sys.stdin\\); [print\\(m['name'], '|', m.get\\('qualification','-'\\), '|', m.get\\('education','-'\\)\\) for m in d.get\\('members',[]\\) if m['name'] in \\('Pratibha Singh','Sowmya Bandhakavi Bhalerao'\\)]\")",
+      "Bash(curl -s -m 5 \"http://161.118.173.163:4020/api/courses/public\")",
+      "Bash(python3 -c \"import json, sys; d=json.load\\(sys.stdin\\); print\\(f'Courses count: {len\\(d.get\\(\\\\\"courses\\\\\",[]\\)\\)}'\\); [print\\(f'{c[\\\\\"slug\\\\\"]}: heroImage={c.get\\(\\\\\"heroImage\\\\\",\\\\\"\\\\\"\\)}, has_teacher={\\\\\"teacher\\\\\" in c}, has_price={\\\\\"price\\\\\" in c}, has_gallery={\\\\\"gallery\\\\\" in c}, testimonials={len\\(c.get\\(\\\\\"testimonials\\\\\",[]\\)\\)}'\\) for c in d.get\\('courses',[]\\)]\")",
+      "Bash(python3 -c \"import json, sys; d=json.load\\(sys.stdin\\); c=d['courses'][0]; print\\(json.dumps\\(c, indent=2\\)[:1500]\\)\")",
+      "Bash(python3 -c \"import json, sys; d=json.load\\(sys.stdin\\); c=d['courses'][0]; print\\('KEYS:', list\\(c.keys\\(\\)\\)\\); print\\('teacher:', c.get\\('teacher'\\)\\); print\\('price:', c.get\\('price'\\)\\); print\\('gallery:', c.get\\('gallery'\\)\\)\")",
+      "Bash(/usr/bin/curl -sf -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3020/)",
+      "Bash(/usr/bin/curl -s -m 10 http://localhost:3020/src/pages/CourseDetail.jsx)"
     ],
     "additionalDirectories": [
       "/private/tmp"
