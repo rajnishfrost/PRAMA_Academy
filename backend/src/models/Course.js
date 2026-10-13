@@ -17,6 +17,7 @@ const programImageSchema = new mongoose.Schema({
 
 const programSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  summary: { type: String, default: '' }, // short description shown on the class card
   details: [String],
   note: { type: String, default: '' },
   images: [programImageSchema],
@@ -26,16 +27,6 @@ const testimonialSchema = new mongoose.Schema({
   quote: { type: String, required: true },
   author: { type: String, default: '' },
   role: { type: String, default: '' },
-}, { _id: false })
-
-// Catalog-style class cards (image + title + price) that open a full detail view
-const classCardSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  image: { type: String, default: '' },        // card cover
-  price: { type: String, default: '' },
-  badge: { type: String, default: '' },
-  description: { type: String, default: '' },   // shown in the detail view
-  images: [programImageSchema],                 // extra images in the detail view
 }, { _id: false })
 
 const courseSchema = new mongoose.Schema({
@@ -49,7 +40,6 @@ const courseSchema = new mongoose.Schema({
   benefits: [benefitSchema],
   levels: [levelSchema],
   programs: [programSchema],
-  classCards: [classCardSchema],
   testimonials: [testimonialSchema],
   isActive: { type: Boolean, default: true },
   order: { type: Number, default: 0 },
