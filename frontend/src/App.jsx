@@ -4,6 +4,7 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import About from './pages/About'
 import CourseDetail from './pages/CourseDetail'
+import ClassDetail from './pages/ClassDetail'
 import Team from './pages/Team'
 import Terms from './pages/Terms'
 import BrandAmbassador from './pages/BrandAmbassador'
@@ -66,6 +67,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="courses/:slug" element={<CourseDetail />} />
+        <Route path="courses/:slug/class/:idx" element={<ClassDetail />} />
         <Route path="team" element={<Team />} />
         <Route path="terms" element={<Terms />} />
         <Route path="brand-ambassador" element={<BrandAmbassador />} />

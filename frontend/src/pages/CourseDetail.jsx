@@ -1,14 +1,10 @@
-import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useCourse } from '../lib/useCourses'
 import { getImageUrl } from '../lib/imageUrl'
-import Lightbox from '../components/Lightbox'
 
 export default function CourseDetail() {
   const { slug } = useParams()
   const { course, loading } = useCourse(slug)
-  const [lightbox, setLightbox] = useState(null)
-  const [selectedProgram, setSelectedProgram] = useState(null)
 
   if (loading) {
     return <div className="pt-40 pb-20 text-center text-gray-500">Loading...</div>
@@ -106,10 +102,9 @@ export default function CourseDetail() {
                 const preview = prog.summary || prog.details?.find(Boolean) || ''
                 const thumb = prog.images?.[0]?.url
                 return (
-                  <button
+                  <Link
                     key={i}
-                    type="button"
-                    onClick={() => setSelectedProgram(prog)}
+                    to={`/courses/${slug}/class/${i}`}
                     className="group text-left bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-primary/30 transition-all overflow-hidden flex flex-col focus:outline-none focus:ring-2 focus:ring-primary/30"
                   >
                     {thumb && (
@@ -122,7 +117,7 @@ export default function CourseDetail() {
                       {preview && <p className="mt-2 text-sm text-gray-500 line-clamp-2 flex-1">{preview}</p>}
                       <span className="mt-3 text-sm font-medium text-primary group-hover:underline">View details →</span>
                     </div>
-                  </button>
+                  </Link>
                 )
               })}
             </div>
@@ -159,88 +154,6 @@ export default function CourseDetail() {
         )}
       </div>
 
-      <Lightbox state={lightbox} onChange={setLightbox} />
-
-      {/* Class full detail — full-screen sheet on mobile, centered modal on desktop */}
-      {selectedProgram && (
-        <div
-          className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/60 backdrop-blur-sm"
-          onClick={() => setSelectedProgram(null)}
-        >
-          <div
-            className="bg-white w-full md:max-w-2xl rounded-t-3xl md:rounded-3xl max-h-[92vh] overflow-y-auto shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close bar */}
-            <div className="sticky top-0 z-10 flex items-center justify-between bg-white/90 backdrop-blur px-4 py-3 border-b border-gray-100">
-              <span className="md:hidden absolute left-1/2 -translate-x-1/2 top-1.5 w-10 h-1 rounded-full bg-gray-300" />
-              <h3 className="font-semibold text-gray-900 text-sm truncate pr-3">{selectedProgram.title}</h3>
-              <button
-                type="button"
-                onClick={() => setSelectedProgram(null)}
-                aria-label="Close"
-                className="shrink-0 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-              </button>
-            </div>
-
-            {/* Cover (first image) */}
-            {selectedProgram.images?.[0]?.url && (
-              <img src={getImageUrl(selectedProgram.images[0].url)} alt={selectedProgram.title} className="w-full aspect-[16/10] object-cover" />
-            )}
-
-            <div className="p-5 md:p-7">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-900">{selectedProgram.title}</h2>
-
-              {selectedProgram.summary && (
-                <p className="mt-3 text-gray-600 leading-relaxed whitespace-pre-line">{selectedProgram.summary}</p>
-              )}
-
-              {selectedProgram.details?.filter(Boolean).length > 0 && (
-                <ul className="mt-5 space-y-2.5">
-                  {selectedProgram.details.filter(Boolean).map((d, j) => (
-                    <li key={j} className="flex items-start gap-2.5 text-sm md:text-base text-gray-700">
-                      <svg className="w-5 h-5 mt-0.5 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      {d}
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {selectedProgram.note && (
-                <p className="mt-5 text-sm text-gray-500 bg-gray-50 rounded-xl p-3.5 border border-gray-100">
-                  <span className="font-medium text-gray-700">Note: </span>{selectedProgram.note}
-                </p>
-              )}
-
-              {selectedProgram.images?.length > 0 && (
-                <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {selectedProgram.images.map((img, k) => (
-                    <figure
-                      key={k}
-                      className="rounded-xl overflow-hidden bg-gray-100 cursor-pointer"
-                      onClick={() => setLightbox({ images: selectedProgram.images, index: k })}
-                    >
-                      <img src={getImageUrl(img.url)} alt={img.caption || ''} loading="lazy" className="w-full aspect-square object-cover hover:scale-[1.03] transition-transform" />
-                    </figure>
-                  ))}
-                </div>
-              )}
-
-              <Link
-                to="/contact"
-                onClick={() => setSelectedProgram(null)}
-                className="mt-7 block w-full text-center bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-colors"
-              >
-                Enquire Now
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 }
