@@ -84,8 +84,6 @@ export default function VirtualAbacus() {
                     {rods.map((rod, ri) => {
                       const digit = (rod.heaven ? 5 : 0) + rod.earth
                       const isUnit = ri === unitIndex
-                      // grouping markers every 3 rods from the unit rod (like a real soroban)
-                      const marked = (ri - unitIndex) % 3 === 0
                       return (
                         <div key={ri} className="relative flex flex-col items-center">
                           {/* vertical rod line */}
@@ -98,8 +96,8 @@ export default function VirtualAbacus() {
 
                           {/* Reckoning bar */}
                           <div className="relative z-10 w-6 sm:w-8 h-1.5 bg-amber-900 rounded-full my-0.5">
-                            {marked && (
-                              <span className={`absolute left-1/2 -translate-x-1/2 rounded-full ${isUnit ? '-top-[5px] w-2 h-2 bg-red-500 ring-1 ring-white' : '-top-[3px] w-1 h-1 bg-amber-50'}`} />
+                            {isUnit && (
+                              <span className="absolute left-1/2 -translate-x-1/2 -top-[5px] w-2 h-2 rounded-full bg-red-500 ring-1 ring-white" />
                             )}
                           </div>
 
