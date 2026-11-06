@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-const COLUMN_OPTIONS = [5, 7, 9, 13]
+const COLUMN_OPTIONS = [5, 7, 9, 13, 17]
 
 function makeRods(n) {
   return Array.from({ length: n }, () => ({ heaven: false, earth: 0 }))
@@ -27,10 +27,20 @@ export default function VirtualAbacus() {
     setRods((prev) => prev.map((r, i) => (i === ri ? { ...r, earth: newEarth } : r)))
   }
 
-  const value = useMemo(
-    () => rods.reduce((acc, r) => acc * 10 + (r.heaven ? 5 : 0) + r.earth, 0),
-    [rods],
-  )
+  // The middle rod is the units place; rods to its right are decimals (0.1, 0.01, …),
+  // rods to its left are integers (10, 100, …).
+  const unitIndex = Math.floor(cols / 2)
+
+  const display = useMemo(() => {
+    const digits = rods.map((r) => (r.heaven ? 5 : 0) + r.earth)
+    const intDigits = digits.slice(0, unitIndex + 1)
+    const fracDigits = digits.slice(unitIndex + 1)
+    let intStr = intDigits.join('').replace(/^0+(?=\d)/, '')
+    if (intStr === '') intStr = '0'
+    const intFormatted = Number(intStr).toLocaleString('en-IN')
+    const fracStr = fracDigits.join('').replace(/0+$/, '')
+    return fracStr ? `${intFormatted}.${fracStr}` : intFormatted
+  }, [rods, unitIndex])
 
   return (
     <>
@@ -62,7 +72,7 @@ export default function VirtualAbacus() {
             <div className="text-center mb-5 sm:mb-6">
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">Value</p>
               <p className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 tabular-nums break-all">
-                {value.toLocaleString('en-IN')}
+                {display}
               </p>
             </div>
 
@@ -73,9 +83,9 @@ export default function VirtualAbacus() {
                   <div className="flex items-stretch justify-center gap-1 sm:gap-1.5">
                     {rods.map((rod, ri) => {
                       const digit = (rod.heaven ? 5 : 0) + rod.earth
-                      const placeFromRight = cols - 1 - ri
-                      // group rod markers every 3 digits (like a real soroban dot)
-                      const marked = placeFromRight % 3 === 0
+                      const isUnit = ri === unitIndex
+                      // grouping markers every 3 rods from the unit rod (like a real soroban)
+                      const marked = (ri - unitIndex) % 3 === 0
                       return (
                         <div key={ri} className="relative flex flex-col items-center">
                           {/* vertical rod line */}
@@ -88,7 +98,9 @@ export default function VirtualAbacus() {
 
                           {/* Reckoning bar */}
                           <div className="relative z-10 w-6 sm:w-8 h-1.5 bg-amber-900 rounded-full my-0.5">
-                            {marked && <span className="absolute left-1/2 -translate-x-1/2 -top-[3px] w-1 h-1 rounded-full bg-amber-50" />}
+                            {marked && (
+                              <span className={`absolute left-1/2 -translate-x-1/2 rounded-full ${isUnit ? '-top-[5px] w-2 h-2 bg-red-500 ring-1 ring-white' : '-top-[3px] w-1 h-1 bg-amber-50'}`} />
+                            )}
                           </div>
 
                           {/* Earth (value 1 each, up to 4) */}
@@ -144,7 +156,7 @@ export default function VirtualAbacus() {
             </div>
 
             <p className="mt-4 text-xs text-gray-400 text-center">
-              Top bead = 5 · each bottom bead = 1 · a bead counts when pushed toward the middle bar.
+              Top bead = 5 · each bottom bead = 1 · the <span className="text-red-500 font-semibold">red dot</span> marks the units rod — rods to its right are decimals (0.1, 0.01, …).
             </p>
           </div>
         </div>
