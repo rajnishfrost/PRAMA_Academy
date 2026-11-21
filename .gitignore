@@ -3,3 +3,4 @@
 
 # user-uploaded files (live copies live on the server)
 backend/uploads/profile/
+backend/uploads/tmp/
