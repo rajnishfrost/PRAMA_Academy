@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useStudentAuth } from '../lib/StudentAuthContext'
 
 const tools = [
   {
+    id: 'worksheet',
     to: '/tools/worksheet',
     title: 'Math Worksheet Generator',
     desc: 'Generate printable math worksheets with customizable operations, difficulty levels, and number of problems.',
@@ -9,6 +11,7 @@ const tools = [
     color: 'bg-blue-500',
   },
   {
+    id: 'screen-recording',
     to: '/tools/screen-recording',
     title: 'Screen Recording',
     desc: 'Record your entire screen or a specific application window with audio. Download recordings instantly.',
@@ -16,6 +19,7 @@ const tools = [
     color: 'bg-red-500',
   },
   {
+    id: 'flash-anzan',
     to: '/tools/flash-anzan',
     title: 'Flash Anzan',
     desc: 'Practice mental calculation by adding numbers that flash on screen. Improve your speed and accuracy.',
@@ -23,6 +27,7 @@ const tools = [
     color: 'bg-amber-500',
   },
   {
+    id: 'virtual-abacus',
     to: '/tools/virtual-abacus',
     title: 'Virtual Abacus',
     desc: 'An interactive soroban (abacus). Tap the beads to set numbers and learn place value — great for practice on any device.',
@@ -32,6 +37,7 @@ const tools = [
 ]
 
 export default function Tools() {
+  const { canUseTool, isSignup } = useStudentAuth()
   return (
     <>
       {/* Hero Banner */}
@@ -44,7 +50,7 @@ export default function Tools() {
           <p className="text-primary font-semibold text-sm tracking-wider uppercase mb-3">Free Tools</p>
           <h1 className="text-4xl md:text-5xl font-bold text-white">Useful Tools</h1>
           <p className="mt-4 text-gray-300 max-w-2xl mx-auto">
-            Explore our collection of free tools designed to help students, teachers, and parents.
+            Explore our collection of tools designed to help students, teachers, and parents.
           </p>
         </div>
       </section>
@@ -52,30 +58,61 @@ export default function Tools() {
       {/* Tools Grid */}
       <section className="py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-4">
+          {isSignup && (
+            <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-800">
+              You have a free account — the <span className="font-semibold">Virtual Abacus</span> is available to practise.
+              Enrol in a Prama course to unlock all tools and homework.{' '}
+              <Link to="/contact" className="font-semibold underline">Contact us</Link>.
+            </div>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {tools.map((tool) => (
-              <Link
-                key={tool.to}
-                to={tool.to}
-                className="group bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-primary/20 transition-all duration-200"
-              >
-                <div className={`w-12 h-12 ${tool.color} rounded-xl flex items-center justify-center mb-4`}>
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={tool.icon} />
-                  </svg>
+            {tools.map((tool) => {
+              const unlocked = canUseTool(tool.id)
+              if (unlocked) {
+                return (
+                  <Link
+                    key={tool.to}
+                    to={tool.to}
+                    className="group bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-primary/20 transition-all duration-200"
+                  >
+                    <div className={`w-12 h-12 ${tool.color} rounded-xl flex items-center justify-center mb-4`}>
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d={tool.icon} />
+                      </svg>
+                    </div>
+                    <h2 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">{tool.title}</h2>
+                    <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
+                    <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-4">
+                      Explore
+                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </span>
+                  </Link>
+                )
+              }
+              // Locked (free accounts)
+              return (
+                <div
+                  key={tool.to}
+                  className="relative bg-white rounded-2xl shadow-sm border border-gray-100 p-6 opacity-70 select-none"
+                  aria-disabled="true"
+                >
+                  <div className="absolute top-4 right-4 flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full px-2.5 py-1">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+                    Locked
+                  </div>
+                  <div className={`w-12 h-12 ${tool.color} rounded-xl flex items-center justify-center mb-4 grayscale`}>
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={tool.icon} />
+                    </svg>
+                  </div>
+                  <h2 className="text-lg font-bold text-gray-900 mb-2">{tool.title}</h2>
+                  <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
+                  <span className="inline-block text-xs font-medium text-gray-400 mt-4">Available for enrolled students</span>
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">
-                  {tool.title}
-                </h2>
-                <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-4">
-                  Explore
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </span>
-              </Link>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

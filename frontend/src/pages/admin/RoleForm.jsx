@@ -17,21 +17,32 @@ export default function RoleForm() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    api.get('/roles/modules').then((d) => {
-      setModules(d.modules)
-      if (!isEdit) {
-        setPermissions(d.modules.map((m) => ({
-          module: m, read: false, write: false, edit: false, delete: false,
-        })))
-      }
-    }).catch(() => {})
-
+    const modulesP = api.get('/roles/modules')
     if (isEdit) {
-      api.get(`/roles/${id}`).then((d) => {
-        setName(d.role.name)
-        setDescription(d.role.description || '')
-        setPermissions(d.role.permissions || [])
-      }).catch((e) => setError(e.message))
+      Promise.all([modulesP, api.get(`/roles/${id}`)])
+        .then(([m, d]) => {
+          setModules(m.modules)
+          setName(d.role.name)
+          setDescription(d.role.description || '')
+          // Merge the full module list with the role's stored permissions so
+          // newly added modules (e.g. batches/students/homework) also show up.
+          const existing = Object.fromEntries((d.role.permissions || []).map((p) => [p.module, p]))
+          setPermissions(m.modules.map((mod) => ({
+            module: mod,
+            read: existing[mod]?.read || false,
+            write: existing[mod]?.write || false,
+            edit: existing[mod]?.edit || false,
+            delete: existing[mod]?.delete || false,
+          })))
+        })
+        .catch((e) => setError(e.message))
+    } else {
+      modulesP
+        .then((m) => {
+          setModules(m.modules)
+          setPermissions(m.modules.map((mod) => ({ module: mod, read: false, write: false, edit: false, delete: false })))
+        })
+        .catch(() => {})
     }
   }, [id, isEdit])
 

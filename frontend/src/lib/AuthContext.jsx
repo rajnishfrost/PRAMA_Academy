@@ -23,6 +23,13 @@ export function AuthProvider({ children }) {
     return data.user
   }
 
+  // Hydrate an admin session from an already-fetched login response
+  // (used by the unified login page, which decides admin vs student).
+  const setSession = (u, token) => {
+    localStorage.setItem('token', token)
+    setUser(u)
+  }
+
   const logout = () => {
     localStorage.removeItem('token')
     setUser(null)
@@ -38,7 +45,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, isSuperAdmin, hasPermission }}>
+    <AuthContext.Provider value={{ user, loading, login, setSession, logout, isSuperAdmin, hasPermission }}>
       {children}
     </AuthContext.Provider>
   )

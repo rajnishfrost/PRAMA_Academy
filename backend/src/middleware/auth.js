@@ -7,6 +7,8 @@ export async function authenticate(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    // Reject student tokens on admin/staff routes.
+    if (decoded.type === 'student') return res.status(401).json({ message: 'Invalid token' })
     const user = await User.findById(decoded.id).populate('role')
     if (!user || !user.isActive) return res.status(401).json({ message: 'Invalid token' })
     req.user = user

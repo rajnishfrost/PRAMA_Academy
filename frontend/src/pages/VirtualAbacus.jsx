@@ -56,7 +56,7 @@ export default function VirtualAbacus() {
       </section>
 
       <section className="py-8 sm:py-12 md:py-16">
-        <div className="max-w-3xl mx-auto px-3 sm:px-4">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4">
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 md:p-8">
             <Link
               to="/tools"
@@ -80,7 +80,7 @@ export default function VirtualAbacus() {
             <div className="overflow-x-auto -mx-1 px-1 pb-2">
               <div className="mx-auto w-max rounded-2xl bg-amber-900/90 p-2.5 sm:p-3.5 shadow-inner select-none">
                 <div className="rounded-xl bg-amber-50 px-2 sm:px-3 py-3 sm:py-4">
-                  <div className="flex items-stretch justify-center gap-1 sm:gap-1.5">
+                  <div className="flex items-stretch justify-center gap-1">
                     {rods.map((rod, ri) => {
                       const digit = (rod.heaven ? 5 : 0) + rod.earth
                       const isUnit = ri === unitIndex

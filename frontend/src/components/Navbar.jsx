@@ -1,18 +1,25 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
+import { useStudentAuth } from '../lib/StudentAuthContext'
+import { getImageUrl } from '../lib/imageUrl'
 
-const navLinks = [
+const baseLinks = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/#courses', label: 'Courses' },
   { to: '/team', label: 'Team' },
-  { to: '/tools', label: 'Tools' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
+  const { student, isBatch, logout } = useStudentAuth()
+
+  // Tools visible only when logged in; Homework only for enrolled students.
+  const navLinks = [...baseLinks]
+  if (student) navLinks.push({ to: '/tools', label: 'Tools' })
+  if (isBatch) navLinks.push({ to: '/homework', label: 'Homework' })
 
   const handleCoursesClick = () => {
     setOpen(false)
@@ -22,6 +29,19 @@ export default function Navbar() {
       navigate('/', { state: { scrollTo: 'courses' } })
     }
   }
+
+  const doLogout = () => {
+    logout()
+    setOpen(false)
+    navigate('/')
+  }
+
+  const initial = student?.name?.charAt(0)?.toUpperCase() || '?'
+  const avatar = student?.photo ? (
+    <img src={getImageUrl(student.photo)} alt="" className="w-8 h-8 rounded-full object-cover" />
+  ) : (
+    <span className="w-8 h-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-sm font-bold">{initial}</span>
+  )
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm print:hidden no-print">
@@ -49,45 +69,49 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-7">
           {navLinks.map(({ to, label }) => (
             <li key={to}>
               {to === '/#courses' ? (
-                <button
-                  onClick={handleCoursesClick}
-                  className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-                >
-                  {label}
-                </button>
+                <button onClick={handleCoursesClick} className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">{label}</button>
               ) : (
-                <NavLink
-                  to={to}
-                  end={to === '/'}
-                  className={({ isActive }) =>
-                    `text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-gray-600 hover:text-primary'}`
-                  }
-                >
-                  {label}
-                </NavLink>
+                <NavLink to={to} end={to === '/'} className={({ isActive }) => `text-sm font-medium transition-colors ${isActive ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}>{label}</NavLink>
               )}
             </li>
           ))}
-          <li>
-            <Link
-              to="/contact"
-              className="bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
-            >
-              Contact Us
-            </Link>
-          </li>
+
+          {!student ? (
+            <>
+              <li>
+                <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">Login</Link>
+              </li>
+              <li>
+                <Link to="/contact" className="bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">Contact Us</Link>
+              </li>
+            </>
+          ) : (
+            <li className="relative group">
+              <button type="button" className="flex items-center cursor-default" aria-label="Account menu">
+                {avatar}
+              </button>
+              {/* Opens on hover / keyboard focus. top-full + pt-2 bridges the gap so it stays open. */}
+              <div className="absolute right-0 top-full pt-2 w-52 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-150 z-20">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-2">
+                  <div className="px-4 py-2 border-b border-gray-100">
+                    <p className="text-sm font-semibold text-gray-900 truncate">{student.name}</p>
+                    <p className="text-xs text-gray-500 truncate">{student.email}</p>
+                  </div>
+                  <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Profile</Link>
+                  {isBatch && <Link to="/homework" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Homework</Link>}
+                  <button onClick={doLogout} className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50">Logout</button>
+                </div>
+              </div>
+            </li>
+          )}
         </ul>
 
         {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden p-2 text-gray-700"
-          aria-label="Toggle menu"
-        >
+        <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-gray-700" aria-label="Toggle menu">
           {open ? (
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
           ) : (
@@ -103,35 +127,35 @@ export default function Navbar() {
             {navLinks.map(({ to, label }) => (
               <li key={to}>
                 {to === '/#courses' ? (
-                  <button
-                    onClick={handleCoursesClick}
-                    className="block w-full text-left px-4 py-2.5 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors"
-                  >
-                    {label}
-                  </button>
+                  <button onClick={handleCoursesClick} className="block w-full text-left px-4 py-2.5 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-lg transition-colors">{label}</button>
                 ) : (
-                  <NavLink
-                    to={to}
-                    end={to === '/'}
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      `block px-4 py-2.5 rounded-lg transition-colors ${isActive ? 'bg-primary/10 text-primary font-medium' : 'text-gray-700 hover:bg-primary/10 hover:text-primary'}`
-                    }
-                  >
-                    {label}
-                  </NavLink>
+                  <NavLink to={to} end={to === '/'} onClick={() => setOpen(false)} className={({ isActive }) => `block px-4 py-2.5 rounded-lg transition-colors ${isActive ? 'bg-primary/10 text-primary font-medium' : 'text-gray-700 hover:bg-primary/10 hover:text-primary'}`}>{label}</NavLink>
                 )}
               </li>
             ))}
-            <li className="pt-2">
-              <Link
-                to="/about"
-                onClick={() => setOpen(false)}
-                className="block text-center bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-colors"
-              >
-                Contact Us
-              </Link>
-            </li>
+
+            {student ? (
+              <>
+                <li className="pt-2 mt-1 border-t border-gray-100">
+                  <div className="flex items-center gap-3 px-4 py-2">
+                    {avatar}
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-gray-900 truncate">{student.name}</p>
+                      <p className="text-xs text-gray-500 truncate">{student.email}</p>
+                    </div>
+                  </div>
+                </li>
+                <li><NavLink to="/profile" onClick={() => setOpen(false)} className="block px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary/10 hover:text-primary">My Profile</NavLink></li>
+                <li><button onClick={doLogout} className="block w-full text-left px-4 py-2.5 rounded-lg text-red-500 hover:bg-red-50">Logout</button></li>
+              </>
+            ) : (
+              <>
+                <li><NavLink to="/login" onClick={() => setOpen(false)} className="block px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary/10 hover:text-primary">Login</NavLink></li>
+                <li className="pt-2">
+                  <Link to="/contact" onClick={() => setOpen(false)} className="block text-center bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-colors">Contact Us</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       )}

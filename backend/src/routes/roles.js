@@ -6,7 +6,7 @@ import { checkPermission } from '../middleware/rbac.js'
 const router = Router()
 
 // Available modules for permissions
-const MODULES = ['courses', 'team', 'brand-ambassador', 'users', 'roles', 'contact', 'class-video']
+const MODULES = ['courses', 'team', 'brand-ambassador', 'users', 'roles', 'contact', 'class-video', 'batches', 'students', 'homework']
 
 router.get('/modules', authenticate, checkPermission('roles', 'read'), (req, res) => {
   res.json({ modules: MODULES })

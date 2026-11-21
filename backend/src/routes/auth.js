@@ -1,13 +1,14 @@
 import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
+import Student from '../models/Student.js'
 import { authenticate } from '../middleware/auth.js'
 
 const router = Router()
 
-// Rate limiting: max 3 login attempts per IP, 10 minute window
+// Rate limiting: max login attempts per IP within the window
 const loginAttempts = new Map() // ip -> { count, firstAttempt }
-const MAX_ATTEMPTS = 3
+const MAX_ATTEMPTS = 20
 const WINDOW_MS = 10 * 60 * 1000 // 10 minutes
 
 function checkLoginRate(ip) {
@@ -46,7 +47,28 @@ function generateToken(user) {
   })
 }
 
-// Login
+// Student tokens carry a `type: 'student'` claim so admin/student sessions never mix.
+function generateStudentToken(student) {
+  return jwt.sign({ id: student._id, type: 'student' }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  })
+}
+
+function publicStudent(s) {
+  return {
+    _id: s._id,
+    name: s.name,
+    email: s.email,
+    photo: s.photo,
+    accountType: s.accountType,
+    batch: s.batch || null,
+    isActive: s.isActive,
+  }
+}
+
+// Unified login — one entry point for everyone.
+// Checks admin/staff users first, then students, and tells the client which
+// kind of session it is via `kind` so the frontend can route accordingly.
 router.post('/login', async (req, res) => {
   try {
     const ip = req.ip
@@ -60,22 +82,35 @@ router.post('/login', async (req, res) => {
 
     const { email, password } = req.body
     if (!email || !password) return res.status(400).json({ message: 'Email and password required' })
+    const normEmail = String(email).toLowerCase().trim()
 
-    const user = await User.findOne({ email }).populate('role')
-    if (!user || !(await user.comparePassword(password))) {
-      recordFailedAttempt(ip)
-      const updated = checkLoginRate(ip)
-      if (!updated.allowed) {
-        return res.status(429).json({
-          message: `Too many login attempts. Try again after ${updated.remainMin} minute(s).`,
-        })
-      }
-      return res.status(401).json({ message: 'Invalid credentials' })
+    // 1) Admin / staff account (role-based access to the admin portal)
+    const user = await User.findOne({ email: normEmail }).populate('role')
+    if (user && (await user.comparePassword(password))) {
+      if (!user.isActive) return res.status(403).json({ message: 'Account deactivated' })
+      clearAttempts(ip)
+      return res.json({ kind: 'admin', token: generateToken(user), user })
     }
-    if (!user.isActive) return res.status(403).json({ message: 'Account deactivated' })
 
-    clearAttempts(ip)
-    res.json({ token: generateToken(user), user })
+    // 2) Student account (signup / batch)
+    const student = await Student.findOne({ email: normEmail }).populate('batch')
+    if (student && (await student.comparePassword(password))) {
+      if (!student.isActive) {
+        return res.status(403).json({ message: 'Account deactivated. Please contact Prama Academy.' })
+      }
+      clearAttempts(ip)
+      return res.json({ kind: 'student', token: generateStudentToken(student), student: publicStudent(student) })
+    }
+
+    // 3) Neither matched
+    recordFailedAttempt(ip)
+    const updated = checkLoginRate(ip)
+    if (!updated.allowed) {
+      return res.status(429).json({
+        message: `Too many login attempts. Try again after ${updated.remainMin} minute(s).`,
+      })
+    }
+    return res.status(401).json({ message: 'Invalid email or password' })
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

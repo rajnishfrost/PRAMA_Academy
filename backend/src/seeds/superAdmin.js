@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import Role from '../models/Role.js'
 import User from '../models/User.js'
 
-const MODULES = ['courses', 'team', 'brand-ambassador', 'users', 'roles', 'contact', 'class-video']
+const MODULES = ['courses', 'team', 'brand-ambassador', 'users', 'roles', 'contact', 'class-video', 'batches', 'students', 'homework']
 
 async function seed() {
   await mongoose.connect(process.env.MONGODB_URI)
