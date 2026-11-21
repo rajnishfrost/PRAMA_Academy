@@ -1,0 +1,96 @@
+# Deploy Prama Academy to the Oracle VPS (prama-server) on every push to `production`.
+#
+#   Frontend : Vite build  -> /srv/prama/frontend   (served by nginx)
+#   Backend  : Node/Express -> /srv/prama/backend   (PM2 app "prama-be", port 4020)
+#   Uploads  : server's /srv/prama/backend/uploads is never deleted/overwritten;
+#              files tracked in git are only added if missing.
+#   Secrets  : backend/.env lives ONLY on the server (MongoDB Atlas URI, JWT secret).
+#
+# Required repo secrets:
+#   PROD_HOST         server public IP (prama-server)
+#   PROD_USER         ssh user (ubuntu)
+#   PROD_SSH_KEY      private key whose public half is in the server's ~/.ssh/authorized_keys
+#   PROD_KNOWN_HOSTS  output of `ssh-keyscan <PROD_HOST>`
+#
+# Live traffic path: pramaacademy.com -> rathole-server (SSL) -> prama-server (private 10.0.0.235)
+
+name: Deploy production
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      VITE_API_URL: https://api.pramaacademy.com/api
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            backend/package-lock.json
+
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm ci --no-audit --no-fund
+          echo "VITE_API_URL=$VITE_API_URL" > .env.production
+          npm run build
+          grep -q "api.pramaacademy.com/api" dist/assets/*.js || { echo "API URL missing from build"; exit 1; }
+
+      - name: Check backend installs
+        working-directory: backend
+        run: npm ci --omit=dev --no-audit --no-fund
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          echo "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/deploy_key && chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.PROD_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          printf 'Host prod\n  HostName %s\n  User %s\n  IdentityFile ~/.ssh/deploy_key\n  IdentitiesOnly yes\n' \
+            "${{ secrets.PROD_HOST }}" "${{ secrets.PROD_USER }}" > ~/.ssh/config
+
+      - name: Upload frontend
+        run: |
+          rsync -az --delete frontend/dist/ prod:/srv/prama/frontend/
+          ssh prod 'find /srv/prama/frontend -type d -exec chmod 755 {} + && find /srv/prama/frontend -type f -exec chmod 644 {} +'
+
+      - name: Upload backend
+        run: |
+          rsync -az --delete \
+            --exclude node_modules --exclude .env --exclude uploads \
+            backend/ prod:/srv/prama/backend/
+          # tracked upload files: add only if missing, never delete server uploads
+          rsync -az --ignore-existing backend/uploads/ prod:/srv/prama/backend/uploads/
+
+      - name: Install & restart backend
+        run: |
+          ssh prod 'set -e
+            cd /srv/prama/backend
+            npm ci --omit=dev --no-audit --no-fund
+            pm2 reload prama-be --update-env || pm2 start server.js --name prama-be --max-memory-restart 300M --time
+            pm2 save'
+
+      - name: Health check
+        run: |
+          for i in 1 2 3 4 5 6; do
+            sleep 5
+            if curl -fsS https://api.pramaacademy.com/api/health | grep -q ok \
+               && curl -fsS -o /dev/null https://pramaacademy.com/; then
+              echo "Production is healthy"; exit 0
+            fi
+          done
+          echo "Health check failed"; ssh prod 'pm2 logs prama-be --lines 40 --nostream' || true
+          exit 1
