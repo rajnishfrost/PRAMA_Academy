@@ -16,9 +16,9 @@ export default function Navbar() {
   const location = useLocation()
   const { student, isBatch, logout } = useStudentAuth()
 
-  // Tools visible only when logged in; Homework only for enrolled students.
+  // Tools is public (abacus free to try); Homework only for enrolled students.
   const navLinks = [...baseLinks]
-  if (student) navLinks.push({ to: '/tools', label: 'Tools' })
+  navLinks.push({ to: '/tools', label: 'Tools' })
   if (isBatch) navLinks.push({ to: '/homework', label: 'Homework' })
 
   const handleCoursesClick = () => {

@@ -92,8 +92,8 @@ export default function App() {
         <Route path="signup" element={<StudentSignup />} />
         <Route path="profile" element={<RequireStudent><StudentProfile /></RequireStudent>} />
 
-        {/* Tools — require login; signup students get abacus only */}
-        <Route path="tools" element={<RequireStudent><Tools /></RequireStudent>} />
+        {/* Tools — public page; Virtual Abacus open to all, other tools need a batch account */}
+        <Route path="tools" element={<Tools />} />
         <Route path="tools/virtual-abacus" element={<RequireToolAccess toolId="virtual-abacus"><VirtualAbacus /></RequireToolAccess>} />
         <Route path="tools/worksheet" element={<RequireToolAccess toolId="worksheet"><Worksheet /></RequireToolAccess>} />
         <Route path="tools/screen-recording" element={<RequireToolAccess toolId="screen-recording"><ScreenRecording /></RequireToolAccess>} />
