@@ -24,12 +24,12 @@ export function RequireBatch({ children }) {
   return children
 }
 
-// Tool-level gate: signup students may only open the abacus.
+// Tool-level gate: Virtual Abacus is open to everyone (even logged-out);
+// the other tools need a batch account. No login redirect — a visitor who
+// hits a locked tool directly just lands back on the Tools page.
 export function RequireToolAccess({ toolId, children }) {
-  const { student, loading, canUseTool } = useStudentAuth()
-  const location = useLocation()
+  const { loading, canUseTool } = useStudentAuth()
   if (loading) return <Loader />
-  if (!student) return <Navigate to="/login" state={{ from: location.pathname }} replace />
   if (!canUseTool(toolId)) return <Navigate to="/tools" replace />
   return children
 }

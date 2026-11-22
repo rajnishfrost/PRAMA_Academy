@@ -37,7 +37,7 @@ const tools = [
 ]
 
 export default function Tools() {
-  const { canUseTool, isSignup } = useStudentAuth()
+  const { canUseTool, isSignup, student } = useStudentAuth()
   return (
     <>
       {/* Hero Banner */}
@@ -58,6 +58,12 @@ export default function Tools() {
       {/* Tools Grid */}
       <section className="py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-4">
+          {!student && (
+            <div className="mb-8 p-4 rounded-xl bg-blue-50 border border-blue-200 text-sm text-blue-800">
+              The <span className="font-semibold">Virtual Abacus</span> is free to try — no login needed.{' '}
+              <Link to="/login" className="font-semibold underline">Log in</Link> or enrol in a Prama course to unlock all tools and homework.
+            </div>
+          )}
           {isSignup && (
             <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-800">
               You have a free account — the <span className="font-semibold">Virtual Abacus</span> is available to practise.
