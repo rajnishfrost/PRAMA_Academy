@@ -91,13 +91,12 @@ export default function Tools() {
                   </Link>
                 )
               }
-              // Locked — clickable, routes to login (and back to the tool after
-              // login for enrolled/batch students).
+              // Locked — these tools need a Prama batch (enrolment); clicking
+              // sends the visitor to Contact so they can enrol.
               return (
                 <Link
                   key={tool.to}
-                  to="/login"
-                  state={{ from: tool.to }}
+                  to="/contact"
                   className="group relative bg-white rounded-2xl shadow-sm border border-gray-100 p-6 opacity-80 hover:opacity-100 hover:shadow-lg hover:border-primary/20 transition-all duration-200"
                 >
                   <div className="absolute top-4 right-4 flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full px-2.5 py-1">
@@ -112,7 +111,7 @@ export default function Tools() {
                   <h2 className="text-lg font-bold text-gray-900 mb-2">{tool.title}</h2>
                   <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
                   <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-4">
-                    Log in to access
+                    Enrol to unlock — contact us
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                     </svg>
