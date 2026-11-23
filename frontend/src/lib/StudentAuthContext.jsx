@@ -53,9 +53,11 @@ export function StudentAuthProvider({ children }) {
   const isBatch = student?.accountType === 'batch'
   const isSignup = student?.accountType === 'signup'
 
-  // Tool access: batch students → all tools; everyone else (public/logged-out
-  // and free signup accounts) → Virtual Abacus only.
+  // Tool access: you must be logged in. Signup (free) accounts → Virtual
+  // Abacus only; batch (enrolled) students → all tools. Logged-out visitors
+  // get nothing here — clicking any tool sends them to login.
   const canUseTool = (toolId) => {
+    if (!student) return false
     if (isBatch) return true
     return toolId === 'virtual-abacus'
   }
