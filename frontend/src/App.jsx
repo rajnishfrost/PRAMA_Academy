@@ -39,6 +39,7 @@ import StudentForm from './pages/admin/StudentForm'
 import AdminHomework from './pages/admin/AdminHomework'
 import HomeworkForm from './pages/admin/HomeworkForm'
 import HomeworkDetail from './pages/admin/HomeworkDetail'
+import Analytics from './pages/admin/Analytics'
 import Contact from './pages/Contact'
 import ClassVideo from './pages/ClassVideo'
 import NotFound from './pages/NotFound'
@@ -68,6 +69,7 @@ const modulePathMap = {
   'homework': '/admin/homework',
   'users': '/admin/users',
   'roles': '/admin/roles',
+  'analytics': '/admin/analytics',
 }
 
 function DashboardRoute() {
@@ -136,6 +138,7 @@ export default function App() {
         <Route path="roles/new" element={<PermissionRoute module="roles"><RoleForm /></PermissionRoute>} />
         <Route path="roles/:id/edit" element={<PermissionRoute module="roles"><RoleForm /></PermissionRoute>} />
         <Route path="users" element={<PermissionRoute module="users"><Users /></PermissionRoute>} />
+        <Route path="analytics" element={<PermissionRoute module="analytics"><Analytics /></PermissionRoute>} />
       </Route>
     </Routes>
   )
