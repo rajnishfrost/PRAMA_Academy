@@ -60,8 +60,9 @@ export default function Tools() {
         <div className="max-w-5xl mx-auto px-4">
           {!student && (
             <div className="mb-8 p-4 rounded-xl bg-blue-50 border border-blue-200 text-sm text-blue-800">
-              The <span className="font-semibold">Virtual Abacus</span> is free to try — no login needed.{' '}
-              <Link to="/login" className="font-semibold underline">Log in</Link> or enrol in a Prama course to unlock all tools and homework.
+              These tools are for Prama students.{' '}
+              <Link to="/login" className="font-semibold underline">Log in</Link> to use the{' '}
+              <span className="font-semibold">Virtual Abacus</span> — enrol in a Prama course to unlock all tools and homework.
             </div>
           )}
           {isSignup && (
@@ -73,7 +74,9 @@ export default function Tools() {
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {tools.map((tool) => {
-              const unlocked = canUseTool(tool.id)
+              // Logged out: every tool is clickable and the route guard sends
+              // the visitor to login. Logged in: only allowed tools are clickable.
+              const unlocked = !student || canUseTool(tool.id)
               if (unlocked) {
                 return (
                   <Link
@@ -115,7 +118,7 @@ export default function Tools() {
                   </div>
                   <h2 className="text-lg font-bold text-gray-900 mb-2">{tool.title}</h2>
                   <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
-                  <span className="inline-block text-xs font-medium text-gray-400 mt-4">Available for enrolled students</span>
+                  <span className="inline-block text-xs font-medium text-gray-400 mt-4">Enrol in a Prama course to unlock</span>
                 </div>
               )
             })}
