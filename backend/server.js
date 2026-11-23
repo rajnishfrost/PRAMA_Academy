@@ -17,6 +17,7 @@ import batchRoutes from './src/routes/batches.js'
 import adminStudentRoutes from './src/routes/adminStudents.js'
 import homeworkRoutes from './src/routes/homework.js'
 import studentHomeworkRoutes from './src/routes/studentHomework.js'
+import analyticsRoutes from './src/routes/analytics.js'
 
 const app = express()
 // Behind nginx + rathole — trust the proxy so req.ip is the real client IP
@@ -68,6 +69,7 @@ app.use('/api/batches', batchRoutes)
 app.use('/api/admin/students', adminStudentRoutes)
 app.use('/api/homework', homeworkRoutes)
 app.use('/api/student-homework', studentHomeworkRoutes)
+app.use('/api/analytics', analyticsRoutes)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
 

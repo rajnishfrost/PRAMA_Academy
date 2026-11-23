@@ -37,7 +37,7 @@ const tools = [
 ]
 
 export default function Tools() {
-  const { canUseTool, isSignup, student } = useStudentAuth()
+  const { canUseTool, isSignup } = useStudentAuth()
   return (
     <>
       {/* Hero Banner */}
@@ -58,13 +58,6 @@ export default function Tools() {
       {/* Tools Grid */}
       <section className="py-16 md:py-20">
         <div className="max-w-5xl mx-auto px-4">
-          {!student && (
-            <div className="mb-8 p-4 rounded-xl bg-blue-50 border border-blue-200 text-sm text-blue-800">
-              These tools are for Prama students.{' '}
-              <Link to="/login" className="font-semibold underline">Log in</Link> to use the{' '}
-              <span className="font-semibold">Virtual Abacus</span> — enrol in a Prama course to unlock all tools and homework.
-            </div>
-          )}
           {isSignup && (
             <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-800">
               You have a free account — the <span className="font-semibold">Virtual Abacus</span> is available to practise.
@@ -74,9 +67,7 @@ export default function Tools() {
           )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {tools.map((tool) => {
-              // Logged out: every tool is clickable and the route guard sends
-              // the visitor to login. Logged in: only allowed tools are clickable.
-              const unlocked = !student || canUseTool(tool.id)
+              const unlocked = canUseTool(tool.id)
               if (unlocked) {
                 return (
                   <Link
@@ -100,26 +91,33 @@ export default function Tools() {
                   </Link>
                 )
               }
-              // Locked (free accounts)
+              // Locked — clickable, routes to login (and back to the tool after
+              // login for enrolled/batch students).
               return (
-                <div
+                <Link
                   key={tool.to}
-                  className="relative bg-white rounded-2xl shadow-sm border border-gray-100 p-6 opacity-70 select-none"
-                  aria-disabled="true"
+                  to="/login"
+                  state={{ from: tool.to }}
+                  className="group relative bg-white rounded-2xl shadow-sm border border-gray-100 p-6 opacity-80 hover:opacity-100 hover:shadow-lg hover:border-primary/20 transition-all duration-200"
                 >
                   <div className="absolute top-4 right-4 flex items-center gap-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full px-2.5 py-1">
                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
                     Locked
                   </div>
-                  <div className={`w-12 h-12 ${tool.color} rounded-xl flex items-center justify-center mb-4 grayscale`}>
+                  <div className={`w-12 h-12 ${tool.color} rounded-xl flex items-center justify-center mb-4 grayscale group-hover:grayscale-0 transition`}>
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d={tool.icon} />
                     </svg>
                   </div>
                   <h2 className="text-lg font-bold text-gray-900 mb-2">{tool.title}</h2>
                   <p className="text-sm text-gray-500 leading-relaxed">{tool.desc}</p>
-                  <span className="inline-block text-xs font-medium text-gray-400 mt-4">Enrol in a Prama course to unlock</span>
-                </div>
+                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary mt-4">
+                    Log in to access
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </span>
+                </Link>
               )
             })}
           </div>
